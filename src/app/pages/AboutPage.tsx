@@ -306,16 +306,18 @@ export function AboutPage() {
         >
           <a
             href="mailto:hello@julienbourcet.fr"
-            className="inline-flex items-center gap-3 text-white group"
-            style={{ fontSize: "12px", letterSpacing: "0.18em" }}
+            className="inline-flex items-center gap-2 group"
           >
-            <span className="uppercase tracking-widest opacity-75 group-hover:opacity-100 transition-opacity duration-300">
+            <span
+              className="block w-8 h-px transition-all duration-300 group-hover:w-12"
+              style={{ background: "white" }}
+            />
+            <span
+              className="uppercase"
+              style={{ fontSize: "11px", letterSpacing: "0.2em", color: "white", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}
+            >
               Contact
             </span>
-            <span
-              className="block h-px transition-all duration-300 group-hover:w-10"
-              style={{ width: "32px", background: "white", opacity: 0.6 }}
-            />
           </a>
         </motion.div>
       </div>

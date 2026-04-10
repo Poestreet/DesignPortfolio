@@ -8,29 +8,39 @@ export function AnimatedBackground({ className = "" }: { className?: string }) {
     >
       <style>{`
         @keyframes driftX {
-          0%   { transform: translateX(0px);    }
-          100% { transform: translateX(-120px); }
+          0%   { transform: translateX(  0px); }
+          100% { transform: translateX(-140px); }
         }
         @keyframes driftY {
-          0%   { transform: translateY(0px);   }
-          100% { transform: translateY(-80px); }
+          0%   { transform: translateY(  0px); }
+          100% { transform: translateY(-100px); }
         }
-        @keyframes drift2d {
-          0%   { transform: translate(  0px,   0px); }
-          25%  { transform: translate(-100px, -60px); }
-          50%  { transform: translate(-160px,  20px); }
-          75%  { transform: translate( -60px,  80px); }
-          100% { transform: translate(  0px,   0px); }
+        @keyframes driftScale {
+          0%   { transform: scale(1);    }
+          100% { transform: scale(1.18); }
         }
 
-        .animated-bg-wrap {
+        .animated-bg-outer {
           position: absolute;
-          /* overscan: 15% on each side so movement never reveals edges */
-          top: -15%;
-          left: -15%;
-          width: 130%;
-          height: 130%;
-          animation: drift2d 10s ease-in-out infinite;
+          top: -20%;
+          left: -20%;
+          width: 140%;
+          height: 140%;
+          animation: driftX 3.3s ease-in-out infinite alternate;
+          will-change: transform;
+        }
+
+        .animated-bg-inner {
+          width: 100%;
+          height: 100%;
+          animation: driftY 2.1s ease-in-out infinite alternate;
+          will-change: transform;
+        }
+
+        .animated-bg-scale {
+          width: 100%;
+          height: 100%;
+          animation: driftScale 4.5s ease-in-out infinite alternate;
           will-change: transform;
         }
 
@@ -42,13 +52,17 @@ export function AnimatedBackground({ className = "" }: { className?: string }) {
           object-position: center center;
         }
       `}</style>
-      <div className="animated-bg-wrap">
-        <img
-          src={exampleImage}
-          className="animated-bg-img"
-          alt=""
-          draggable={false}
-        />
+      <div className="animated-bg-outer">
+        <div className="animated-bg-inner">
+          <div className="animated-bg-scale">
+            <img
+              src={exampleImage}
+              className="animated-bg-img"
+              alt=""
+              draggable={false}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
