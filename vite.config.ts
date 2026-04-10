@@ -33,4 +33,21 @@ export default defineConfig({
 
   // File types to support raw imports. Never add .css, .tsx, or .ts files to this.
   assetsInclude: ['**/*.svg', '**/*.csv'],
+
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
+    // Chunk size warning threshold (kB)
+    chunkSizeWarningLimit: 800,
+    rollupOptions: {
+      output: {
+        // Split vendor libraries into a separate chunk for better caching
+        manualChunks: {
+          react: ['react', 'react-dom'],
+          router: ['react-router'],
+          motion: ['motion'],
+        },
+      },
+    },
+  },
 })
