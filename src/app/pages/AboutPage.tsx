@@ -13,35 +13,13 @@ const BINARY_FILL = Array.from(
 ).join("").slice(0, 10000);
 
 // ── Entrance timings ──────────────────────────────────────────────────────────
-const CHARS_PER_TICK = 64;
-const TICK_MS = 16;
-const TYPING_START_DELAY = 1900;
+const CHARS_PER_TICK      = 64;
+const TICK_MS             = 16;
+const TYPING_START_DELAY  = 1900;
 const PHOTO_FADE_DURATION = 800;
-const TEXT_REVEAL_DELAY = 600;
+const TEXT_REVEAL_DELAY   = 600;
 
-// ── Exit timings (exact mirror) ───────────────────────────────────────────────
-// step 1 : text fades out in reverse stagger            ~700 ms
-// step 2 : photo fades out / binary fades back in       500 ms
-// step 3 : binary un-types at 300 chars/tick            ~534 ms → allow 650 ms
-// step 4 : background fades out (same as entrance:      1 200 ms, easeInOut)
-//          → navigate() at the end
-
-const CHARS_PER_TICK_EXIT = 64;   // même vitesse qu'à l'entrée
-
-const EXIT_TEXT_MS   = 700;   // step 1 → 2
-const EXIT_PHOTO_MS  = 500;   // step 2 → 3
-const EXIT_BINARY_MS = 2600;  // step 3 → 4  (10 000 / 64 * 16 ms ≈ 2 500 ms + marge)
-// background fade duration equals the entrance fade duration
-const EXIT_BG_DURATION_S = 1.2;
-const EXIT_BG_MS = EXIT_BG_DURATION_S * 1000; // 1 200 ms
-
-// Total before navigate: 700 + 500 + 650 + 1 200 = 3 050 ms
-const NAVIGATE_DELAY = EXIT_TEXT_MS + EXIT_PHOTO_MS + EXIT_BINARY_MS + EXIT_BG_MS;
-
-// ── Types ─────────────────────────────────────────────────────────────────────
-type Phase    = "idle" | "typing" | "revealing" | "done";
-// 0=entrance/idle  1=text-out  2=photo-out/binary-in  3=binary-erase  4=bg-out
-type ExitStep = 0 | 1 | 2 | 3 | 4;
+type Phase = "idle" | "typing" | "revealing" | "done";
 
 export function AboutPage() {
   const navigate = useNavigate();
@@ -49,10 +27,8 @@ export function AboutPage() {
   const [phase,     setPhase]     = useState<Phase>("idle");
   const [displayed, setDisplayed] = useState(0);
   const [showText,  setShowText]  = useState(false);
-  const [exitStep,  setExitStep]  = useState<ExitStep>(0);
 
-  const intervalRef    = useRef<ReturnType<typeof setInterval>  | null>(null);
-  const exitTimersRef  = useRef<ReturnType<typeof setTimeout>[]>([]);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // ── Entrance ─────────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -75,78 +51,27 @@ export function AboutPage() {
     return () => {
       clearTimeout(startTimer);
       clearInterval(intervalRef.current!);
-      exitTimersRef.current.forEach(clearTimeout);
     };
   }, []);
 
-  // ── Exit: exact mirror of entrance ───────────────────────────────────────────
-  const handleBack = () => {
-    if (exitStep > 0) return;
-
-    // Step 1 – text leaves (reverse stagger: CTA → bio p2 → bio p1 → quote)
-    setExitStep(1);
-
-    const t1 = setTimeout(() => {
-      // Step 2 – photo fades out; binary fades back in at full
-      setExitStep(2);
-      setDisplayed(BINARY_FILL.length); // ensure full binary for re-reveal
-    }, EXIT_TEXT_MS);
-
-    const t2 = setTimeout(() => {
-      // Step 3 – binary un-types character by character
-      setExitStep(3);
-      intervalRef.current = setInterval(() => {
-        setDisplayed((prev) => {
-          const next = Math.max(prev - CHARS_PER_TICK_EXIT, 0);
-          if (next <= 0) clearInterval(intervalRef.current!);
-          return next;
-        });
-      }, TICK_MS);
-    }, EXIT_TEXT_MS + EXIT_PHOTO_MS);
-
-    const t3 = setTimeout(() => {
-      // Step 4 – background fades out (same 1.2 s easeInOut as entrance)
-      setExitStep(4);
-    }, EXIT_TEXT_MS + EXIT_PHOTO_MS + EXIT_BINARY_MS);
-
-    const t4 = setTimeout(() => {
-      // Background fully faded → trigger Root.tsx slide
-      navigate(-1);
-    }, NAVIGATE_DELAY);
-
-    exitTimersRef.current = [t1, t2, t3, t4];
+  // ── Navigation — Root.tsx slide handles all transitions ───────────────────────
+  const handleNavigate = (to: string) => {
+    navigate(to);
   };
 
-  // ── Derived opacity states ────────────────────────────────────────────────────
-  // Background: mirror entrance exactly
-  //   entrance → opacity 0 → 1, duration 1.2s, delay 0.7s, easeInOut
-  //   exit     → opacity 1 → 0, duration 1.2s, no delay,   easeInOut  (step 4)
-  const bgAnimate    = exitStep >= 4 ? { opacity: 0 } : { opacity: 1 };
-  const bgTransition = exitStep >= 4
-    ? { duration: EXIT_BG_DURATION_S, ease: "easeInOut" as const }
-    : { duration: 1.2, delay: 0.7,   ease: "easeInOut" as const };
-
-  // Binary: show while typing; hide under photo; re-appear at exit step 2+
-  const binaryOpacity =
-    exitStep === 0 ? (phase === "revealing" || phase === "done" ? 0 : 1)
-    : exitStep === 1 ? 0    // photo still covering
-    : 1;                    // step 2: fade in; step 3: un-typing; step 4: still visible
-
-  // Photo: visible once typing done; fade out at exit step 2+
-  const photoOpacity =
-    exitStep === 0 ? (phase === "revealing" || phase === "done" ? 1 : 0)
-    : exitStep === 1 ? 1    // still visible while text leaves
-    : 0;                    // step 2+: fade out
+  // ── Derived opacity states (entrance only) ────────────────────────────────────
+  const binaryOpacity = phase === "revealing" || phase === "done" ? 0 : 1;
+  const photoOpacity  = phase === "revealing" || phase === "done" ? 1 : 0;
 
   return (
     <div className="relative w-full h-full overflow-hidden">
 
-      {/* ── Animated background (mirrors entrance fade exactly on exit) ── */}
+      {/* ── Animated background ── */}
       <motion.div
         className="absolute inset-0"
         initial={{ opacity: 0 }}
-        animate={bgAnimate}
-        transition={bgTransition}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.2, delay: 0.7, ease: "easeInOut" }}
       >
         <AnimatedBackground />
         <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.45)" }} />
@@ -159,12 +84,7 @@ export function AboutPage() {
         <motion.div
           className="absolute inset-0 overflow-hidden"
           animate={{ opacity: binaryOpacity }}
-          transition={{
-            duration: exitStep === 2
-              ? EXIT_PHOTO_MS / 1000        // fades in as photo leaves
-              : PHOTO_FADE_DURATION / 1000, // normal entrance/exit fade
-            ease: "easeInOut",
-          }}
+          transition={{ duration: PHOTO_FADE_DURATION / 1000, ease: "easeInOut" }}
           style={{ pointerEvents: "none" }}
         >
           <p
@@ -180,7 +100,7 @@ export function AboutPage() {
             }}
           >
             {BINARY_FILL.slice(0, displayed)}
-            {phase === "typing" && exitStep === 0 && (
+            {phase === "typing" && (
               <motion.span
                 animate={{ opacity: [1, 0, 1] }}
                 transition={{ duration: 0.8, repeat: Infinity }}
@@ -197,12 +117,7 @@ export function AboutPage() {
           className="absolute inset-0"
           initial={{ opacity: 0 }}
           animate={{ opacity: photoOpacity }}
-          transition={{
-            duration: exitStep >= 2
-              ? EXIT_PHOTO_MS / 1000
-              : PHOTO_FADE_DURATION / 1000,
-            ease: "easeInOut",
-          }}
+          transition={{ duration: PHOTO_FADE_DURATION / 1000, ease: "easeInOut" }}
         >
           <img
             src={photo}
@@ -222,41 +137,24 @@ export function AboutPage() {
         className="absolute inset-y-0 right-0 w-1/2 flex flex-col justify-center"
         style={{ paddingLeft: "72px", paddingRight: "96px", paddingBottom: "94px" }}
       >
-        {/* Quote — enters first (delay 0), exits last (exit-delay 0.3) */}
         <motion.p
           className="text-white italic mb-10"
           style={{ fontSize: "22px", lineHeight: "1.4", fontFamily: "'Fraunces', serif" }}
           initial={{ opacity: 0, y: 18 }}
-          animate={{
-            opacity: exitStep >= 1 ? 0 : showText ? 0.9 : 0,
-            y:       exitStep >= 1 ? 18 : showText ? 0   : 18,
-          }}
-          transition={
-            exitStep >= 1
-              ? { duration: 0.35, delay: 0.3, ease: [0.4, 0, 0.05, 1] }
-              : { duration: 0.7,  delay: 0,   ease: [0.4, 0, 0.05, 1] }
-          }
+          animate={{ opacity: showText ? 0.9 : 0, y: showText ? 0 : 18 }}
+          transition={{ duration: 0.7, delay: 0, ease: [0.4, 0, 0.05, 1] }}
         >
           « Simplicity is inexhaustible »
         </motion.p>
 
-        {/* Bio */}
         <div
           className="text-white space-y-5"
           style={{ fontSize: "14px", lineHeight: "1.75", fontFamily: "'Outfit', sans-serif", fontWeight: 300 }}
         >
-          {/* Bio p1 — enters 2nd (delay 0.2), exits 3rd (exit-delay 0.2) */}
           <motion.p
             initial={{ opacity: 0, y: 18 }}
-            animate={{
-              opacity: exitStep >= 1 ? 0 : showText ? 0.75 : 0,
-              y:       exitStep >= 1 ? 18 : showText ? 0    : 18,
-            }}
-            transition={
-              exitStep >= 1
-                ? { duration: 0.35, delay: 0.2, ease: [0.4, 0, 0.05, 1] }
-                : { duration: 0.7,  delay: 0.2, ease: [0.4, 0, 0.05, 1] }
-            }
+            animate={{ opacity: showText ? 0.75 : 0, y: showText ? 0 : 18 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.4, 0, 0.05, 1] }}
           >
             Self-taught, I discovered « the graphic arts » – as they were called
             at the time – in 1998. My career path then consisted of training and
@@ -269,18 +167,10 @@ export function AboutPage() {
             and design systems.
           </motion.p>
 
-          {/* Bio p2 — enters 3rd (delay 0.4), exits 2nd (exit-delay 0.1) */}
           <motion.p
             initial={{ opacity: 0, y: 18 }}
-            animate={{
-              opacity: exitStep >= 1 ? 0 : showText ? 0.75 : 0,
-              y:       exitStep >= 1 ? 18 : showText ? 0    : 18,
-            }}
-            transition={
-              exitStep >= 1
-                ? { duration: 0.35, delay: 0.1, ease: [0.4, 0, 0.05, 1] }
-                : { duration: 0.7,  delay: 0.4, ease: [0.4, 0, 0.05, 1] }
-            }
+            animate={{ opacity: showText ? 0.75 : 0, y: showText ? 0 : 18 }}
+            transition={{ duration: 0.7, delay: 0.4, ease: [0.4, 0, 0.05, 1] }}
           >
             Sports and the free press, European association, tourism, airlines,
             mobility, retail, e-commerce, B2B, B2C, B2G, design OPS, I had the
@@ -289,56 +179,46 @@ export function AboutPage() {
             helping to solve clients' problems while satisfying my curiosity.
           </motion.p>
         </div>
-
-        {/* CTA — enters last (delay 0.55), exits first (exit-delay 0) */}
-        <motion.div
-          className="mt-10"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{
-            opacity: exitStep >= 1 ? 0 : showText ? 1 : 0,
-            y:       exitStep >= 1 ? 18 : showText ? 0  : 18,
-          }}
-          transition={
-            exitStep >= 1
-              ? { duration: 0.35, delay: 0,    ease: [0.4, 0, 0.05, 1] }
-              : { duration: 0.7,  delay: 0.55, ease: [0.4, 0, 0.05, 1] }
-          }
-        >
-          <a
-            href="mailto:hello@julienbourcet.fr"
-            className="inline-flex items-center gap-2 group"
-          >
-            <span
-              className="block w-8 h-px transition-all duration-300 group-hover:w-12"
-              style={{ background: "white" }}
-            />
-            <span
-              className="uppercase"
-              style={{ fontSize: "11px", letterSpacing: "0.2em", color: "white", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}
-            >
-              Contact
-            </span>
-          </a>
-        </motion.div>
       </div>
 
-      {/* Back button */}
-      <button
-        onClick={handleBack}
-        className="absolute z-20 flex items-center gap-2 group"
-        style={{ cursor: "pointer", left: "64px", bottom: "64px" }}
+      {/* ── Nav — top right ── */}
+      <nav
+        className="absolute flex flex-col items-end z-20"
+        style={{ top: "16px", right: "16px", gap: "16px" }}
       >
-        <span
-          className="block w-8 h-px transition-all duration-300 group-hover:w-12"
-          style={{ background: "white" }}
-        />
-        <span
-          className="uppercase"
-          style={{ fontSize: "11px", letterSpacing: "0.2em", color: "white", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}
+        <button
+          onClick={() => handleNavigate("/cases")}
+          className="flex items-center gap-2 group"
+          style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}
         >
-          Back / About
-        </span>
-      </button>
+          <span className="block w-8 h-px transition-all duration-300 group-hover:w-12" style={{ background: "white" }} />
+          <span className="uppercase" style={{ fontSize: "11px", letterSpacing: "0.2em", color: "white", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}>
+            Cases
+          </span>
+        </button>
+
+        <a
+          href="mailto:hello@julienbourcet.fr"
+          className="flex items-center gap-2 group"
+          style={{ textDecoration: "none" }}
+        >
+          <span className="block w-8 h-px transition-all duration-300 group-hover:w-12" style={{ background: "white" }} />
+          <span className="uppercase" style={{ fontSize: "11px", letterSpacing: "0.2em", color: "white", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}>
+            Contact
+          </span>
+        </a>
+
+        <button
+          onClick={() => handleNavigate("/")}
+          className="flex items-center gap-2 group"
+          style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}
+        >
+          <span className="block w-8 h-px transition-all duration-300 group-hover:w-12" style={{ background: "white" }} />
+          <span className="uppercase" style={{ fontSize: "11px", letterSpacing: "0.2em", color: "white", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}>
+            Homepage
+          </span>
+        </button>
+      </nav>
     </div>
   );
 }

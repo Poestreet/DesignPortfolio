@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { motion } from "motion/react";
 import { useNavigate } from "react-router";
 import { AnimatedBackground } from "../../app/components/AnimatedBackground";
 import designPaths from "../Design/svg-5rty58y69t";
@@ -69,6 +71,33 @@ const taglineUrl = `url("data:image/svg+xml,${encodeURIComponent(taglineSvg)}")`
 
 export default function Homepage() {
   const navigate = useNavigate();
+  const [entered, setEntered] = useState(false);
+
+  useEffect(() => {
+    // Short delay so the initial state renders before transition fires
+    const t = setTimeout(() => setEntered(true), 80);
+    return () => clearTimeout(t);
+  }, []);
+
+  // ── Mask positions ────────────────────────────────────────────────────────────
+  // Tagline: 560×24 — enters via mask-size (height 0 → 24px), delay 0.75s
+  // DESIGN:  1120×218 — enters via mask-position (slides up from below), delay 0.2s
+
+  const maskSize = entered
+    ? "560px 24px, 1120px 218px"
+    : "560px 0px,  1120px 218px";
+
+  const maskPosition = entered
+    ? "64px calc(100% - 340px), 64px calc(100% - 106px)"
+    : "64px calc(100% - 340px), 64px calc(100% + 130px)";
+
+  // CSS transition: DESIGN position first, tagline size second
+  const maskTransition = [
+    "mask-position 0.95s cubic-bezier(0.4, 0, 0.05, 1) 0.2s",
+    "-webkit-mask-position 0.95s cubic-bezier(0.4, 0, 0.05, 1) 0.2s",
+    "mask-size 0.65s ease 0.75s",
+    "-webkit-mask-size 0.65s ease 0.75s",
+  ].join(", ");
 
   return (
     <div className="bg-[#fafafa] relative size-full overflow-hidden">
@@ -79,40 +108,78 @@ export default function Homepage() {
           WebkitMaskImage:    `${taglineUrl}, ${designUrl}`,
           maskRepeat:         "no-repeat, no-repeat",
           WebkitMaskRepeat:   "no-repeat, no-repeat",
-          maskSize:           "560px 24px, 1120px 218px",
-          WebkitMaskSize:     "560px 24px, 1120px 218px",
-          maskPosition:       `64px calc(100% - 340px), 64px calc(100% - 106px)`,
-          WebkitMaskPosition: `64px calc(100% - 340px), 64px calc(100% - 106px)`,
+          maskSize,
+          WebkitMaskSize:     maskSize,
+          maskPosition,
+          WebkitMaskPosition: maskPosition,
+          transition:         maskTransition,
         }}
       >
         <AnimatedBackground />
       </div>
 
-      {/* ABOUT link — plain text, right of DESIGN + 32px gap, aligned to DESIGN bottom */}
-      <button
-        onClick={() => navigate("/about")}
-        className="absolute flex items-center gap-2 group"
-        style={{
-          left:       "1216px",
-          bottom:     "106px",
-          cursor:     "pointer",
-          background: "transparent",
-          border:     "none",
-          padding:    0,
-          zIndex:     10,
-        }}
+      {/* Nav — top right, 64px from top and right, 32px gap between links */}
+      <motion.nav
+        className="absolute flex flex-col items-end"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7, delay: 1.35, ease: [0.4, 0, 0.05, 1] }}
+        style={{ top: "32px", right: "32px", gap: "16px", zIndex: 10 }}
       >
-        <span
-          className="block w-8 h-px transition-all duration-300 group-hover:w-12"
-          style={{ background: "#111" }}
-        />
-        <span
-          className="uppercase"
-          style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#111", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}
+        {/* About */}
+        <button
+          onClick={() => navigate("/about")}
+          className="flex items-center gap-2 group"
+          style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}
         >
-          About
-        </span>
-      </button>
+          <span
+            className="block w-8 h-px transition-all duration-300 group-hover:w-12"
+            style={{ background: "#111" }}
+          />
+          <span
+            className="uppercase"
+            style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#111", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}
+          >
+            About
+          </span>
+        </button>
+
+        {/* Cases */}
+        <button
+          onClick={() => navigate("/cases")}
+          className="flex items-center gap-2 group"
+          style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}
+        >
+          <span
+            className="block w-8 h-px transition-all duration-300 group-hover:w-12"
+            style={{ background: "#111" }}
+          />
+          <span
+            className="uppercase"
+            style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#111", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}
+          >
+            Cases
+          </span>
+        </button>
+
+        {/* Contact */}
+        <a
+          href="mailto:hello@julienbourcet.fr"
+          className="flex items-center gap-2 group"
+          style={{ textDecoration: "none" }}
+        >
+          <span
+            className="block w-8 h-px transition-all duration-300 group-hover:w-12"
+            style={{ background: "#111" }}
+          />
+          <span
+            className="uppercase"
+            style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#111", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}
+          >
+            Contact
+          </span>
+        </a>
+      </motion.nav>
     </div>
   );
 }

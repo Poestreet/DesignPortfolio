@@ -1,7 +1,7 @@
 
-  # Animate Background Image
+  # PortFolio
 
-  This is a code bundle for Animate Background Image. The original project is available at https://www.figma.com/design/JZTCpLEumSFYfJwVcBHpkH/Animate-Background-Image.
+  This is a code bundle for PortFolio. The original project is available at https://www.figma.com/design/JZTCpLEumSFYfJwVcBHpkH/PortFolio.
 
   ## Running the code
 
