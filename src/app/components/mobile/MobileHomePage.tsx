@@ -9,12 +9,12 @@ import { imgBackground as imgTagline, imgBackground2 as imgDesign } from "../../
 // DESIGN in container at x=658 → viewport x = 50vw - 843 + 658 = 50vw - 185px
 // DESIGN y=762 → 112px from bottom ; tagline y=842 → 32px from bottom
 
-const D_X      = "calc(50vw - 185px)";
-const D_Y_END  = "calc(100vh - 112px)";
-const D_Y_START = "calc(100vh + 200px)";
+const D_X      = "16px";
+const D_Y_END  = "calc(100dvh - 120px)"; // bottom(16) + tagline(16) + gap(16) + design(72)
+const D_Y_START = "calc(100dvh + 200px)";
 
-const T_X = "calc(50vw - 185px)";
-const T_Y = "calc(100vh - 32px)";
+const T_X = "16px";
+const T_Y = "calc(100dvh - 32px)"; // bottom(16) + tagline(16)
 
 export function MobileHomePage() {
   const navigate = useNavigate();
