@@ -282,7 +282,7 @@ function AnimatedHero({
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.45) 100%)", zIndex: 3 }} />
 
       {/* Text content */}
-      <div style={{ position: "relative", zIndex: 4, width: "100%", display: "flex", justifyContent: "center", padding: "0 64px 80px" }}>
+      <div style={{ position: "relative", zIndex: 4, width: "100%", display: "flex", justifyContent: "center", padding: "0 64px 40px" }}>
         <div className="flex flex-col gap-6" style={{ maxWidth: 608, width: "100%" }}>
           <motion.div
             initial={{ opacity: 0, y: 18 }}
