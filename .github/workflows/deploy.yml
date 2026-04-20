@@ -25,12 +25,10 @@ jobs:
         run: npm run build
 
       - name: Deploy via SFTP to Infomaniak
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-        with:
-          username: ${{ secrets.SFTP_USERNAME }}
-          server: ${{ secrets.SFTP_HOST }}
-          password: ${{ secrets.SFTP_PASSWORD }}
-          local_path: './dist/*'
-          remote_path: ${{ secrets.SFTP_REMOTE_PATH }}
-          sftp_only: true
-          delete_remote_files: true
+        run: |
+          sudo apt-get install -y lftp
+          lftp -u "${{ secrets.SFTP_USERNAME }},${{ secrets.SFTP_PASSWORD }}" sftp://${{ secrets.SFTP_HOST }} -e "
+            set sftp:auto-confirm yes;
+            mirror -R --delete ./dist/ ${{ secrets.SFTP_REMOTE_PATH }}/;
+            quit
+          "
