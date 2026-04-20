@@ -283,6 +283,10 @@ function SncfChallenge() {
   return (
     <div ref={ref} id="sncf-challenge" style={{ height: "100vh", display: "flex", alignItems: "center", overflow: "hidden" }}>
       <div className="flex gap-12 px-16" style={{ width: "100%", maxWidth: 1280, margin: "0 auto" }}>
+        <Reveal inView={inView} index={1} className="flex-1 min-w-0 relative" style={{ minHeight: 420 }}>
+          <img src={imgSncfUI} alt="SNCF Cart UI" className="absolute pointer-events-none"
+            style={{ top: 16, left: -60, width: 871, height: "auto", maxWidth: "none" }} />
+        </Reveal>
         <div className="flex flex-col gap-12 flex-1 min-w-0">
           <div className="flex flex-col gap-6">
             <Reveal inView={inView} index={0}>
@@ -310,10 +314,6 @@ function SncfChallenge() {
             </Reveal>
           </div>
         </div>
-        <Reveal inView={inView} index={1} className="flex-1 min-w-0 relative" style={{ minHeight: 420 }}>
-          <img src={imgSncfUI} alt="SNCF Cart UI" className="absolute pointer-events-none"
-            style={{ top: 16, left: -60, width: 871, height: "auto", maxWidth: "none" }} />
-        </Reveal>
       </div>
     </div>
   );
@@ -387,6 +387,10 @@ function ManutanChallenge() {
   return (
     <div ref={ref} id="manutan-challenge" style={{ height: "100vh", display: "flex", alignItems: "center", overflow: "hidden" }}>
       <div className="flex gap-12 px-16" style={{ width: "100%", maxWidth: 1280, margin: "0 auto" }}>
+        <Reveal inView={inView} index={1} className="flex-1 min-w-0 relative" style={{ minHeight: 380 }}>
+          <img src={imgManutanUI} alt="Manutan UI" className="absolute pointer-events-none"
+            style={{ top: 61, left: -71, width: 822, height: 308, maxWidth: "none", objectFit: "cover" }} />
+        </Reveal>
         <div className="flex flex-col gap-12 flex-1 min-w-0">
           <div className="flex flex-col gap-6">
             <Reveal inView={inView} index={0}>
@@ -414,10 +418,6 @@ function ManutanChallenge() {
             </Reveal>
           </div>
         </div>
-        <Reveal inView={inView} index={1} className="flex-1 min-w-0 relative" style={{ minHeight: 380 }}>
-          <img src={imgManutanUI} alt="Manutan UI" className="absolute pointer-events-none"
-            style={{ top: 61, left: -71, width: 822, height: 308, maxWidth: "none", objectFit: "cover" }} />
-        </Reveal>
       </div>
     </div>
   );
@@ -530,7 +530,7 @@ function CaseNavItem({ label, active, onClick }: { label: string; active: boolea
         <span className="absolute rounded-full border border-white transition-opacity duration-300 group-hover:opacity-0" style={{ width: 8, height: 8 }} />
         <span className="absolute inset-x-0 h-px bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ top: "50%", transform: "translateY(-50%)" }} />
       </span>
-      <span className="uppercase" style={{ fontSize: "11px", letterSpacing: "0.2em", color: "rgba(250,250,250,0.5)", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}>
+      <span className="uppercase" style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#fafafa", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}>
         {label}
       </span>
     </button>
@@ -552,7 +552,7 @@ function SubNavItem({ label, active, onClick }: { label: string; active: boolean
           letterSpacing: "0.15em",
           fontFamily: "'Outfit', sans-serif",
           fontWeight: active ? 500 : 400,
-          color: active ? "#fafafa" : "rgba(250,250,250,0.35)",
+          color: "#fafafa",
         }}
       >
         {label}
