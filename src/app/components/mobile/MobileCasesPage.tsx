@@ -66,11 +66,11 @@ function SncfCase() {
     >
       {/* Hero — image */}
       <div style={{ position: "relative", width: "100%", height: "260px", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, filter: "grayscale(1)", opacity: 0.5 }}>
+        <div style={{ position: "absolute", inset: 0, mixBlendMode: "luminosity" }}>
           <img
             src={imgSncfHero}
             alt="SNCF Cart"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.5 }}
           />
         </div>
         <div
@@ -355,11 +355,11 @@ function ManutanCase() {
     >
       {/* Hero — image */}
       <div style={{ position: "relative", width: "100%", height: "260px", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, filter: "grayscale(1)", opacity: 0.5 }}>
+        <div style={{ position: "absolute", inset: 0, mixBlendMode: "luminosity" }}>
           <img
             src={imgManutanHero}
             alt="Manutan Search"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.5 }}
           />
         </div>
         <div
@@ -646,7 +646,7 @@ export function MobileCasesPage() {
       </div>
 
       {/* ── Content ── */}
-      <div className="relative pb-16" style={{ zIndex: 1 }}>
+      <div className="relative pb-16">
         {/* Navigation */}
         <nav
           className="flex flex-col items-end"
