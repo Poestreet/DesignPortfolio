@@ -603,13 +603,12 @@ export function CasesPage() {
       {/* Background */}
       <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
         <AnimatedBackground />
-        <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.35)" }} />
       </div>
 
       {/* Scrollable content */}
       <div
         ref={scrollRef}
-        style={{ position: "absolute", inset: 0, zIndex: 10, overflowY: "auto", overflowX: "hidden" }}
+        style={{ position: "absolute", inset: 0, overflowY: "auto", overflowX: "hidden" }}
       >
         <AnimatedHero
           id="sncf-hero"
