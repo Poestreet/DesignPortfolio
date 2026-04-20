@@ -64,21 +64,12 @@ function SncfCase() {
         gap: "48px",
       }}
     >
-      {/* Hero — image + text overlaid */}
-      <div
-        style={{
-          position: "relative",
-          width: "100%",
-          minHeight: "360px",
-          overflow: "hidden",
-        }}
-      >
+      {/* Hero — image */}
+      <div style={{ position: "relative", width: "100%", height: "260px", overflow: "hidden" }}>
         <img
           src={imgSncfHero}
           alt="SNCF Cart"
           style={{
-            position: "absolute",
-            inset: 0,
             width: "100%",
             height: "100%",
             objectFit: "cover",
@@ -90,36 +81,36 @@ function SncfCase() {
           style={{
             position: "absolute",
             inset: 0,
-            background:
-              "linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.65) 100%)",
+            background: "linear-gradient(to bottom, transparent 20%, rgba(0,0,0,0.75) 100%)",
           }}
         />
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            padding: "0 32px 32px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "16px",
-          }}
-        >
-          <p style={headingStyle}>
-            Optimisation and Redesign of the B2C Shopping Cart
-          </p>
-          <p style={bodyStyle}>
-            Shopping cart suffered from structural complexity and
-            a lack of clarity, which was a source of frustration.
-            The challenge was to reorganise the information
-            hierarchy to simplify it and make it more effective
-            (multi-product, key actions), whilst managing the
-            legal constraints imposed by the legal team regarding
-            the display of partnership offers (insurance) and
-            mandatory disclosures.
-          </p>
-        </div>
+      </div>
+
+      {/* Hero text — starts at midpoint of image, overflows below */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          marginTop: -130,
+          padding: "0 32px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+        }}
+      >
+        <p style={headingStyle}>
+          Optimisation and Redesign of the B2C Shopping Cart
+        </p>
+        <p style={bodyStyle}>
+          Shopping cart suffered from structural complexity and
+          a lack of clarity, which was a source of frustration.
+          The challenge was to reorganise the information
+          hierarchy to simplify it and make it more effective
+          (multi-product, key actions), whilst managing the
+          legal constraints imposed by the legal team regarding
+          the display of partnership offers (insurance) and
+          mandatory disclosures.
+        </p>
       </div>
 
       {/* Challenge & Objectives */}
@@ -366,21 +357,12 @@ function ManutanCase() {
         gap: "48px",
       }}
     >
-      {/* Hero — image + text overlaid */}
-      <div
-        style={{
-          position: "relative",
-          width: "100%",
-          minHeight: "360px",
-          overflow: "hidden",
-        }}
-      >
+      {/* Hero — image */}
+      <div style={{ position: "relative", width: "100%", height: "260px", overflow: "hidden" }}>
         <img
           src={imgManutanHero}
           alt="Manutan Search"
           style={{
-            position: "absolute",
-            inset: 0,
             width: "100%",
             height: "100%",
             objectFit: "cover",
@@ -392,35 +374,35 @@ function ManutanCase() {
           style={{
             position: "absolute",
             inset: 0,
-            background:
-              "linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.65) 100%)",
+            background: "linear-gradient(to bottom, transparent 20%, rgba(0,0,0,0.75) 100%)",
           }}
         />
-        <div
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            padding: "0 32px 32px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "16px",
-          }}
-        >
-          <p style={headingStyle}>
-            Strategic Overhaul of Research: Design and Performance
-          </p>
-          <p style={bodyStyle}>
-            Search experience suffered from low search engine
-            usage and a high bounce rate, particularly for paid
-            traffic (SEA), which indicated a mismatch between the
-            interface provided and users' expectations. The
-            challenge was therefore to simplify the search
-            experience, improve the relevance of results and make
-            the tool more intuitive in order to encourage its use.
-          </p>
-        </div>
+      </div>
+
+      {/* Hero text — starts at midpoint of image, overflows below */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 1,
+          marginTop: -130,
+          padding: "0 32px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "16px",
+        }}
+      >
+        <p style={headingStyle}>
+          Strategic Overhaul of Research: Design and Performance
+        </p>
+        <p style={bodyStyle}>
+          Search experience suffered from low search engine
+          usage and a high bounce rate, particularly for paid
+          traffic (SEA), which indicated a mismatch between the
+          interface provided and users' expectations. The
+          challenge was therefore to simplify the search
+          experience, improve the relevance of results and make
+          the tool more intuitive in order to encourage its use.
+        </p>
       </div>
 
       {/* Challenge & Objectives */}
