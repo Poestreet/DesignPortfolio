@@ -61,11 +61,14 @@ export function ContactPage() {
     return () => clearTimeout(t);
   }, []);
 
-  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error" | "invalid-email">("idle");
+
+  const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !email || !message) return;
+    if (!name || !message) return;
+    if (!isValidEmail(email)) { setStatus("invalid-email"); return; }
     setStatus("sending");
     try {
       const res = await fetch("/contact.php", {
@@ -160,13 +163,18 @@ export function ContactPage() {
                   <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                     <label style={labelStyle}>How do i reach you?</label>
                     <input
-                      type="email"
+                      type="text"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => {
+                        setEmail(e.target.value);
+                        if (status === "invalid-email") setStatus("idle");
+                      }}
                       placeholder="your email"
                       style={{
                         ...placeholderStyle,
                         caretColor: "#fafafa",
+                        borderBottomColor: status === "invalid-email" ? "#ff4d4d" : "#fafafa",
+                        transition: "border-color 0.2s ease",
                       }}
                     />
                   </div>
@@ -194,7 +202,7 @@ export function ContactPage() {
                     type="submit"
                     disabled={status === "sending" || status === "sent"}
                     className="group flex items-center gap-2"
-                    style={{ background: "transparent", border: "none", padding: 0, cursor: status === "sent" ? "default" : "pointer", opacity: status === "sending" ? 0.6 : 1 }}
+                    style={{ background: "transparent", border: "none", padding: 0, cursor: status === "sent" ? "default" : "pointer", opacity: status === "sending" ? 0.6 : 1, transition: "opacity 0.2s ease" }}
                   >
                     <span
                       className="block h-px transition-all duration-300 w-8 group-hover:w-12 shrink-0"
@@ -211,7 +219,7 @@ export function ContactPage() {
                         color: "#fafafa",
                       }}
                     >
-                      {status === "sending" ? "sending..." : status === "sent" ? "i'll reach you soon!" : status === "error" ? "try again" : "reach me"}
+                      {status === "sending" ? "sending..." : status === "sent" ? "i'll reach you soon!" : status === "error" ? "try again" : status === "invalid-email" ? "email address incorrect" : "reach me"}
                     </span>
                   </button>
 
