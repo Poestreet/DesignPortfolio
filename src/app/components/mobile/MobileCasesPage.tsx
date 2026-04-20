@@ -66,17 +66,13 @@ function SncfCase() {
     >
       {/* Hero — image */}
       <div style={{ position: "relative", width: "100%", height: "260px", overflow: "hidden" }}>
-        <img
-          src={imgSncfHero}
-          alt="SNCF Cart"
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            filter: "grayscale(1)",
-            opacity: 0.5,
-          }}
-        />
+        <div style={{ position: "absolute", inset: 0, filter: "grayscale(1)", opacity: 0.5 }}>
+          <img
+            src={imgSncfHero}
+            alt="SNCF Cart"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </div>
         <div
           style={{
             position: "absolute",
@@ -359,17 +355,13 @@ function ManutanCase() {
     >
       {/* Hero — image */}
       <div style={{ position: "relative", width: "100%", height: "260px", overflow: "hidden" }}>
-        <img
-          src={imgManutanHero}
-          alt="Manutan Search"
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            filter: "grayscale(1)",
-            opacity: 0.5,
-          }}
-        />
+        <div style={{ position: "absolute", inset: 0, filter: "grayscale(1)", opacity: 0.5 }}>
+          <img
+            src={imgManutanHero}
+            alt="Manutan Search"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </div>
         <div
           style={{
             position: "absolute",
