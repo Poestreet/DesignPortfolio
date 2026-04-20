@@ -36,8 +36,9 @@ const listStyle: React.CSSProperties = {
     lineHeight: "24.5px",
     color: "#fafafa",
   },
-  paddingLeft: 21,
+  paddingLeft: 0,
   margin: 0,
+  listStylePosition: "inside",
 };
 
 // ── Divider between cases ──────────────────────────────────────────────────────

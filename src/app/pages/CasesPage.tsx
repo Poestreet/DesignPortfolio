@@ -112,8 +112,9 @@ const listStyle: React.CSSProperties = {
   fontSize: "14px",
   lineHeight: "24.5px",
   color: "#fafafa",
-  paddingLeft: 21,
+  paddingLeft: 0,
   margin: 0,
+  listStylePosition: "inside",
 };
 
 function SectionHeading({ children }: { children: React.ReactNode }) {
