@@ -136,7 +136,6 @@ export function ContactPage() {
         transition={{ duration: 1.4, ease: "easeInOut" }}
       >
         <AnimatedBackground />
-        <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.18)" }} />
       </motion.div>
 
       {/* ── Two-column layout ── */}

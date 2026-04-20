@@ -129,7 +129,6 @@ export function AboutPage() {
         transition={{ duration: 1.2, delay: 0.7, ease: "easeInOut" }}
       >
         <AnimatedBackground />
-        <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.45)" }} />
       </motion.div>
 
       {/* ── Flex row layout ── */}
@@ -186,7 +185,7 @@ export function AboutPage() {
             {/* Right-edge fade into content */}
             <div
               className="absolute inset-y-0 right-0 w-32"
-              style={{ background: "linear-gradient(to right, transparent, rgba(0,0,0,0.45))" }}
+              style={{ background: "linear-gradient(to right, transparent, rgba(0,0,0,0.3))" }}
             />
           </motion.div>
         </div>

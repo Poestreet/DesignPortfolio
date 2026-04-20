@@ -44,7 +44,6 @@ export function Root() {
       {showCover && (
         <div style={{ position: "fixed", inset: 0, zIndex: 48 }}>
           <AnimatedBackground />
-          <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.35)" }} />
         </div>
       )}
 

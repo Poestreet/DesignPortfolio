@@ -61,7 +61,6 @@ export function MobileAboutPage() {
       <div className="sticky top-0 left-0 w-full" style={{ height: 0, zIndex: 0 }}>
         <div className="absolute inset-0" style={{ height: "100vh" }}>
           <AnimatedBackground />
-          <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.45)" }} />
         </div>
       </div>
 
@@ -85,7 +84,6 @@ export function MobileAboutPage() {
         {/* Content background */}
         <div className="absolute inset-0" style={{ zIndex: 0 }}>
           <AnimatedBackground />
-          <div className="absolute inset-0" style={{ background: "rgba(0,0,0,0.5)" }} />
         </div>
 
         <div className="relative px-4 py-8 flex flex-col gap-6" style={{ zIndex: 1 }}>

@@ -225,7 +225,7 @@ function AnimatedHero({
         transition={{ duration: PHOTO_FADE_DURATION / 1000, ease: "easeInOut" }}
         style={{ zIndex: 1, pointerEvents: "none" }}
       >
-        <p style={{ fontFamily: "monospace", fontSize: "9px", lineHeight: "1.5", letterSpacing: "0.05em", color: "rgba(255,255,255,0.55)", wordBreak: "break-all", padding: "20px", margin: 0, height: "100%", overflow: "hidden" }}>
+        <p style={{ fontFamily: "monospace", fontSize: "9px", lineHeight: "1.5", letterSpacing: "0.05em", color: "rgba(250,250,250,0.55)", wordBreak: "break-all", padding: "20px", margin: 0, height: "100%", overflow: "hidden" }}>
           {BINARY_FILL.slice(0, displayed)}
           {phase === "typing" && (
             <motion.span

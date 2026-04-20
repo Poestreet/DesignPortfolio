@@ -660,10 +660,6 @@ export function MobileCasesPage() {
       {/* ── Background (fixed) ── */}
       <div className="fixed inset-0" style={{ zIndex: 0 }}>
         <AnimatedBackground />
-        <div
-          className="absolute inset-0"
-          style={{ background: "rgba(0,0,0,0.45)" }}
-        />
       </div>
 
       {/* ── Content ── */}
