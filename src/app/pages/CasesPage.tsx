@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router";
 import { AnimatePresence, motion } from "motion/react";
 import { AnimatedBackground } from "../components/AnimatedBackground";
+import { MobileCasesPage } from "../components/mobile/MobileCasesPage";
 
 import imgSncfHero       from "../../imports/CasesPageDesktop/f1725bc3c57cf3dd7645db13a41f98c510522e43.png";
 import imgSncfUI         from "../../imports/CasesPageDesktop/7725d6f86a5b9645928d53b0663fcffa1a5bba31.png";
@@ -589,6 +590,14 @@ export function CasesPage() {
   };
 
   return (
+    <>
+      {/* ── Mobile (below md) ── */}
+      <div className="md:hidden w-full h-full">
+        <MobileCasesPage />
+      </div>
+
+      {/* ── Desktop (md and above) ── */}
+      <div className="hidden md:block w-full h-full">
     <div style={{ position: "absolute", inset: 0 }}>
 
       {/* Background */}
@@ -676,5 +685,7 @@ export function CasesPage() {
         </div>
       </div>
     </div>
+      </div>
+    </>
   );
 }

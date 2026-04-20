@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { useNavigate } from "react-router";
 import { AnimatedBackground } from "../../app/components/AnimatedBackground";
+import { MobileHomePage } from "../../app/components/mobile/MobileHomePage";
 import { imgBackground, imgBackground2 } from "../HomePageDesktop/svg-pta88";
 
 // ── Mask geometry (from Figma) ─────────────────────────────────────────────────
@@ -57,88 +58,67 @@ export default function Homepage() {
   ].join(", ");
 
   return (
-    <div className="bg-[#fafafa] relative size-full overflow-hidden">
+    <>
+      {/* ── Desktop (md and above) ── */}
+      <div className="hidden md:block w-full h-full">
+        <div className="bg-[#fafafa] relative size-full overflow-hidden">
+          {/* Masked animated background */}
+          <div
+            className="absolute inset-0"
+            style={{
+              maskImage:          `url("${imgBackground}"), url("${imgBackground2}")`,
+              WebkitMaskImage:    `url("${imgBackground}"), url("${imgBackground2}")`,
+              maskRepeat:         "no-repeat, no-repeat",
+              WebkitMaskRepeat:   "no-repeat, no-repeat",
+              maskSize,
+              WebkitMaskSize:     maskSize,
+              maskPosition:       `${designPos}, ${taglinePos}`,
+              WebkitMaskPosition: `${designPos}, ${taglinePos}`,
+              transition:         maskTransition,
+            }}
+          >
+            <AnimatedBackground />
+          </div>
 
-      {/* Masked animated background — DESIGN first, tagline second */}
-      <div
-        className="absolute inset-0"
-        style={{
-          maskImage:          `url("${imgBackground}"), url("${imgBackground2}")`,
-          WebkitMaskImage:    `url("${imgBackground}"), url("${imgBackground2}")`,
-          maskRepeat:         "no-repeat, no-repeat",
-          WebkitMaskRepeat:   "no-repeat, no-repeat",
-          maskSize,
-          WebkitMaskSize:     maskSize,
-          maskPosition:       `${designPos}, ${taglinePos}`,
-          WebkitMaskPosition: `${designPos}, ${taglinePos}`,
-          transition:         maskTransition,
-        }}
-      >
-        <AnimatedBackground />
+          {/* Navigation */}
+          <motion.nav
+            className="absolute flex flex-col items-end"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 1.35, ease: [0.4, 0, 0.05, 1] }}
+            style={{ top: "16px", right: "16px", gap: "16px", zIndex: 10 }}
+          >
+            {[
+              { label: "About",   action: () => navigate("/about") },
+              { label: "Cases",   action: () => navigate("/cases") },
+              { label: "Contact", action: () => navigate("/contact") },
+            ].map(({ label, action }) => (
+              <button
+                key={label}
+                onClick={action}
+                className="flex items-center gap-2 group"
+                style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}
+              >
+                <span
+                  className="block w-8 h-px transition-all duration-300 group-hover:w-12"
+                  style={{ background: "#070071" }}
+                />
+                <span
+                  className="uppercase"
+                  style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#070071", fontFamily: "'Outfit', sans-serif", fontWeight: 800 }}
+                >
+                  {label}
+                </span>
+              </button>
+            ))}
+          </motion.nav>
+        </div>
       </div>
 
-      {/* Navigation — top right, 16px from edges, gap 16px */}
-      <motion.nav
-        className="absolute flex flex-col items-end"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 1.35, ease: [0.4, 0, 0.05, 1] }}
-        style={{ top: "16px", right: "16px", gap: "16px", zIndex: 10 }}
-      >
-        {/* About */}
-        <button
-          onClick={() => navigate("/about")}
-          className="flex items-center gap-2 group"
-          style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}
-        >
-          <span
-            className="block w-8 h-px transition-all duration-300 group-hover:w-12"
-            style={{ background: "#070071" }}
-          />
-          <span
-            className="uppercase"
-            style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#070071", fontFamily: "'Outfit', sans-serif", fontWeight: 800 }}
-          >
-            About
-          </span>
-        </button>
-
-        {/* Cases */}
-        <button
-          onClick={() => navigate("/cases")}
-          className="flex items-center gap-2 group"
-          style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}
-        >
-          <span
-            className="block w-8 h-px transition-all duration-300 group-hover:w-12"
-            style={{ background: "#070071" }}
-          />
-          <span
-            className="uppercase"
-            style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#070071", fontFamily: "'Outfit', sans-serif", fontWeight: 800 }}
-          >
-            Cases
-          </span>
-        </button>
-
-        {/* Contact */}
-        <button
-          onClick={() => navigate("/contact")}
-          className="flex items-center gap-2 group"
-          style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}
-        >
-          <span
-            className="block w-8 h-px transition-all duration-300 group-hover:w-12"
-            style={{ background: "#070071" }}
-          />
-          <span
-            className="uppercase"
-            style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#070071", fontFamily: "'Outfit', sans-serif", fontWeight: 800 }}
-          >
-            Contact
-          </span>
-        </button>
-      </motion.nav>
-    </div>
+      {/* ── Mobile (below md) ── */}
+      <div className="md:hidden w-full h-full">
+        <MobileHomePage />
+      </div>
+    </>
   );
 }

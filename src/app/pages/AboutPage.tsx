@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router";
 import { motion } from "motion/react";
 import { AnimatedBackground } from "../components/AnimatedBackground";
+import { MobileAboutPage } from "../components/mobile/MobileAboutPage";
 import photo from "figma:asset/4b4a98ebdf8ee3d638fcd41fb40af9b5b6aa4999.png";
 
 // ── Binary entrance (same pattern as before) ──────────────────────────────────
@@ -110,6 +111,14 @@ export function AboutPage() {
   const photoOpacity  = phase === "revealing" || phase === "done" ? 1 : 0;
 
   return (
+    <>
+      {/* ── Mobile (below md) ── */}
+      <div className="md:hidden w-full h-full">
+        <MobileAboutPage />
+      </div>
+
+      {/* ── Desktop (md and above) ── */}
+      <div className="hidden md:block w-full h-full">
     <div className="relative w-full h-full overflow-hidden">
 
       {/* ── Animated background (full bleed) ── */}
@@ -329,5 +338,7 @@ export function AboutPage() {
       </nav>
 
     </div>
+      </div>
+    </>
   );
 }
