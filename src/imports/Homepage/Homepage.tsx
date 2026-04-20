@@ -24,12 +24,12 @@ import { imgBackground, imgBackground2 } from "../HomePageDesktop/svg-pta88";
 // NB: mask-position % ≠ element %. Using vw/vh gives true absolute offsets.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const DESIGN_X   = "calc(50vw - 688px)";
-const DESIGN_Y   = "calc(50vh + 222px)";
-const DESIGN_Y0  = "calc(50vh + 800px)"; // below viewport (start of animation)
+const DESIGN_X   = "16px";
+const DESIGN_Y   = "calc(100vh - 275px)"; // tagline(24) + gap(17) + design(218) + bottom(16)
+const DESIGN_Y0  = "calc(100vh + 400px)"; // below viewport (start of animation)
 
-const TAGLINE_X  = "calc(50vw - 688px)";
-const TAGLINE_Y  = "calc(50vh + 456px)";
+const TAGLINE_X  = "16px";
+const TAGLINE_Y  = "calc(100vh - 40px)"; // tagline(24) + bottom(16)
 
 export default function Homepage() {
   const navigate = useNavigate();
