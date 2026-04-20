@@ -651,35 +651,36 @@ export function CasesPage() {
 
         <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "flex-end", justifyContent: "center", gap: 20 }}>
           {CASES.map(({ id, label }) => (
-            <div key={id} className="flex flex-col items-end" style={{ gap: 10 }}>
+            <motion.div layout key={id} className="flex flex-col items-end" style={{ gap: 10 }}>
               <CaseNavItem
                 label={label}
                 active={activeCase === id}
                 onClick={() => scrollTo(`${id}-hero`)}
               />
-              <AnimatePresence>
+              <AnimatePresence initial={false}>
                 {activeCase === id && (
                   <motion.div
                     key="sub"
-                    initial={{ opacity: 0, y: -4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
-                    transition={{ duration: 0.25, ease: "easeOut" }}
-                    className="flex flex-col items-end"
-                    style={{ gap: 8 }}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+                    style={{ overflow: "hidden" }}
                   >
-                    {SUB_NAV_ITEMS.map(({ sub, label: subLabel }) => (
-                      <SubNavItem
-                        key={sub}
-                        label={subLabel}
-                        active={activeSubSection === sub}
-                        onClick={() => scrollTo(`${id}-${sub}`)}
-                      />
-                    ))}
+                    <div className="flex flex-col items-end" style={{ gap: 8, paddingTop: 2 }}>
+                      {SUB_NAV_ITEMS.map(({ sub, label: subLabel }) => (
+                        <SubNavItem
+                          key={sub}
+                          label={subLabel}
+                          active={activeSubSection === sub}
+                          onClick={() => scrollTo(`${id}-${sub}`)}
+                        />
+                      ))}
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
