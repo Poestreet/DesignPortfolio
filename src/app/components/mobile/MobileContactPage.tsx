@@ -55,7 +55,13 @@ export function MobileContactPage() {
         body: JSON.stringify({ name, email, message }),
       });
       const data = await res.json();
-      setStatus(data.success ? "sent" : "error");
+      if (data.success) {
+        setStatus("sent");
+        setName(""); setEmail(""); setMessage("");
+        setTimeout(() => setStatus("idle"), 3000);
+      } else {
+        setStatus("error");
+      }
     } catch {
       setStatus("error");
     }
@@ -187,7 +193,7 @@ export function MobileContactPage() {
                     color: "#fafafa",
                   }}
                 >
-                  {status === "sending" ? "sending..." : status === "sent" ? "message sent ✓" : status === "error" ? "try again" : "reach me"}
+                  {status === "sending" ? "sending..." : status === "sent" ? "i'll reach you soon!" : status === "error" ? "try again" : "reach me"}
                 </span>
               </button>
 
