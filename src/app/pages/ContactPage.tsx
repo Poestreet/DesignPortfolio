@@ -214,6 +214,7 @@ export function ContactPage() {
                 <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                   {[
                     { label: "LinkedIn", href: "https://linkedin.com/in/julienbourcet" },
+                    { label: "Medium",   href: "https://medium.com/@julienbourcet" },
                   ].map(({ label, href }) => (
                     <a
                       key={label}

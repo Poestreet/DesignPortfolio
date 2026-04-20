@@ -190,30 +190,36 @@ export function MobileContactPage() {
               <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 800 }}>Links</span>
             </div>
 
-            <a
-              href="https://linkedin.com/in/julienbourcet"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2"
-              style={{ textDecoration: "none" }}
-            >
-              <span
-                className="block h-px transition-all duration-300 w-8 group-hover:w-12 shrink-0"
-                style={{ background: "#fafafa" }}
-              />
-              <span
-                style={{
-                  fontFamily: "'Outfit', sans-serif",
-                  fontWeight: 800,
-                  fontSize: "11px",
-                  letterSpacing: "3px",
-                  textTransform: "uppercase",
-                  color: "#fafafa",
-                }}
+            {[
+              { label: "linkedin", href: "https://linkedin.com/in/julienbourcet" },
+              { label: "medium",   href: "https://medium.com/@julienbourcet" },
+            ].map(({ label, href }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2"
+                style={{ textDecoration: "none" }}
               >
-                linkedin
-              </span>
-            </a>
+                <span
+                  className="block h-px transition-all duration-300 w-8 group-hover:w-12 shrink-0"
+                  style={{ background: "#fafafa" }}
+                />
+                <span
+                  style={{
+                    fontFamily: "'Outfit', sans-serif",
+                    fontWeight: 800,
+                    fontSize: "11px",
+                    letterSpacing: "3px",
+                    textTransform: "uppercase",
+                    color: "#fafafa",
+                  }}
+                >
+                  {label}
+                </span>
+              </a>
+            ))}
 
           </div>
         </div>
