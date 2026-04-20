@@ -543,7 +543,7 @@ function SubNavItem({ label, active, onClick }: { label: string; active: boolean
       style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}>
       <span
         className="block h-px shrink-0 transition-all duration-300"
-        style={{ width: active ? 16 : 8, background: active ? "#fafafa" : "rgba(250,250,250,0.3)" }}
+        style={{ width: active ? 16 : 8, background: "#fafafa" }}
       />
       <span
         className="uppercase transition-all duration-300"
