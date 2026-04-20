@@ -151,7 +151,7 @@ function ScrollDownButton({ onClick }: { onClick: () => void }) {
       }}
       aria-label="Scroll to next section"
     >
-      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#fafafa" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fafafa" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10"/>
         <path d="m16 10-4 4-4-4"/>
       </svg>
@@ -298,20 +298,18 @@ function AnimatedHero({
           >
             <BodyText>{body}</BodyText>
           </motion.div>
+          {onScrollNext && (
+            <motion.div
+              style={{ marginTop: 32, display: "flex", justifyContent: "center" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: showContent ? 1 : 0 }}
+              transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+            >
+              <ScrollDownButton onClick={onScrollNext} />
+            </motion.div>
+          )}
         </div>
       </div>
-
-      {/* Scroll down button — centered bottom */}
-      {onScrollNext && (
-        <motion.div
-          style={{ position: "absolute", bottom: 32, left: 0, right: 0, display: "flex", justifyContent: "center", zIndex: 5 }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: showContent ? 1 : 0 }}
-          transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
-        >
-          <ScrollDownButton onClick={onScrollNext} />
-        </motion.div>
-      )}
     </div>
   );
 }
