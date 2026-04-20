@@ -42,11 +42,22 @@ export function MobileContactPage() {
   const [name,    setName]    = useState("");
   const [email,   setEmail]   = useState("");
   const [message, setMessage] = useState("");
+  const [status,  setStatus]  = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (name && email) {
-      window.location.href = `mailto:hello@julienbourcet.fr?subject=Message from ${name}&body=${encodeURIComponent(message)}`;
+    if (!name || !email || !message) return;
+    setStatus("sending");
+    try {
+      const res = await fetch("/contact.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message }),
+      });
+      const data = await res.json();
+      setStatus(data.success ? "sent" : "error");
+    } catch {
+      setStatus("error");
     }
   };
 
@@ -158,8 +169,9 @@ export function MobileContactPage() {
 
               <button
                 type="submit"
+                disabled={status === "sending" || status === "sent"}
                 className="group flex items-center gap-2"
-                style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer" }}
+                style={{ background: "transparent", border: "none", padding: 0, cursor: status === "sent" ? "default" : "pointer", opacity: status === "sending" ? 0.6 : 1 }}
               >
                 <span
                   className="block h-px transition-all duration-300 w-8 group-hover:w-12 shrink-0"
@@ -175,7 +187,7 @@ export function MobileContactPage() {
                     color: "#fafafa",
                   }}
                 >
-                  reach me
+                  {status === "sending" ? "sending..." : status === "sent" ? "message sent ✓" : status === "error" ? "try again" : "reach me"}
                 </span>
               </button>
 

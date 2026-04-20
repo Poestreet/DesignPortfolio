@@ -1,0 +1,5 @@
+node_modules/
+dist/
+
+# SMTP credentials — ne jamais committer
+public/.smtp-config.php
