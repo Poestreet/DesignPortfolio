@@ -50,6 +50,7 @@ export function MobileContactPage() {
     e.preventDefault();
     if (!name || !message) return;
     if (!isValidEmail(email)) { setStatus("invalid-email"); return; }
+    console.log("[Contact/mobile] setStatus → sending");
     setStatus("sending");
     try {
       const res = await fetch("/contact.php", {
@@ -57,15 +58,24 @@ export function MobileContactPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),
       });
-      const data = await res.json();
+      console.log("[Contact/mobile] HTTP status:", res.status);
+      const text = await res.text();
+      console.log("[Contact/mobile] Raw response:", text);
+      let data: { success: boolean };
+      try { data = JSON.parse(text); }
+      catch { console.error("[Contact/mobile] JSON parse failed"); setStatus("error"); return; }
+      console.log("[Contact/mobile] data.success:", data.success);
       if (data.success) {
+        console.log("[Contact/mobile] setStatus → sent");
         setStatus("sent");
         setName(""); setEmail(""); setMessage("");
         setTimeout(() => setStatus("idle"), 3000);
       } else {
+        console.log("[Contact/mobile] setStatus → error (success=false)");
         setStatus("error");
       }
-    } catch {
+    } catch (err) {
+      console.error("[Contact/mobile] fetch error:", err);
       setStatus("error");
     }
   };

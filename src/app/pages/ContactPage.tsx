@@ -69,6 +69,7 @@ export function ContactPage() {
     e.preventDefault();
     if (!name || !message) return;
     if (!isValidEmail(email)) { setStatus("invalid-email"); return; }
+    console.log("[Contact] setStatus → sending");
     setStatus("sending");
     try {
       const res = await fetch("/contact.php", {
@@ -76,15 +77,24 @@ export function ContactPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),
       });
-      const data = await res.json();
+      console.log("[Contact] HTTP status:", res.status);
+      const text = await res.text();
+      console.log("[Contact] Raw response:", text);
+      let data: { success: boolean };
+      try { data = JSON.parse(text); }
+      catch { console.error("[Contact] JSON parse failed"); setStatus("error"); return; }
+      console.log("[Contact] data.success:", data.success);
       if (data.success) {
+        console.log("[Contact] setStatus → sent");
         setStatus("sent");
         setName(""); setEmail(""); setMessage("");
         setTimeout(() => setStatus("idle"), 3000);
       } else {
+        console.log("[Contact] setStatus → error (success=false)");
         setStatus("error");
       }
-    } catch {
+    } catch (err) {
+      console.error("[Contact] fetch error:", err);
       setStatus("error");
     }
   };

@@ -1,4 +1,5 @@
 <?php
+ob_start();
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: https://julienbourcet.fr');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
@@ -94,5 +95,6 @@ $body    = "Nom : {$name}\nEmail : {$email}\n\nMessage :\n{$message}";
 
 $ok = smtp_send(SMTP_TO, SMTP_USER, 'Portfolio julienbourcet.fr', $subject, $body);
 
+ob_clean();
 http_response_code($ok ? 200 : 500);
 echo json_encode(['success' => $ok]);
