@@ -3,18 +3,20 @@ import { useNavigate } from "react-router";
 import { AnimatedBackground } from "../AnimatedBackground";
 import { imgBackground as imgTagline, imgBackground2 as imgDesign } from "../../../imports/HomePageMobile/svg-v4b9j";
 
-// DESIGN text mask (370×72) positioned near bottom of viewport
-// Tagline mask (370×16) just below
-// Mobile design is 402×874 → container 1686px wide centered → left edge = 50vw - 843px
-// DESIGN in container at x=658 → viewport x = 50vw - 843 + 658 = 50vw - 185px
-// DESIGN y=762 → 112px from bottom ; tagline y=842 → 32px from bottom
+// Masks are fluid: width = 100vw - 32px (16px margin each side)
+// DESIGN (370×72): height scales proportionally with width → auto
+// Tagline (370×16): height fixed at 16px for reveal animation
+//
+// D_Y_END = 100dvh - bottom(16) - tagline(16) - gap(16) - design_auto_height
+//         = calc(100dvh - 48px - (100vw - 32px) * 72 / 370)
+// T_Y     = 100dvh - bottom(16) - tagline(16) = calc(100dvh - 32px)
 
-const D_X      = "16px";
-const D_Y_END  = "calc(100dvh - 120px)"; // bottom(16) + tagline(16) + gap(16) + design(72)
+const D_X       = "16px";
+const D_Y_END   = "calc(100dvh - 48px - (100vw - 32px) * 72 / 370)";
 const D_Y_START = "calc(100dvh + 200px)";
 
 const T_X = "16px";
-const T_Y = "calc(100dvh - 32px)"; // bottom(16) + tagline(16)
+const T_Y = "calc(100dvh - 32px)";
 
 export function MobileHomePage() {
   const navigate = useNavigate();
@@ -28,9 +30,10 @@ export function MobileHomePage() {
   const designPos  = `${D_X} ${entered ? D_Y_END : D_Y_START}`;
   const taglinePos = `${T_X} ${T_Y}`;
 
+  const maskW = "calc(100vw - 32px)";
   const maskSize = entered
-    ? "370px 72px, 370px 16px"
-    : "370px 72px, 370px 0px";
+    ? `${maskW} auto, ${maskW} 16px`
+    : `${maskW} auto, ${maskW} 0px`;
 
   const maskTransition = [
     "mask-position 0.95s cubic-bezier(0.4,0,0.05,1) 0.2s",
