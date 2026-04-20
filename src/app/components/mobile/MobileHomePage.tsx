@@ -4,19 +4,22 @@ import { AnimatedBackground } from "../AnimatedBackground";
 import { imgBackground as imgTagline, imgBackground2 as imgDesign } from "../../../imports/HomePageMobile/svg-v4b9j";
 
 // Masks are fluid: width = 100vw - 32px (16px margin each side)
-// DESIGN (370×72): height scales proportionally with width → auto
-// Tagline (370×16): height fixed at 16px for reveal animation
+// Heights scale proportionally from original dimensions (370×72 and 370×16)
+// designH  = (100vw - 32px) * 72  / 370
+// taglineH = (100vw - 32px) * 16 / 370
 //
-// D_Y_END = 100dvh - bottom(16) - tagline(16) - gap(16) - design_auto_height
-//         = calc(100dvh - 48px - (100vw - 32px) * 72 / 370)
-// T_Y     = 100dvh - bottom(16) - tagline(16) = calc(100dvh - 32px)
+// D_Y_END = 100dvh - bottom(16) - taglineH - gap(16) - designH
+//         = calc(100dvh - 32px - (100vw - 32px) * 88 / 370)
+//           where 88 = 72 (design) + 16 (tagline)
+// T_Y     = 100dvh - bottom(16) - taglineH
+//         = calc(100dvh - 16px - (100vw - 32px) * 16 / 370)
 
 const D_X       = "16px";
-const D_Y_END   = "calc(100dvh - 48px - (100vw - 32px) * 72 / 370)";
+const D_Y_END   = "calc(100dvh - 32px - (100vw - 32px) * 88 / 370)";
 const D_Y_START = "calc(100dvh + 200px)";
 
 const T_X = "16px";
-const T_Y = "calc(100dvh - 32px)";
+const T_Y = "calc(100dvh - 16px - (100vw - 32px) * 16 / 370)";
 
 export function MobileHomePage() {
   const navigate = useNavigate();
@@ -31,9 +34,11 @@ export function MobileHomePage() {
   const taglinePos = `${T_X} ${T_Y}`;
 
   const maskW = "calc(100vw - 32px)";
+  const designH  = "calc((100vw - 32px) * 72 / 370)";
+  const taglineH = "calc((100vw - 32px) * 16 / 370)";
   const maskSize = entered
-    ? `${maskW} auto, ${maskW} 16px`
-    : `${maskW} auto, ${maskW} 0px`;
+    ? `${maskW} ${designH}, ${maskW} ${taglineH}`
+    : `${maskW} ${designH}, ${maskW} 0px`;
 
   const maskTransition = [
     "mask-position 0.95s cubic-bezier(0.4,0,0.05,1) 0.2s",
