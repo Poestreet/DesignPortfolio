@@ -496,8 +496,8 @@ function ManutanResults() {
 function NavBtn({ label, onClick, href }: { label: string; onClick?: () => void; href?: string }) {
   const inner = (
     <span className="flex items-center gap-2 group">
-      <span className="block w-8 h-px transition-all duration-300 group-hover:w-12" style={{ background: "white" }} />
-      <span className="uppercase" style={{ fontSize: "11px", letterSpacing: "0.2em", color: "white", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}>
+      <span className="block w-8 h-px transition-all duration-300 group-hover:w-12" style={{ background: "#fafafa" }} />
+      <span className="uppercase" style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#fafafa", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}>
         {label}
       </span>
     </span>
@@ -515,8 +515,8 @@ function CaseNavItem({ label, active, onClick }: { label: string; active: boolea
     return (
       <button onClick={onClick} className="flex items-center gap-2"
         style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}>
-        <span className="rounded-full shrink-0" style={{ width: 8, height: 8, background: "white" }} />
-        <span className="uppercase" style={{ fontSize: "14px", letterSpacing: "0.2em", color: "white", fontFamily: "'Outfit', sans-serif", fontWeight: 600 }}>
+        <span className="rounded-full shrink-0" style={{ width: 8, height: 8, background: "#fafafa" }} />
+        <span className="uppercase" style={{ fontSize: "14px", letterSpacing: "0.2em", color: "#fafafa", fontFamily: "'Outfit', sans-serif", fontWeight: 600 }}>
           {label}
         </span>
       </button>
@@ -529,7 +529,7 @@ function CaseNavItem({ label, active, onClick }: { label: string; active: boolea
         <span className="absolute rounded-full border border-white transition-opacity duration-300 group-hover:opacity-0" style={{ width: 8, height: 8 }} />
         <span className="absolute inset-x-0 h-px bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ top: "50%", transform: "translateY(-50%)" }} />
       </span>
-      <span className="uppercase" style={{ fontSize: "11px", letterSpacing: "0.2em", color: "rgba(255,255,255,0.5)", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}>
+      <span className="uppercase" style={{ fontSize: "11px", letterSpacing: "0.2em", color: "rgba(250,250,250,0.5)", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}>
         {label}
       </span>
     </button>
@@ -542,7 +542,7 @@ function SubNavItem({ label, active, onClick }: { label: string; active: boolean
       style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}>
       <span
         className="block h-px shrink-0 transition-all duration-300"
-        style={{ width: active ? 16 : 8, background: active ? "white" : "rgba(255,255,255,0.3)" }}
+        style={{ width: active ? 16 : 8, background: active ? "#fafafa" : "rgba(250,250,250,0.3)" }}
       />
       <span
         className="uppercase transition-all duration-300"
@@ -551,7 +551,7 @@ function SubNavItem({ label, active, onClick }: { label: string; active: boolean
           letterSpacing: "0.15em",
           fontFamily: "'Outfit', sans-serif",
           fontWeight: active ? 500 : 400,
-          color: active ? "white" : "rgba(255,255,255,0.35)",
+          color: active ? "#fafafa" : "rgba(250,250,250,0.35)",
         }}
       >
         {label}

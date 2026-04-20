@@ -151,7 +151,7 @@ export function AboutPage() {
                 fontSize: "9px",
                 lineHeight: "1.5",
                 letterSpacing: "0.05em",
-                color: "rgba(255,255,255,0.55)",
+                color: "rgba(250,250,250,0.55)",
                 wordBreak: "break-all",
                 padding: "20px",
                 margin: 0,
@@ -319,14 +319,14 @@ export function AboutPage() {
           >
             <span
               className="block w-8 h-px transition-all duration-300 group-hover:w-12"
-              style={{ background: "white" }}
+              style={{ background: "#fafafa" }}
             />
             <span
               className="uppercase"
               style={{
                 fontSize: "11px",
                 letterSpacing: "0.2em",
-                color: "white",
+                color: "#fafafa",
                 fontFamily: "'Outfit', sans-serif",
                 fontWeight: 800,
               }}
