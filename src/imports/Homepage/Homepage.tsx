@@ -25,7 +25,7 @@ import { imgBackground, imgBackground2 } from "../HomePageDesktop/svg-pta88";
 // ─────────────────────────────────────────────────────────────────────────────
 
 const DESIGN_X   = "16px";
-const DESIGN_Y   = "calc(100vh - 275px)"; // tagline(24) + gap(17) + design(218) + bottom(16)
+const DESIGN_Y   = "calc(100vh - 274px)"; // tagline(24) + gap(16) + design(218) + bottom(16)
 const DESIGN_Y0  = "calc(100vh + 400px)"; // below viewport (start of animation)
 
 const TAGLINE_X  = "16px";
