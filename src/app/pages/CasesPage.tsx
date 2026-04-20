@@ -244,10 +244,10 @@ function AnimatedHero({
         initial={{ opacity: 0 }}
         animate={{ opacity: imageVisible ? 1 : 0 }}
         transition={{ duration: PHOTO_FADE_DURATION / 1000, ease: "easeInOut" }}
-        style={{ zIndex: 2 }}
+        style={{ zIndex: 2, mixBlendMode: "luminosity" }}
       >
         <img src={image} alt="" className="w-full h-full object-cover"
-          style={{ mixBlendMode: "luminosity", opacity: 0.5 }} />
+          style={{ opacity: 0.5 }} />
       </motion.div>
 
       {/* Gradient vignette */}
