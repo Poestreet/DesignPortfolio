@@ -2,96 +2,53 @@ import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { useNavigate } from "react-router";
 import { AnimatedBackground } from "../../app/components/AnimatedBackground";
-import designPaths from "../Design/svg-5rty58y69t";
-import taglinePaths from "../TheBridgeBetweenStrategyAndHighFidelity/svg-q0ue6zeszd";
+import { imgBackground, imgBackground2 } from "../HomePageDesktop/svg-pta88";
 
-// DESIGN: viewBox 0 0 1120 218
-const designSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 218">
-  <path d="${designPaths.p13107300}" fill="white"/>
-  <path d="${designPaths.p16833b80}" fill="white"/>
-  <path d="${designPaths.p2b743280}" fill="white"/>
-  <path d="${designPaths.p3ccc0140}" fill="white"/>
-  <path d="${designPaths.p9cbfd80}" fill="white"/>
-  <path d="${designPaths.p21571a00}" fill="white"/>
-</svg>`;
-
-// Tagline: viewBox 0 0 560 24
-const taglineSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 24">
-  <path d="${taglinePaths.p2bf64a70}" fill="white"/>
-  <path d="${taglinePaths.p2d6f3400}" fill="white"/>
-  <path d="${taglinePaths.p37312180}" fill="white"/>
-  <path d="${taglinePaths.p36f33700}" fill="white"/>
-  <path d="${taglinePaths.p19774800}" fill="white"/>
-  <path d="${taglinePaths.p2480ed00}" fill="white"/>
-  <path d="${taglinePaths.p1b8a6cf0}" fill="white"/>
-  <path d="${taglinePaths.p29332800}" fill="white"/>
-  <path d="${taglinePaths.p350e32f0}" fill="white"/>
-  <path d="${taglinePaths.p45eed00}" fill="white"/>
-  <path d="${taglinePaths.pfa27d00}" fill="white"/>
-  <path d="${taglinePaths.p110c2680}" fill="white"/>
-  <path d="${taglinePaths.p3145a400}" fill="white"/>
-  <path d="${taglinePaths.p1dbb5400}" fill="white"/>
-  <path d="${taglinePaths.p3cf0a300}" fill="white"/>
-  <path d="${taglinePaths.p3f07be00}" fill="white"/>
-  <path d="${taglinePaths.p2c672300}" fill="white"/>
-  <path d="${taglinePaths.p16f3a740}" fill="white"/>
-  <path d="${taglinePaths.p440e280}" fill="white"/>
-  <path d="${taglinePaths.p12ea9300}" fill="white"/>
-  <path d="${taglinePaths.p1b94b00}" fill="white"/>
-  <path d="${taglinePaths.pd956c00}" fill="white"/>
-  <path d="${taglinePaths.p1bd4f100}" fill="white"/>
-  <path d="${taglinePaths.p203a7200}" fill="white"/>
-  <path d="${taglinePaths.p18e0c000}" fill="white"/>
-  <path d="${taglinePaths.p286b4f80}" fill="white"/>
-  <path d="${taglinePaths.pe0b7000}" fill="white"/>
-  <path d="${taglinePaths.p21f3a00}" fill="white"/>
-  <path d="${taglinePaths.p1506e900}" fill="white"/>
-  <path d="${taglinePaths.p21420c40}" fill="white"/>
-  <path d="${taglinePaths.p159eb400}" fill="white"/>
-  <path d="${taglinePaths.p24777900}" fill="white"/>
-  <path d="${taglinePaths.p2a082300}" fill="white"/>
-  <path d="${taglinePaths.p25bfa600}" fill="white"/>
-  <path d="${taglinePaths.pdd54980}" fill="white"/>
-  <path d="${taglinePaths.p4384a00}" fill="white"/>
-  <path d="${taglinePaths.p2219a280}" fill="white"/>
-  <path d="${taglinePaths.p104e9460}" fill="white"/>
-  <path d="${taglinePaths.p37c65680}" fill="white"/>
-  <path d="${taglinePaths.p167761c0}" fill="white"/>
-</svg>`;
-
-const designUrl  = `url("data:image/svg+xml,${encodeURIComponent(designSvg)}")`;
-const taglineUrl = `url("data:image/svg+xml,${encodeURIComponent(taglineSvg)}")`;
-
-// Mask sizes & positions:
-//   Tagline   560 × 24 px  — 64px from left, bottom edge 340px from container bottom
-//   DESIGN   1120 × 218px  — 64px from left, bottom edge 106px from container bottom
+// ── Mask geometry (from Figma) ─────────────────────────────────────────────────
 //
-// ABOUT link: plain HTML text, positioned right of DESIGN (64+1120+32=1216px),
-//             bottom-aligned with DESIGN bottom (106px from viewport bottom).
+// Figma uses a 1527×1024 container, centered on viewport:
+//   left: calc(50% - 0.5px) + translateX(-50%)  →  left edge = 50vw - 764px
+//   top:  50%               + translateY(-50%)  →  top edge  = 50vh - 512px
+//
+// DESIGN  mask (1120×218) at container position x=76, y=734:
+//   viewport x = (50vw - 764) + 76  = 50vw - 688px
+//   viewport y = (50vh - 512) + 734 = 50vh + 222px
+//
+// Tagline mask (560×24)  at container position x=77, y=969
+//   (tagline container: left=calc(50%-1.5px), top=calc(50%-1px)):
+//   left edge = 50vw - 765px, top edge = 50vh - 513px
+//   viewport x = (50vw - 765) + 77  = 50vw - 688px
+//   viewport y = (50vh - 513) + 969 = 50vh + 456px
+//
+// NB: mask-position % ≠ element %. Using vw/vh gives true absolute offsets.
+// ─────────────────────────────────────────────────────────────────────────────
+
+const DESIGN_X   = "calc(50vw - 688px)";
+const DESIGN_Y   = "calc(50vh + 222px)";
+const DESIGN_Y0  = "calc(50vh + 800px)"; // below viewport (start of animation)
+
+const TAGLINE_X  = "calc(50vw - 688px)";
+const TAGLINE_Y  = "calc(50vh + 456px)";
 
 export default function Homepage() {
   const navigate = useNavigate();
   const [entered, setEntered] = useState(false);
 
   useEffect(() => {
-    // Short delay so the initial state renders before transition fires
     const t = setTimeout(() => setEntered(true), 80);
     return () => clearTimeout(t);
   }, []);
 
-  // ── Mask positions ────────────────────────────────────────────────────────────
-  // Tagline: 560×24 — enters via mask-size (height 0 → 24px), delay 0.75s
-  // DESIGN:  1120×218 — enters via mask-position (slides up from below), delay 0.2s
+  // DESIGN:  slides up from below (mask-position-y animates)
+  // Tagline: reveals via height growth (mask-size-height animates)
+  const designPos  = `${DESIGN_X} ${entered ? DESIGN_Y : DESIGN_Y0}`;
+  const taglinePos = `${TAGLINE_X} ${TAGLINE_Y}`;
 
   const maskSize = entered
-    ? "560px 24px, 1120px 218px"
-    : "560px 0px,  1120px 218px";
+    ? "1120px 218px, 560px 24px"
+    : "1120px 218px, 560px 0px";
 
-  const maskPosition = entered
-    ? "64px calc(100% - 340px), 64px calc(100% - 106px)"
-    : "64px calc(100% - 340px), 64px calc(100% + 130px)";
-
-  // CSS transition: DESIGN position first, tagline size second
+  // DESIGN position transitions first (delay 0.2s), tagline size second (delay 0.75s)
   const maskTransition = [
     "mask-position 0.95s cubic-bezier(0.4, 0, 0.05, 1) 0.2s",
     "-webkit-mask-position 0.95s cubic-bezier(0.4, 0, 0.05, 1) 0.2s",
@@ -101,30 +58,32 @@ export default function Homepage() {
 
   return (
     <div className="bg-[#fafafa] relative size-full overflow-hidden">
+
+      {/* Masked animated background — DESIGN first, tagline second */}
       <div
         className="absolute inset-0"
         style={{
-          maskImage:          `${taglineUrl}, ${designUrl}`,
-          WebkitMaskImage:    `${taglineUrl}, ${designUrl}`,
+          maskImage:          `url("${imgBackground}"), url("${imgBackground2}")`,
+          WebkitMaskImage:    `url("${imgBackground}"), url("${imgBackground2}")`,
           maskRepeat:         "no-repeat, no-repeat",
           WebkitMaskRepeat:   "no-repeat, no-repeat",
           maskSize,
           WebkitMaskSize:     maskSize,
-          maskPosition,
-          WebkitMaskPosition: maskPosition,
+          maskPosition:       `${designPos}, ${taglinePos}`,
+          WebkitMaskPosition: `${designPos}, ${taglinePos}`,
           transition:         maskTransition,
         }}
       >
         <AnimatedBackground />
       </div>
 
-      {/* Nav — top right, 64px from top and right, 32px gap between links */}
+      {/* Navigation — top right, 16px from edges, gap 16px */}
       <motion.nav
         className="absolute flex flex-col items-end"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, delay: 1.35, ease: [0.4, 0, 0.05, 1] }}
-        style={{ top: "32px", right: "32px", gap: "16px", zIndex: 10 }}
+        style={{ top: "16px", right: "16px", gap: "16px", zIndex: 10 }}
       >
         {/* About */}
         <button
@@ -134,11 +93,11 @@ export default function Homepage() {
         >
           <span
             className="block w-8 h-px transition-all duration-300 group-hover:w-12"
-            style={{ background: "#111" }}
+            style={{ background: "#070071" }}
           />
           <span
             className="uppercase"
-            style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#111", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}
+            style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#070071", fontFamily: "'Outfit', sans-serif", fontWeight: 800 }}
           >
             About
           </span>
@@ -152,11 +111,11 @@ export default function Homepage() {
         >
           <span
             className="block w-8 h-px transition-all duration-300 group-hover:w-12"
-            style={{ background: "#111" }}
+            style={{ background: "#070071" }}
           />
           <span
             className="uppercase"
-            style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#111", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}
+            style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#070071", fontFamily: "'Outfit', sans-serif", fontWeight: 800 }}
           >
             Cases
           </span>
@@ -170,11 +129,11 @@ export default function Homepage() {
         >
           <span
             className="block w-8 h-px transition-all duration-300 group-hover:w-12"
-            style={{ background: "#111" }}
+            style={{ background: "#070071" }}
           />
           <span
             className="uppercase"
-            style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#111", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}
+            style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#070071", fontFamily: "'Outfit', sans-serif", fontWeight: 800 }}
           >
             Contact
           </span>
