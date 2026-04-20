@@ -281,7 +281,7 @@ function SncfChallenge() {
   const { ref, inView } = useInView();
   return (
     <div ref={ref} id="sncf-challenge" style={{ height: "100vh", display: "flex", alignItems: "center", overflow: "hidden" }}>
-      <div className="flex gap-12 px-16" style={{ width: "100%" }}>
+      <div className="flex gap-12 px-16" style={{ width: "100%", maxWidth: 1280, margin: "0 auto" }}>
         <div className="flex flex-col gap-12 flex-1 min-w-0">
           <div className="flex flex-col gap-6">
             <Reveal inView={inView} index={0}>
@@ -344,7 +344,7 @@ function SncfResults() {
   const { ref, inView } = useInView();
   return (
     <div ref={ref} id="sncf-results" style={{ height: "100vh", display: "flex", alignItems: "center", overflow: "hidden" }}>
-      <div className="flex gap-12 px-16" style={{ width: "100%" }}>
+      <div className="flex gap-12 px-16" style={{ width: "100%", maxWidth: 1280, margin: "0 auto" }}>
         <Reveal inView={inView} index={0} className="flex-1 min-w-0 relative" style={{ minHeight: 500 }}>
           <img src={imgSncfScreens} alt="SNCF screens" className="absolute pointer-events-none"
             style={{ top: "50%", left: -160, transform: "translateY(-50%)", width: 700, height: "auto", maxWidth: "none" }} />
@@ -385,7 +385,7 @@ function ManutanChallenge() {
   const { ref, inView } = useInView();
   return (
     <div ref={ref} id="manutan-challenge" style={{ height: "100vh", display: "flex", alignItems: "center", overflow: "hidden" }}>
-      <div className="flex gap-12 px-16" style={{ width: "100%" }}>
+      <div className="flex gap-12 px-16" style={{ width: "100%", maxWidth: 1280, margin: "0 auto" }}>
         <div className="flex flex-col gap-12 flex-1 min-w-0">
           <div className="flex flex-col gap-6">
             <Reveal inView={inView} index={0}>
@@ -446,7 +446,7 @@ function ManutanResults() {
   const { ref, inView } = useInView();
   return (
     <div ref={ref} id="manutan-results" style={{ height: "100vh", display: "flex", alignItems: "center", overflow: "hidden" }}>
-      <div className="flex gap-12 px-16" style={{ width: "100%" }}>
+      <div className="flex gap-12 px-16" style={{ width: "100%", maxWidth: 1280, margin: "0 auto" }}>
         <Reveal inView={inView} index={0} className="flex-1 min-w-0 relative" style={{ minHeight: 500 }}>
           <img src={imgManutanScreens} alt="Manutan screens" className="absolute pointer-events-none"
             style={{ top: "50%", left: -160, transform: "translateY(-50%)", width: 700, height: "auto", maxWidth: "none" }} />
