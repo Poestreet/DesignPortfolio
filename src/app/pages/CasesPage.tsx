@@ -285,7 +285,7 @@ function SncfChallenge() {
       <div className="flex gap-12 px-16" style={{ width: "100%", maxWidth: 1280, margin: "0 auto" }}>
         <Reveal inView={inView} index={1} className="flex-1 min-w-0 relative" style={{ minHeight: 420 }}>
           <img src={imgSncfUI} alt="SNCF Cart UI" className="absolute pointer-events-none"
-            style={{ top: 16, left: -60, width: 871, height: "auto", maxWidth: "none" }} />
+            style={{ top: 16, right: 0, left: "auto", width: 700, height: "auto", maxWidth: "none" }} />
         </Reveal>
         <div className="flex flex-col gap-12 flex-1 min-w-0">
           <div className="flex flex-col gap-6">
@@ -389,7 +389,7 @@ function ManutanChallenge() {
       <div className="flex gap-12 px-16" style={{ width: "100%", maxWidth: 1280, margin: "0 auto" }}>
         <Reveal inView={inView} index={1} className="flex-1 min-w-0 relative" style={{ minHeight: 380 }}>
           <img src={imgManutanUI} alt="Manutan UI" className="absolute pointer-events-none"
-            style={{ top: 61, left: -71, width: 822, height: 308, maxWidth: "none", objectFit: "cover" }} />
+            style={{ top: 61, right: 0, left: "auto", width: 700, height: "auto", maxWidth: "none", objectFit: "cover" }} />
         </Reveal>
         <div className="flex flex-col gap-12 flex-1 min-w-0">
           <div className="flex flex-col gap-6">
