@@ -62,14 +62,38 @@ export function ContactPage() {
   }, []);
 
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error" | "invalid-email">("idle");
+  const [fieldErrors, setFieldErrors] = useState({ name: false, email: false, message: false });
 
   const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
+  const clearFieldError = (field: keyof typeof fieldErrors) => {
+    setFieldErrors(prev => ({ ...prev, [field]: false }));
+    if (status === "invalid-email") setStatus("idle");
+  };
+
+  const buttonLabel = () => {
+    if (status === "sending") return "sending...";
+    if (status === "sent")    return "i'll reach you soon!";
+    if (status === "error")   return "try again";
+    if (fieldErrors.name)     return "name is required";
+    if (fieldErrors.email || status === "invalid-email") return "email is required";
+    if (fieldErrors.message)  return "message is required";
+    return "reach me";
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !message) return;
-    if (!isValidEmail(email)) { setStatus("invalid-email"); return; }
-    console.log("[Contact] setStatus → sending");
+    const errors = {
+      name:    !name.trim(),
+      email:   !email.trim() || !isValidEmail(email),
+      message: !message.trim(),
+    };
+    if (errors.name || errors.email || errors.message) {
+      setFieldErrors(errors);
+      if (!email.trim() || !isValidEmail(email)) setStatus("invalid-email");
+      return;
+    }
+    setFieldErrors({ name: false, email: false, message: false });
     setStatus("sending");
     try {
       const res = await fetch("/contact.php", {
@@ -77,24 +101,18 @@ export function ContactPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message }),
       });
-      console.log("[Contact] HTTP status:", res.status);
       const text = await res.text();
-      console.log("[Contact] Raw response:", text);
       let data: { success: boolean };
       try { data = JSON.parse(text); }
-      catch { console.error("[Contact] JSON parse failed"); setStatus("error"); return; }
-      console.log("[Contact] data.success:", data.success);
+      catch { setStatus("error"); return; }
       if (data.success) {
-        console.log("[Contact] setStatus → sent");
         setStatus("sent");
         setName(""); setEmail(""); setMessage("");
         setTimeout(() => setStatus("idle"), 3000);
       } else {
-        console.log("[Contact] setStatus → error (success=false)");
         setStatus("error");
       }
-    } catch (err) {
-      console.error("[Contact] fetch error:", err);
+    } catch {
       setStatus("error");
     }
   };
@@ -160,11 +178,13 @@ export function ContactPage() {
                     <input
                       type="text"
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={(e) => { setName(e.target.value); clearFieldError("name"); }}
                       placeholder="your name"
                       style={{
                         ...placeholderStyle,
                         caretColor: "#fafafa",
+                        borderBottomColor: fieldErrors.name ? "#ff4d4d" : "#fafafa",
+                        transition: "border-color 0.2s ease",
                       }}
                     />
                   </div>
@@ -175,15 +195,12 @@ export function ContactPage() {
                     <input
                       type="text"
                       value={email}
-                      onChange={(e) => {
-                        setEmail(e.target.value);
-                        if (status === "invalid-email") setStatus("idle");
-                      }}
+                      onChange={(e) => { setEmail(e.target.value); clearFieldError("email"); }}
                       placeholder="your email"
                       style={{
                         ...placeholderStyle,
                         caretColor: "#fafafa",
-                        borderBottomColor: status === "invalid-email" ? "#ff4d4d" : "#fafafa",
+                        borderBottomColor: (fieldErrors.email || status === "invalid-email") ? "#ff4d4d" : "#fafafa",
                         transition: "border-color 0.2s ease",
                       }}
                     />
@@ -194,7 +211,7 @@ export function ContactPage() {
                     <label style={labelStyle}>Tell me more?</label>
                     <textarea
                       value={message}
-                      onChange={(e) => setMessage(e.target.value)}
+                      onChange={(e) => { setMessage(e.target.value); clearFieldError("message"); }}
                       placeholder="whatever you want to talk about, anything..."
                       rows={1}
                       style={{
@@ -203,6 +220,8 @@ export function ContactPage() {
                         paddingBottom: "96px",
                         fontFamily: "'Outfit', sans-serif",
                         caretColor: "#fafafa",
+                        borderBottomColor: fieldErrors.message ? "#ff4d4d" : "#fafafa",
+                        transition: "border-color 0.2s ease",
                       }}
                     />
                   </div>
@@ -229,7 +248,7 @@ export function ContactPage() {
                         color: "#fafafa",
                       }}
                     >
-                      {status === "sending" ? "sending..." : status === "sent" ? "i'll reach you soon!" : status === "error" ? "try again" : status === "invalid-email" ? "email address incorrect" : "reach me"}
+                      {buttonLabel()}
                     </span>
                   </button>
 
