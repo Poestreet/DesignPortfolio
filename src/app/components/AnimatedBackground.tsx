@@ -30,6 +30,13 @@ export function AnimatedBackground({ className = "" }: { className?: string }) {
           will-change: transform;
         }
 
+        @media (max-width: 768px) {
+          .animated-bg-outer {
+            width: 200%;
+            height: 200%;
+          }
+        }
+
         .animated-bg-inner {
           width: 100%;
           height: 100%;
