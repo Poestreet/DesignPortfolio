@@ -122,10 +122,10 @@ export default function Homepage() {
         </button>
 
         {/* Contact */}
-        <a
-          href="mailto:hello@julienbourcet.fr"
+        <button
+          onClick={() => navigate("/contact")}
           className="flex items-center gap-2 group"
-          style={{ textDecoration: "none" }}
+          style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}
         >
           <span
             className="block w-8 h-px transition-all duration-300 group-hover:w-12"
@@ -137,7 +137,7 @@ export default function Homepage() {
           >
             Contact
           </span>
-        </a>
+        </button>
       </motion.nav>
     </div>
   );

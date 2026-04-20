@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import Homepage from "../../imports/Homepage/Homepage";
 import { CasesPage } from "../pages/CasesPage";
 import { AboutPage } from "../pages/AboutPage";
+import { ContactPage } from "../pages/ContactPage";
 import { AnimatedBackground } from "./AnimatedBackground";
 
 const SLIDE = {
@@ -11,29 +12,27 @@ const SLIDE = {
   ease: [0.4, 0, 0.05, 1] as [number, number, number, number],
 };
 
+type OverlayPage = "cases" | "about" | "contact" | null;
+
 export function Root() {
   const location = useLocation();
-  const isCases = location.pathname === "/cases";
-  const isAbout = location.pathname === "/about";
+  const isCases   = location.pathname === "/cases";
+  const isAbout   = location.pathname === "/about";
+  const isContact = location.pathname === "/contact";
 
-  // Track which overlay page is currently on top (most recently navigated to).
-  // useLayoutEffect updates it synchronously before paint — no visual flicker.
-  const [topPage, setTopPage] = useState<"cases" | "about" | null>(() =>
-    isCases ? "cases" : isAbout ? "about" : null
+  const [topPage, setTopPage] = useState<OverlayPage>(() =>
+    isCases ? "cases" : isAbout ? "about" : isContact ? "contact" : null
   );
 
   useLayoutEffect(() => {
-    if (isCases) setTopPage("cases");
-    else if (isAbout) setTopPage("about");
-    // When returning to "/", keep the last value so the exiting page keeps its z-index.
-  }, [isCases, isAbout]);
+    if (isCases)        setTopPage("cases");
+    else if (isAbout)   setTopPage("about");
+    else if (isContact) setTopPage("contact");
+    // When returning to "/" keep the last value so the exiting page keeps its z-index.
+  }, [isCases, isAbout, isContact]);
 
-  // The cover layer sits above the homepage (z=48) but below the pages (z=50/51).
-  // It is shown as long as ANY overlay is active and prevents the homepage from
-  // showing through the gap between two pages during a page-to-page slide.
-  // When returning to homepage it disappears instantly, letting the page reveal
-  // the homepage naturally as it slides away — which is the intended behaviour.
-  const showCover = isCases || isAbout;
+  // Cover layer sits above homepage (z=48) but below pages (z=50/51).
+  const showCover = isCases || isAbout || isContact;
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }}>
@@ -41,8 +40,7 @@ export function Root() {
       {/* Homepage — always underneath */}
       <Homepage />
 
-      {/* Cover layer — same AnimatedBackground as overlay pages, fills any
-          visual gap during Cases ↔ About transitions */}
+      {/* Cover layer — fills visual gap during page-to-page transitions */}
       {showCover && (
         <div style={{ position: "fixed", inset: 0, zIndex: 48 }}>
           <AnimatedBackground />
@@ -62,7 +60,6 @@ export function Root() {
             style={{
               position: "fixed",
               inset: 0,
-              // Entering page is always on top; exiting page slides out behind it.
               zIndex: topPage === "cases" ? 51 : 50,
             }}
           >
@@ -87,6 +84,26 @@ export function Root() {
             }}
           >
             <AboutPage />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Contact page */}
+      <AnimatePresence>
+        {isContact && (
+          <motion.div
+            key="contact"
+            initial={{ x: "100%" }}
+            animate={{ x: "0%" }}
+            exit={{ x: "100%" }}
+            transition={SLIDE}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: topPage === "contact" ? 51 : 50,
+            }}
+          >
+            <ContactPage />
           </motion.div>
         )}
       </AnimatePresence>
