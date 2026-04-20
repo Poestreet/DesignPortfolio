@@ -191,10 +191,10 @@ export function AboutPage() {
           </motion.div>
         </div>
 
-        {/* ── Right column — scrollable content, centered ── */}
+        {/* ── Right column — scrollable content, top-anchored ── */}
         <div
-          className="relative flex-1 min-w-0 flex flex-col items-center justify-center overflow-y-auto"
-          style={{ paddingTop: "80px", paddingBottom: "48px" }}
+          className="relative flex-1 min-w-0 flex flex-col items-center overflow-y-auto"
+          style={{ paddingTop: "131px", paddingBottom: "48px" }}
         >
           {/* MainContent — w-[607.5px] as per Figma */}
           <div style={{ width: "607.5px", maxWidth: "calc(100% - 96px)" }}>
