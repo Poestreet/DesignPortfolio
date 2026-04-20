@@ -133,6 +133,32 @@ function BodyText({ children }: { children: React.ReactNode }) {
   );
 }
 
+// ── Scroll Down Button ────────────────────────────────────────────────────────
+function ScrollDownButton({ onClick }: { onClick: () => void }) {
+  return (
+    <motion.button
+      onClick={onClick}
+      whileHover={{ y: 6 }}
+      transition={{ type: "spring", stiffness: 300, damping: 12 }}
+      style={{
+        background: "transparent",
+        border: "none",
+        padding: 0,
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+      aria-label="Scroll to next section"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#fafafa" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="m16 10-4 4-4-4"/>
+      </svg>
+    </motion.button>
+  );
+}
+
 // ── Animated Hero ─────────────────────────────────────────────────────────────
 interface AnimatedHeroProps {
   id: string;
@@ -141,6 +167,7 @@ interface AnimatedHeroProps {
   body: React.ReactNode;
   startDelay?: number;
   useIntersection?: boolean;
+  onScrollNext?: () => void;
 }
 
 function AnimatedHero({
@@ -150,6 +177,7 @@ function AnimatedHero({
   body,
   startDelay = 0,
   useIntersection = false,
+  onScrollNext,
 }: AnimatedHeroProps) {
   const [phase,       setPhase]       = useState<AnimPhase>("idle");
   const [displayed,   setDisplayed]   = useState(0);
@@ -272,6 +300,18 @@ function AnimatedHero({
           </motion.div>
         </div>
       </div>
+
+      {/* Scroll down button — centered bottom */}
+      {onScrollNext && (
+        <motion.div
+          style={{ position: "absolute", bottom: 32, left: 0, right: 0, display: "flex", justifyContent: "center", zIndex: 5 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: showContent ? 1 : 0 }}
+          transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+        >
+          <ScrollDownButton onClick={onScrollNext} />
+        </motion.div>
+      )}
     </div>
   );
 }
