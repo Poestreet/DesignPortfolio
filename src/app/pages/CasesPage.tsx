@@ -646,7 +646,7 @@ export function CasesPage() {
       >
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 16 }}>
           <NavBtn label="About"    onClick={() => navigate("/about")} />
-          <NavBtn label="Contact"  href="mailto:hello@julienbourcet.fr" />
+          <NavBtn label="Contact"  onClick={() => navigate("/contact")} />
           <NavBtn label="Homepage" onClick={() => navigate("/")} />
         </div>
 
