@@ -87,7 +87,7 @@ function SncfCase() {
         style={{
           position: "relative",
           zIndex: 1,
-          marginTop: -130,
+          marginTop: -160,
           padding: "0 32px",
           display: "flex",
           flexDirection: "column",
@@ -376,7 +376,7 @@ function ManutanCase() {
         style={{
           position: "relative",
           zIndex: 1,
-          marginTop: -130,
+          marginTop: -160,
           padding: "0 32px",
           display: "flex",
           flexDirection: "column",

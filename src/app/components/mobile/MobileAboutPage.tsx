@@ -65,7 +65,7 @@ export function MobileAboutPage() {
       </div>
 
       {/* ── Photo section (first screen height) ── */}
-      <div className="relative w-full shrink-0" style={{ height: "100vh", zIndex: 1 }}>
+      <div className="relative w-full shrink-0" style={{ height: "85vh", zIndex: 1 }}>
         <img
           src={photo}
           alt="Julien Bourcet"
