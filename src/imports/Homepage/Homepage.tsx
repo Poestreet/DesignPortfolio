@@ -22,7 +22,7 @@ const DESIGN_CHARS        = 3200;
 
 const CHARS_PER_TICK      = 80;
 const TICK_MS             = 16;
-const TYPING_START_DELAY  = 300;
+const TYPING_START_DELAY  = 50;
 const BG_FADE_DURATION    = 700;
 
 type Phase = "idle" | "typing" | "revealing" | "done";
@@ -148,7 +148,7 @@ export default function Homepage() {
                 }}
               >
                 {BINARY_FILL.slice(0, Math.min(displayed, DESIGN_CHARS))}
-                {phase === "typing" && displayed < DESIGN_CHARS && (
+                {(phase === "idle" || (phase === "typing" && displayed < DESIGN_CHARS)) && (
                   <motion.span
                     animate={{ opacity: [1, 0, 1] }}
                     transition={{ duration: 0.8, repeat: Infinity }}
