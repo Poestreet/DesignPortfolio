@@ -20,10 +20,10 @@ const BINARY_FILL = Array.from(
   () => BINARY
 ).join("").slice(0, 40000);
 
-const CHARS_PER_TICK      = 200;
+const CHARS_PER_TICK      = 500;
 const TICK_MS             = 16;
-const PHOTO_FADE_DURATION = 800;
-const TEXT_REVEAL_DELAY   = 600;
+const PHOTO_FADE_DURATION = 600;
+const TEXT_REVEAL_DELAY   = 350;
 const SNCF_START_DELAY    = 1400;
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -200,9 +200,12 @@ function AnimatedHero({
   const [displayed,   setDisplayed]   = useState(0);
   const [showContent, setShowContent] = useState(false);
 
-  const containerRef = useRef<HTMLDivElement>(null);
-  const intervalRef  = useRef<ReturnType<typeof setInterval> | null>(null);
-  const startedRef   = useRef(false);
+  const containerRef     = useRef<HTMLDivElement>(null);
+  const intervalRef      = useRef<ReturnType<typeof setInterval> | null>(null);
+  const startedRef       = useRef(false);
+  // Stable ref for callback — avoids re-triggering useEffect on every render
+  const onShowContentRef = useRef(onShowContent);
+  useEffect(() => { onShowContentRef.current = onShowContent; }, [onShowContent]);
 
   const triggerAnimation = useCallback(() => {
     if (startedRef.current) return;
@@ -219,7 +222,7 @@ function AnimatedHero({
             setTimeout(() => setPhase("done"),      200 + PHOTO_FADE_DURATION);
             setTimeout(() => {
               setShowContent(true);
-              onShowContent?.();
+              onShowContentRef.current?.();
             }, 200 + PHOTO_FADE_DURATION + TEXT_REVEAL_DELAY);
           }
           return next;
@@ -228,7 +231,7 @@ function AnimatedHero({
     }, startDelay);
 
     return t;
-  }, [startDelay, onShowContent]);
+  }, [startDelay]); // onShowContent excluded — accessed via ref
 
   useEffect(() => {
     if (useIntersection) return;
