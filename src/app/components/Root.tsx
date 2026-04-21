@@ -12,6 +12,11 @@ const SLIDE = {
   ease: [0.4, 0, 0.05, 1] as [number, number, number, number],
 };
 
+// Slide direction: left→right on desktop, bottom→top on mobile
+const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+const SLIDE_INITIAL = isMobile ? { x: 0, y: "100%" } : { x: "100%", y: 0 };
+const SLIDE_EXIT    = isMobile ? { x: 0, y: "100%" } : { x: "100%", y: 0 };
+
 // White flash that fades out as the slide completes — reveals the AnimatedBackground
 function PageEntranceFlash() {
   return (
@@ -70,9 +75,9 @@ export function Root() {
         {isCases && (
           <motion.div
             key="cases"
-            initial={{ x: "100%" }}
-            animate={{ x: "0%" }}
-            exit={{ x: "100%" }}
+            initial={SLIDE_INITIAL}
+            animate={{ x: 0, y: 0 }}
+            exit={SLIDE_EXIT}
             transition={SLIDE}
             style={{
               position: "fixed",
@@ -91,9 +96,9 @@ export function Root() {
         {isAbout && (
           <motion.div
             key="about"
-            initial={{ x: "100%" }}
-            animate={{ x: "0%" }}
-            exit={{ x: "100%" }}
+            initial={SLIDE_INITIAL}
+            animate={{ x: 0, y: 0 }}
+            exit={SLIDE_EXIT}
             transition={SLIDE}
             style={{
               position: "fixed",
@@ -112,9 +117,9 @@ export function Root() {
         {isContact && (
           <motion.div
             key="contact"
-            initial={{ x: "100%" }}
-            animate={{ x: "0%" }}
-            exit={{ x: "100%" }}
+            initial={SLIDE_INITIAL}
+            animate={{ x: 0, y: 0 }}
+            exit={SLIDE_EXIT}
             transition={SLIDE}
             style={{
               position: "fixed",
