@@ -1,3 +1,37 @@
 @import './fonts.css';
 @import './tailwind.css';
 @import './theme.css';
+
+/* ── Focus visible — WCAG 2.4.11 AA ─────────────────────────────────────────
+   Règle dans @layer base pour que les classes Tailwind utilities (outline-none
+   sur les composants shadcn/ui) gardent leur priorité et ne soient pas écrasées.
+
+   Sur les éléments du portfolio (nav buttons, liens, submit) — qui n'ont pas
+   de classe outline-none — cette règle s'applique et produit une outline
+   #fafafa 2px visible sur les fonds sombres (#070071 / gradient).
+
+   Remplace le outline-ring/50 de theme.css (gris neutre à 50% d'opacité,
+   invisible sur fond sombre).
+   ─────────────────────────────────────────────────────────────────────────── */
+@layer base {
+  :focus-visible {
+    outline: 2px solid #fafafa;
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  /* Champs de formulaire : design à bordure inférieure seule.
+     Le box-outline est remplacé par une lueur douce sur le bord bas,
+     cohérent avec la charte (pas de border top/left/right). */
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: none;
+    border-bottom-color: #fafafa !important;
+    box-shadow: 0 3px 0 0 rgba(250, 250, 250, 0.35);
+  }
+
+  /* Skip link : fond #fafafa clair → outline inversée en bleu foncé */
+  .skip-link:focus-visible {
+    outline-color: #070071;
+  }
+}

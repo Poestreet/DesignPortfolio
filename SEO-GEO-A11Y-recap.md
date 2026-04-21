@@ -198,6 +198,22 @@ Page 404 personnalisée avec :
 | Opquast R223 | ✅ page 404 personnalisée |
 | Opquast R225 | ✅ navigation principale présente |
 
+### src/styles/index.css — Focus visible global (WCAG 2.4.11)
+
+Ajout d'une règle `@layer base` couvrant tous les éléments interactifs du portfolio :
+
+| Règle CSS | Cible | Règle |
+|-----------|-------|-------|
+| `:focus-visible { outline: 2px solid #fafafa; outline-offset: 4px; border-radius: 2px }` | Tous les `<button>`, `<a>`, `<nav>` sans classe `outline-none` (nav, submit, liens externes) | WCAG 2.4.11 (AA) |
+| `input:focus-visible, textarea:focus-visible { outline: none; box-shadow: 0 3px 0 0 rgba(250,250,250,0.35) }` | Champs formulaire (design à bordure inférieure seule) | WCAG 2.4.11 |
+| `.skip-link:focus-visible { outline-color: #070071 }` | Skip link (fond #fafafa clair) | WCAG 2.4.11 |
+
+**Pourquoi `@layer base` et non une règle nue ?** Les composants shadcn/ui utilisent la classe utilitaire `outline-none` (`@layer utilities`). Les utilities ayant priorité sur base, ils gardent leurs propres styles `:focus-visible` (ring via box-shadow). Les éléments du portfolio sans classe outline-none héritent de la règle base. Sans ce wrapping, la règle nue aurait écrasé les composants shadcn.
+
+**Pourquoi `outline: none` était problématique ?** Le style inline `outline: "none"` dans `placeholderStyle` (ContactPage) et `fieldStyle` (MobileContactPage) avait une spécificité inline (1-0-0-0), écrasant tout. Supprimé dans les deux fichiers — la règle CSS `input:focus-visible` prend le relais.
+
+**Contexte sombre :** `#fafafa` sur `#070071` → ratio de contraste ≈ 17.5:1 (dépasse le minimum 3:1 requis par WCAG 2.4.11 pour la couleur du focus).
+
 ---
 
 ## 4. Ce qui reste hors périmètre code React (côté serveur)

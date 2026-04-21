@@ -26,11 +26,11 @@ const placeholderStyle: React.CSSProperties = {
   color: "rgba(250,250,250,0.7)",
   background: "transparent",
   border: "none",
-  borderBottom: "1px solid #fafafa",
-  outline: "none",
+  borderBottom: "1px solid rgba(250,250,250,0.6)",
   width: "100%",
   padding: "8px",
   lineHeight: "normal",
+  /* outline: none retiré — géré par input:focus-visible dans index.css (WCAG 2.4.11) */
 };
 
 export function ContactPage() {
