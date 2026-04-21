@@ -302,11 +302,12 @@ function AnimatedHero({
         </p>
       </motion.div>
 
-      {/* Hero image */}
+      {/* Hero image — fades out after text on exit */}
       <motion.div
         className="absolute inset-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: imageVisible ? 1 : 0 }}
+        exit={{ opacity: 0, transition: { duration: 0.35, delay: 0.2, ease: "easeIn" } }}
         transition={{ duration: PHOTO_FADE_DURATION / 1000, ease: "easeInOut" }}
         style={{ zIndex: 2 }}
       >
@@ -317,12 +318,13 @@ function AnimatedHero({
       {/* Gradient vignette */}
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.45) 100%)", zIndex: 3 }} />
 
-      {/* Text content — bottom-to-top stagger: scroll → body → heading */}
+      {/* Text content — entrance bottom-to-top / exit top-to-bottom (mirror) */}
       <div style={{ position: "relative", zIndex: 4, width: "100%", display: "flex", justifyContent: "center", padding: "0 64px 40px" }}>
         <div className="flex flex-col gap-6" style={{ maxWidth: 608, width: "100%" }}>
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 18 }}
+            exit={{ opacity: 0, y: 18, transition: { duration: 0.35, delay: 0, ease: [0.4, 0, 0.05, 1] } }}
             transition={{ duration: 0.7, delay: 0.4, ease: [0.4, 0, 0.05, 1] }}
           >
             <SectionH1>{heading}</SectionH1>
@@ -330,6 +332,7 @@ function AnimatedHero({
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 18 }}
+            exit={{ opacity: 0, y: 18, transition: { duration: 0.35, delay: 0.08, ease: [0.4, 0, 0.05, 1] } }}
             transition={{ duration: 0.7, delay: 0.2, ease: [0.4, 0, 0.05, 1] }}
           >
             <BodyText>{body}</BodyText>
@@ -339,6 +342,7 @@ function AnimatedHero({
               style={{ marginTop: 32, display: "flex", justifyContent: "center" }}
               initial={{ opacity: 0 }}
               animate={{ opacity: showContent ? 1 : 0 }}
+              exit={{ opacity: 0, transition: { duration: 0.35, delay: 0.16, ease: "easeIn" } }}
               transition={{ duration: 0.6, delay: 0, ease: "easeOut" }}
             >
               <ScrollDownButton onClick={onScrollNext} />
@@ -728,6 +732,7 @@ export function CasesPage() {
               key={label}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
+              exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08, ease: [0.4, 0, 0.05, 1] } }}
               transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: [0.4, 0, 0.05, 1] }}
             >
               <NavBtn
@@ -747,6 +752,7 @@ export function CasesPage() {
               style={{ gap: 10 }}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
+              exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08 + 0.16, ease: [0.4, 0, 0.05, 1] } }}
               transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12 + 0.24, ease: [0.4, 0, 0.05, 1] }}
             >
               <CaseNavItem

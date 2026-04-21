@@ -11,16 +11,19 @@ let contactAnimPlayed = false;
 function Reveal({
   children,
   delay = 0,
+  exitDelay = 0,
   show,
 }: {
   children: React.ReactNode;
   delay?: number;
+  exitDelay?: number;
   show: boolean;
 }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: show ? 1 : 0, y: show ? 0 : 18 }}
+      exit={{ opacity: 0, y: 18, transition: { duration: 0.35, delay: exitDelay, ease: [0.4, 0, 0.05, 1] } }}
       transition={{ duration: 0.7, delay, ease: [0.4, 0, 0.05, 1] }}
     >
       {children}
@@ -155,7 +158,7 @@ export function ContactPage() {
           <div style={{ width: "607.5px", maxWidth: "calc(100% - 64px)", display: "flex", flexDirection: "column", gap: "24px" }}>
 
             {/* ── FormSection ── */}
-            <Reveal show={showText} delay={0.2}>
+            <Reveal show={showText} delay={0.2} exitDelay={0}>
               <form
                 onSubmit={handleSubmit}
                 style={{ display: "flex", flexDirection: "column", gap: "24px" }}
@@ -260,7 +263,7 @@ export function ContactPage() {
             </Reveal>
 
             {/* ── LinksSection ── */}
-            <Reveal show={showText} delay={0}>
+            <Reveal show={showText} delay={0} exitDelay={0.12}>
               <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
 
                 {/* EyeBrow 02 . Links */}
@@ -323,6 +326,7 @@ export function ContactPage() {
                 key={label}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
+                exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08, ease: [0.4, 0, 0.05, 1] } }}
                 transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: [0.4, 0, 0.05, 1] }}
                 onClick={action}
                 className="group flex items-center gap-2"
