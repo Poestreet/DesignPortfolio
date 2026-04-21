@@ -1,27 +1,79 @@
-# Julien Bourcet, Designer
+# Julien Bourcet — Senior Product Designer
 
-> Le pont entre la stratégie et la haute fidélité. Product designer autodidacte depuis 1998.
+> Le pont entre la stratégie et la haute fidélité. Autodidacte depuis 1998. « Le simple est inépuisable. »
 
 ## Qui suis-je ?
 
-Julien Bourcet est product designer avec plus de 15 ans d'expérience. Autodidacte depuis 1998, il a évolué du graphisme print au product design digital. Il intervient sur des projets B2B, B2C, B2G, SaaS, mobilité et e-commerce, en France et à l'international.
+Julien Bourcet est senior product designer avec plus de 20 ans d'expérience, autodidacte depuis 1998. Son parcours : infographiste print → web designer → UX/UI designer → product designer. Il intervient en France et à l'international sur des projets B2B, B2C, B2G, SaaS, mobilité, tourisme et e-commerce.
 
-Sa conviction, inspirée de Christian Bobin : « Le simple est inépuisable. » Résoudre des problèmes complexes par des solutions épurées, performantes et centrées sur l'utilisateur.
+Sa conviction, empruntée à Christian Bobin : « Le simple est inépuisable. » Résoudre des problèmes complexes par des solutions épurées, accessibles et centrées sur l'utilisateur réel.
+
+Il travaille en freelance et en cabinet, seul ou en équipes de tailles variées. Il se forme en continu sur la data, l'accessibilité, le front-end, les méthodologies, l'intelligence artificielle et les design systems.
 
 ## Expertises
 
-- **Design Systems & DesignOps** — conception, gouvernance et scalabilité de systèmes de design
-- **UX Research & Product Discovery** — entretiens, tests utilisateurs, proto-personas, Jobs To Be Done
-- **UI Design & Prototypage haute fidélité** — Figma, animations, micro-interactions
-- **Accessibilité** — WCAG 2.2 AA, RGAA, Opquast
-- **Collaboration front-end** — React, Vue, TypeScript
+**1. Recherche utilisateur (UX Research)**
+Entretiens semi-directifs, tests d'utilisabilité, proto-personas, Jobs To Be Done (Christensen), affinity mapping, synthèse quali/quanti.
 
-## Cas clients notables
+**2. Prototypage haute fidélité**
+Figma (composants, variables, auto-layout avancé, prototypage interactif), Figma Make, HTML/CSS/JS natif pour prototypes fonctionnels.
 
-- **SNCF Connect** (2021–2023) — Senior Product Designer. Refonte du tunnel d'achat et du panier sur l'application de mobilité leader en France.
-- **Rail Europe** (2016–2021) — UXI Designer. Plateforme internationale de réservation de trains.
-- **Frontguys** (2023–2025) — Senior Product Designer. Cabinet spécialisé Design Systems, DesignOps et développement front-end.
-- **L'Équipe, Radio France, eDreams / GoVoyages / Opodo, Pixalione, ENSP** — missions antérieures depuis 2006.
+**3. Conception UX**
+Architecture d'information, zoning éditorial, parcours utilisateur, heuristiques de Nielsen, 5 états du visiteur (Comprendre → Se reconnaître → Croire → Se projeter → Agir).
+
+**4. Ergonomie**
+Ergonomie IHM, ergonomie cognitive, lois de Hick et Fitts, Gestalt, design éthique (frugalité, inclusivité, respect de l'attention).
+
+**5. Conception UI & Design Systems**
+Haute fidélité, Design Systems scalables, tokens sémantiques (OKLCH pour l'accessibilité couleur), DesignOps, gouvernance et contribution.
+
+**6. Accessibilité numérique**
+WCAG 2.2 AA, RGAA 4.1, Opquast (245 règles), FALC. Accessibilité intégrée dès la spécification — jamais en post-production.
+
+**7. Collaboration front-end**
+React, Vue, TypeScript, HTML, CSS. Capacité à spécifier des composants réutilisables compatibles avec les stacks modernes.
+
+## Certifications & formations
+
+- **Contentsquare Digital Experience Analytics** — 2024
+- **Certification Qualité Web Opquast** — 2024
+- **Accessibilité numérique SNCF** — 2021
+- **UX & Design Thinking — Anatole 42** — 2020
+- **Contentsquare Fundamentals** — 2020
+- **UI Design — Gobelins Paris** — 2018
+- **Typographie — Gobelins Paris** — 2011
+
+## Parcours professionnel
+
+**Frontguys** (2023–2025) — Senior Product Designer
+Cabinet senior spécialisé Design Systems, DesignOps et développement front-end (React, Vue, TypeScript).
+
+**SNCF Connect** (2021–2023) — Senior Product Designer
+Application de mobilité leader en France (15M d'utilisateurs). Refonte du tunnel d'achat et du panier.
+
+**Rail Europe** (2016–2021) — UXI Designer
+Leader mondial de la distribution ferroviaire internationale. Portail agents B2B + refonte SPA B2C.
+
+**Depuis 2006** — Missions freelance et salariat
+L'Équipe, Radio France, eDreams / GoVoyages / Opodo, Pixalione, ENSP, WordAppeal × Lafarge, Hebdoprint.
+
+## Cas clients détaillés
+
+### SNCF Connect — Refonte du tunnel d'achat B2C (2021–2023)
+SNCF Connect est l'application de mobilité leader en France avec 15 millions d'utilisateurs. Mission : refonte UX du panier et du tunnel de commande (billetterie multimodale). Rôle : Senior Product Designer. Résultat notable : la page redessinée est toujours en ligne 2 ans après la livraison, sans modification majeure — signe d'une solution structurellement solide.
+Domaines : UX Design, Product Design, Mobilité, B2C, Tunnel d'achat, Billetterie.
+
+### Rail Europe — Portail agents B2B (2016–2021)
+Rail Europe est le leader mondial de la distribution ferroviaire internationale. Mission : conception UX d'un portail agents permettant aux revendeurs du monde entier de réserver des trains pour leurs clients. Rôle : UXI Designer. Résultats : satisfaction utilisateurs augmentée, autonomie des agents renforcée, réduction des erreurs de saisie.
+Domaines : UX Design, Product Design, Tourisme, B2B, Portail métier, Distribution internationale.
+
+### Rail Europe — Refonte SPA B2C (2016–2021)
+Refonte complète du parcours de réservation grand public Rail Europe : SPA multi-opérateurs, marchés internationaux, 11 langues. Rôle : UXI Designer. Enjeux : cohérence internationale, gestion de la complexité tarifaire, accessibilité multimarché.
+Domaines : UX Design, Product Design, Tourisme, B2C, SPA, Internationalisation.
+
+### Frontguys — Design System accessible automatisé WCAG AA (2023–2025)
+Conception et automatisation d'un Design System accessible WCAG 2.2 AA pour un client Frontguys. Utilisation de tokens couleur en OKLCH pour vérification automatique des ratios de contraste en temps réel dans Figma. Documentation, gouvernance et contribution incluses.
+Domaines : Design Systems, DesignOps, Accessibilité, WCAG 2.2, OKLCH, Figma, Automatisation, Tokens sémantiques.
 
 ## Pages disponibles
 
@@ -30,7 +82,12 @@ Sa conviction, inspirée de Christian Bobin : « Le simple est inépuisable. » 
 - Cas clients : https://www.julienbourcet.fr/cases
 - Contact : https://www.julienbourcet.fr/contact
 
+## Pour les recruteurs et décideurs
+
+Julien est disponible pour des missions senior en product design, design systems, UX research ou accessibilité. Il s'adapte aussi bien aux environnements scale-up qu'aux ETI en transformation digitale, en B2B SaaS, mobilité, tourisme ou e-commerce. Disponible en freelance ou mission cabinet.
+
 ## Contact
 
-- Email : bourcetjulien@gmail.com
-- Site : https://www.julienbourcet.fr
+- Site : https://www.julienbourcet.fr/contact
+- LinkedIn : https://linkedin.com/in/julienbourcet
+- Medium : https://medium.com/@julienbourcet
