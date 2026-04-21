@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect, useEffect } from "react";
 import { EASE_TUPLE } from "../lib/animations";
 import { useLocation } from "react-router";
 import { AnimatePresence, motion } from "motion/react";
@@ -36,6 +36,14 @@ function PageEntranceFlash() {
   );
 }
 
+// ── Page titles — centralised here to avoid AnimatePresence cleanup conflicts ──
+const PAGE_TITLES: Record<string, string> = {
+  "/":        "Julien Bourcet, Designer",
+  "/about":   "About - Julien Bourcet, Designer",
+  "/cases":   "Cases - Julien Bourcet, Designer",
+  "/contact": "Contact - Julien Bourcet, Designer",
+};
+
 type OverlayPage = "cases" | "about" | "contact" | null;
 
 export function Root() {
@@ -43,6 +51,11 @@ export function Root() {
   const isCases   = location.pathname === "/cases";
   const isAbout   = location.pathname === "/about";
   const isContact = location.pathname === "/contact";
+
+  // Update document.title on every route change
+  useEffect(() => {
+    document.title = PAGE_TITLES[location.pathname] ?? "Julien Bourcet, Designer";
+  }, [location.pathname]);
 
   const [topPage, setTopPage] = useState<OverlayPage>(() =>
     isCases ? "cases" : isAbout ? "about" : isContact ? "contact" : null
