@@ -4,12 +4,12 @@ import { AnimatePresence, motion } from "motion/react";
 import { AnimatedBackground } from "../components/AnimatedBackground";
 import { MobileCasesPage } from "../components/mobile/MobileCasesPage";
 
-import imgSncfHero       from "../../imports/CasesPageDesktop/f1725bc3c57cf3dd7645db13a41f98c510522e43.png";
-import imgSncfUI         from "../../imports/CasesPageDesktop/7725d6f86a5b9645928d53b0663fcffa1a5bba31.png";
-import imgSncfScreens    from "../../imports/CasesPageDesktop/91d3823d08cc55b2dfeef9f9cf95ea29b755b2df.png";
-import imgManutanHero    from "../../imports/CasesPageDesktop/fee28166fa517fd8c22922535651ddcc807c8fee.png";
-import imgManutanUI      from "../../imports/CasesPageDesktop/07bbb20152618083166542a433ca2836c88af76c.png";
-import imgManutanScreens from "../../imports/CasesPageDesktop/92e0ff13a74b454f6b79d4e6bc4b979656a5b149.png";
+import imgSncfHero       from "figma:asset/f1725bc3c57cf3dd7645db13a41f98c510522e43.webp";
+import imgSncfUI         from "figma:asset/7725d6f86a5b9645928d53b0663fcffa1a5bba31.webp";
+import imgSncfScreens    from "figma:asset/91d3823d08cc55b2dfeef9f9cf95ea29b755b2df.png";
+import imgManutanHero    from "figma:asset/fee28166fa517fd8c22922535651ddcc807c8fee.webp";
+import imgManutanUI      from "figma:asset/07bbb20152618083166542a433ca2836c88af76c.png";
+import imgManutanScreens from "figma:asset/92e0ff13a74b454f6b79d4e6bc4b979656a5b149.png";
 
 // ── Binary animation constants ─────────────────────────────────────────────────
 const BINARY =
@@ -117,12 +117,27 @@ const listStyle: React.CSSProperties = {
   listStylePosition: "inside",
 };
 
-function SectionHeading({ children }: { children: React.ReactNode }) {
-  return (
-    <p style={{ fontFamily: "'Fraunces', serif", fontWeight: 700, fontStyle: "italic", fontSize: "22px", lineHeight: "1.4", color: "#fafafa", margin: 0, fontVariationSettings: "'SOFT' 0, 'WONK' 1" }}>
-      {children}
-    </p>
-  );
+const headingStyle: React.CSSProperties = {
+  fontFamily: "'Fraunces', serif",
+  fontWeight: 700,
+  fontStyle: "italic",
+  fontSize: "22px",
+  lineHeight: "1.4",
+  color: "#fafafa",
+  margin: 0,
+  fontVariationSettings: "'SOFT' 0, 'WONK' 1",
+};
+
+function SectionH1({ children }: { children: React.ReactNode }) {
+  return <h1 style={headingStyle}>{children}</h1>;
+}
+
+function SectionH2({ children }: { children: React.ReactNode }) {
+  return <h2 style={headingStyle}>{children}</h2>;
+}
+
+function SectionH3({ children }: { children: React.ReactNode }) {
+  return <h3 style={headingStyle}>{children}</h3>;
 }
 
 function BodyText({ children }: { children: React.ReactNode }) {
@@ -289,7 +304,7 @@ function AnimatedHero({
             animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 18 }}
             transition={{ duration: 0.7, delay: 0, ease: [0.4, 0, 0.05, 1] }}
           >
-            <SectionHeading>{heading}</SectionHeading>
+            <SectionH1>{heading}</SectionH1>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 18 }}
@@ -328,7 +343,7 @@ function SncfChallenge() {
         <div className="flex flex-col gap-12 flex-1 min-w-0">
           <div className="flex flex-col gap-6">
             <Reveal inView={inView} index={0}>
-              <SectionHeading>Challenge</SectionHeading>
+              <SectionH2>Challenge</SectionH2>
             </Reveal>
             <Reveal inView={inView} index={1}>
               <BodyText>
@@ -340,7 +355,7 @@ function SncfChallenge() {
           </div>
           <div className="flex flex-col gap-6">
             <Reveal inView={inView} index={2}>
-              <SectionHeading>Objectives</SectionHeading>
+              <SectionH2>Objectives</SectionH2>
             </Reveal>
             <Reveal inView={inView} index={3}>
               <ol style={listStyle}>
@@ -363,7 +378,7 @@ function SncfRole() {
     <div ref={ref} id="sncf-role" style={{ height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 64px" }}>
       <div className="flex flex-col gap-6" style={{ maxWidth: 608, width: "100%" }}>
         <Reveal inView={inView} index={0}>
-          <SectionHeading>As lead designer for this redesign:</SectionHeading>
+          <SectionH3>As lead designer for this redesign:</SectionH3>
         </Reveal>
         <Reveal inView={inView} index={1}>
           <ul style={{ ...listStyle, listStyleType: "disc" }}>
@@ -391,7 +406,7 @@ function SncfResults() {
         <div className="flex flex-col gap-12 flex-1 min-w-0">
           <div className="flex flex-col gap-6">
             <Reveal inView={inView} index={1}>
-              <SectionHeading>Environment</SectionHeading>
+              <SectionH2>Environment</SectionH2>
             </Reveal>
             <Reveal inView={inView} index={2}>
               <BodyText>
@@ -403,7 +418,7 @@ function SncfResults() {
           </div>
           <div className="flex flex-col gap-6">
             <Reveal inView={inView} index={3}>
-              <SectionHeading>Results</SectionHeading>
+              <SectionH2>Results</SectionH2>
             </Reveal>
             <Reveal inView={inView} index={4}>
               <BodyText>
@@ -432,7 +447,7 @@ function ManutanChallenge() {
         <div className="flex flex-col gap-12 flex-1 min-w-0">
           <div className="flex flex-col gap-6">
             <Reveal inView={inView} index={0}>
-              <SectionHeading>Challenge</SectionHeading>
+              <SectionH2>Challenge</SectionH2>
             </Reveal>
             <Reveal inView={inView} index={1}>
               <BodyText>
@@ -444,7 +459,7 @@ function ManutanChallenge() {
           </div>
           <div className="flex flex-col gap-6">
             <Reveal inView={inView} index={2}>
-              <SectionHeading>Objectives</SectionHeading>
+              <SectionH2>Objectives</SectionH2>
             </Reveal>
             <Reveal inView={inView} index={3}>
               <ol style={listStyle}>
@@ -467,7 +482,7 @@ function ManutanRole() {
     <div ref={ref} id="manutan-role" style={{ height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 64px" }}>
       <div className="flex flex-col gap-6" style={{ maxWidth: 608, width: "100%" }}>
         <Reveal inView={inView} index={0}>
-          <SectionHeading>Responsible for redesigning the user experience (UX) and user interface (UI)</SectionHeading>
+          <SectionH3>Responsible for redesigning the user experience (UX) and user interface (UI)</SectionH3>
         </Reveal>
         <Reveal inView={inView} index={1}>
           <ul style={{ ...listStyle, listStyleType: "disc" }}>
@@ -493,7 +508,7 @@ function ManutanResults() {
         <div className="flex flex-col gap-12 flex-1 min-w-0">
           <div className="flex flex-col gap-6">
             <Reveal inView={inView} index={1}>
-              <SectionHeading>Environment</SectionHeading>
+              <SectionH2>Environment</SectionH2>
             </Reveal>
             <Reveal inView={inView} index={2}>
               <BodyText>
@@ -505,7 +520,7 @@ function ManutanResults() {
           </div>
           <div className="flex flex-col gap-6">
             <Reveal inView={inView} index={3}>
-              <SectionHeading>Results</SectionHeading>
+              <SectionH2>Results</SectionH2>
             </Reveal>
             <Reveal inView={inView} index={4}>
               <ul style={{ ...listStyle, listStyleType: "disc" }}>
