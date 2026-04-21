@@ -4,6 +4,9 @@ import { motion } from "motion/react";
 import { AnimatedBackground } from "../components/AnimatedBackground";
 import { MobileContactPage } from "../components/mobile/MobileContactPage";
 
+// One-shot flag — persists across remounts within the same session
+let contactAnimPlayed = false;
+
 // ── Staggered reveal ──────────────────────────────────────────────────────────
 function Reveal({
   children,
@@ -51,14 +54,16 @@ const placeholderStyle: React.CSSProperties = {
 
 export function ContactPage() {
   const navigate = useNavigate();
-  const [showText, setShowText] = useState(false);
-  const [showNav,  setShowNav]  = useState(false);
+  const [showText, setShowText] = useState<boolean>(() => contactAnimPlayed);
+  const [showNav,  setShowNav]  = useState<boolean>(() => contactAnimPlayed);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
+    if (contactAnimPlayed) return;
     const t = setTimeout(() => {
+      contactAnimPlayed = true;
       setShowText(true);
       setShowNav(true);
     }, 1400);

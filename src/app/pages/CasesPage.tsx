@@ -26,6 +26,10 @@ const PHOTO_FADE_DURATION = 600;
 const TEXT_REVEAL_DELAY   = 350;
 const SNCF_START_DELAY    = 1400;
 
+// ── One-shot flags — persist across remounts within the same session ───────────
+const playedHeroIds = new Set<string>();
+let   casesNavShown = false;
+
 // ── Types ─────────────────────────────────────────────────────────────────────
 type CaseId    = "sncf" | "manutan";
 type SubId     = "hero" | "challenge" | "role" | "results";
@@ -196,9 +200,11 @@ function AnimatedHero({
   onScrollNext,
   onShowContent,
 }: AnimatedHeroProps) {
-  const [phase,       setPhase]       = useState<AnimPhase>("idle");
-  const [displayed,   setDisplayed]   = useState(0);
-  const [showContent, setShowContent] = useState(false);
+  const alreadyPlayed = playedHeroIds.has(id);
+
+  const [phase,       setPhase]       = useState<AnimPhase>(() => alreadyPlayed ? "done" : "idle");
+  const [displayed,   setDisplayed]   = useState<number>(() => alreadyPlayed ? BINARY_FILL.length : 0);
+  const [showContent, setShowContent] = useState<boolean>(() => alreadyPlayed);
 
   const containerRef     = useRef<HTMLDivElement>(null);
   const intervalRef      = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -221,6 +227,7 @@ function AnimatedHero({
             setTimeout(() => setPhase("revealing"), 200);
             setTimeout(() => setPhase("done"),      200 + PHOTO_FADE_DURATION);
             setTimeout(() => {
+              playedHeroIds.add(id);
               setShowContent(true);
               onShowContentRef.current?.();
             }, 200 + PHOTO_FADE_DURATION + TEXT_REVEAL_DELAY);
@@ -231,19 +238,25 @@ function AnimatedHero({
     }, startDelay);
 
     return t;
-  }, [startDelay]); // onShowContent excluded — accessed via ref
+  }, [startDelay, id]); // onShowContent excluded — accessed via ref
 
+  // First visit: run animation. Subsequent visits: fire callback immediately (nav already visible).
   useEffect(() => {
+    if (alreadyPlayed) {
+      onShowContentRef.current?.();
+      return;
+    }
     if (useIntersection) return;
     const t = triggerAnimation();
     return () => {
       if (t !== undefined) clearTimeout(t);
       clearInterval(intervalRef.current!);
     };
-  }, [useIntersection, triggerAnimation]);
+  }, [useIntersection, triggerAnimation, alreadyPlayed]);
 
   useEffect(() => {
     if (!useIntersection) return;
+    if (alreadyPlayed) return;
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
@@ -259,7 +272,7 @@ function AnimatedHero({
       observer.disconnect();
       clearInterval(intervalRef.current!);
     };
-  }, [useIntersection, triggerAnimation]);
+  }, [useIntersection, triggerAnimation, alreadyPlayed]);
 
   const binaryOpacity = phase === "revealing" || phase === "done" ? 0 : 1;
   const imageVisible  = phase === "revealing" || phase === "done";
@@ -628,7 +641,7 @@ export function CasesPage() {
 
   const [activeCase,       setActiveCase]       = useState<CaseId>("sncf");
   const [activeSubSection, setActiveSubSection] = useState<SubId>("hero");
-  const [showNav,          setShowNav]          = useState(false);
+  const [showNav,          setShowNav]          = useState(() => casesNavShown);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -681,7 +694,7 @@ export function CasesPage() {
           heading="Optimisation and Redesign of the B2C Shopping Cart"
           body="Shopping cart suffered from structural complexity and a lack of clarity, which was a source of frustration. The challenge was to reorganise the information hierarchy to simplify it and make it more effective (multi-product, key actions), whilst managing the legal constraints imposed by the legal team regarding the display of partnership offers (insurance) and mandatory disclosures."
           onScrollNext={() => scrollTo("sncf-challenge")}
-          onShowContent={() => setShowNav(true)}
+          onShowContent={() => { casesNavShown = true; setShowNav(true); }}
         />
         <SncfChallenge />
         <SncfRole />

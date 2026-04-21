@@ -22,6 +22,9 @@ const TEXT_REVEAL_DELAY   = 350;
 
 type Phase = "idle" | "typing" | "revealing" | "done";
 
+// One-shot flag — persists across remounts within the same session
+let aboutAnimPlayed = false;
+
 // ── Staggered reveal wrapper ──────────────────────────────────────────────────
 function Reveal({
   children,
@@ -77,15 +80,17 @@ function Tag({ label }: { label: string }) {
 export function AboutPage() {
   const navigate = useNavigate();
 
-  const [phase,     setPhase]     = useState<Phase>("idle");
-  const [displayed, setDisplayed] = useState(0);
-  const [showText,  setShowText]  = useState(false);
-  const [showNav,   setShowNav]   = useState(false);
+  const [phase,     setPhase]     = useState<Phase>(() => aboutAnimPlayed ? "done" : "idle");
+  const [displayed, setDisplayed] = useState<number>(() => aboutAnimPlayed ? BINARY_FILL.length : 0);
+  const [showText,  setShowText]  = useState<boolean>(() => aboutAnimPlayed);
+  const [showNav,   setShowNav]   = useState<boolean>(() => aboutAnimPlayed);
 
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);;
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // ── Entrance sequence ─────────────────────────────────────────────────────────
+  // ── Entrance sequence — plays once per session ────────────────────────────────
   useEffect(() => {
+    if (aboutAnimPlayed) return;
+
     const startTimer = setTimeout(() => {
       setPhase("typing");
       intervalRef.current = setInterval(() => {
@@ -96,6 +101,7 @@ export function AboutPage() {
             setTimeout(() => setPhase("revealing"), 200);
             setTimeout(() => setPhase("done"),      200 + PHOTO_FADE_DURATION);
             setTimeout(() => {
+              aboutAnimPlayed = true;
               setShowText(true);
               setShowNav(true);
             }, 200 + PHOTO_FADE_DURATION + TEXT_REVEAL_DELAY);
