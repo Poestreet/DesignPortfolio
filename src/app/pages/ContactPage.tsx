@@ -254,7 +254,7 @@ export function ContactPage() {
                     type="submit"
                     disabled={status === "sending" || status === "sent"}
                     className="group flex items-center gap-2"
-                    style={{ background: "transparent", border: "none", padding: 0, cursor: status === "sent" ? "default" : "pointer", opacity: status === "sending" ? 0.6 : 1, transition: "opacity 0.2s ease" }}
+                    style={{ background: "transparent", border: "none", padding: 0, alignSelf: "flex-start", cursor: status === "sent" ? "default" : "pointer", opacity: status === "sending" ? 0.6 : 1, transition: "opacity 0.2s ease" }}
                   >
                     <span
                       className="block h-px transition-all duration-300 w-8 group-hover:w-12 shrink-0"

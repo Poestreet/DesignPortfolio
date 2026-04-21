@@ -202,19 +202,27 @@ Page 404 personnalisée avec :
 
 ### src/styles/index.css — Focus visible global (WCAG 2.4.11)
 
-Ajout d'une règle `@layer base` couvrant tous les éléments interactifs du portfolio :
+Règle `@layer base` couvrant tous les éléments interactifs du portfolio :
 
 | Règle CSS | Cible | Règle |
 |-----------|-------|-------|
-| `:focus-visible { outline: 2px solid #fafafa; outline-offset: 4px; border-radius: 2px }` | Tous les `<button>`, `<a>`, `<nav>` sans classe `outline-none` (nav, submit, liens externes) | WCAG 2.4.11 (AA) |
-| `input:focus-visible, textarea:focus-visible { outline: none; box-shadow: 0 3px 0 0 rgba(250,250,250,0.35) }` | Champs formulaire (design à bordure inférieure seule) | WCAG 2.4.11 |
-| `.skip-link:focus-visible { outline-color: #070071 }` | Skip link (fond #fafafa clair) | WCAG 2.4.11 |
+| `:focus-visible { outline: none; box-shadow: 0 2px 0 0 currentColor }` | Tous `<button>`, `<a>` sans classe `outline-none` — soulignement adaptatif | WCAG 2.4.11 (AA) |
+| `input/textarea:focus-visible { box-shadow: 0 3px 0 0 rgba(250,250,250,0.5); border-bottom-color: #fafafa }` | Champs formulaire (design à bordure inférieure seule) | WCAG 2.4.11 |
+| `.skip-link:focus-visible { box-shadow: 0 2px 0 0 #070071 }` | Skip link (fond #fafafa clair) | WCAG 2.4.11 |
 
-**Pourquoi `@layer base` et non une règle nue ?** Les composants shadcn/ui utilisent la classe utilitaire `outline-none` (`@layer utilities`). Les utilities ayant priorité sur base, ils gardent leurs propres styles `:focus-visible` (ring via box-shadow). Les éléments du portfolio sans classe outline-none héritent de la règle base. Sans ce wrapping, la règle nue aurait écrasé les composants shadcn.
+**Pourquoi `box-shadow` et non `outline` ?**
+- `outline` sur les navs positionnées à `right: 0` peut être clippé par les parents `overflow: hidden`.
+- `outline` crée une boîte rectangulaire visible, incohérente avec le design typographique du portfolio.
+- `box-shadow: 0 2px 0 0 currentColor` simule un soulignement, dessiné au bas du bouton.
+- **`currentColor` adapte automatiquement** : `#070071` sur homepage (fond blanc, texte sombre), `#fafafa` sur les pages intérieures (fond sombre, texte clair). Zéro règle supplémentaire par page.
 
-**Pourquoi `outline: none` était problématique ?** Le style inline `outline: "none"` dans `placeholderStyle` (ContactPage) et `fieldStyle` (MobileContactPage) avait une spécificité inline (1-0-0-0), écrasant tout. Supprimé dans les deux fichiers — la règle CSS `input:focus-visible` prend le relais.
+**Pourquoi `@layer base` et non une règle nue ?** Les composants shadcn/ui utilisent `outline-none` (`@layer utilities` > `@layer base`). Ils gardent leurs propres styles `:focus-visible` (ring via box-shadow). Sans ce wrapping, la règle nue aurait écrasé les composants shadcn.
 
-**Contexte sombre :** `#fafafa` sur `#070071` → ratio de contraste ≈ 17.5:1 (dépasse le minimum 3:1 requis par WCAG 2.4.11 pour la couleur du focus).
+**`inline outline: "none"` supprimé** dans `placeholderStyle` (ContactPage) et `fieldStyle` (MobileContactPage) — les styles inline bloquaient la règle CSS (spécificité 1-0-0-0).
+
+**Contrastes :** `#fafafa` sur `#070071` ≈ 17.5:1 · `#070071` sur `#fafafa` ≈ 17.5:1 — très au-dessus du minimum 3:1 requis (WCAG 2.4.11).
+
+**Boutons "Reach me"** (ContactPage desktop + mobile) : `alignSelf: "flex-start"` ajouté — le parent `flexDirection: "column"` les étirait à 100% de largeur.
 
 ---
 
