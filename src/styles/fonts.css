@@ -1,1 +1,2 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,400&family=Outfit:wght@300;400&display=swap');
+/* Fonts are loaded via <link> in index.html (preconnect + stylesheet).
+   Loading here via @import would block CSS parsing — avoid. */

@@ -1,16 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Julien Bourcet, Designer</title>
-      <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
-    </head>
+    <!-- ── Primary meta ───────────────────────────────────────────────── -->
+    <title>Julien Bourcet — Product Designer</title>
+    <meta name="description" content="Product designer since 2006. UX/UI, design systems, accessibility and front-end. Clients: SNCF Connect, Rail Europe, L'Équipe, Radio France." />
+    <meta name="author" content="Julien Bourcet" />
+    <link rel="canonical" href="https://julienbourcet.com" />
 
-    <body>
-      <div id="root"></div>
-      <script type="module" src="/src/main.tsx"></script>
-    </body>
-  </html>
-  
+    <!-- ── Open Graph ─────────────────────────────────────────────────── -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://julienbourcet.com" />
+    <meta property="og:title" content="Julien Bourcet — Product Designer" />
+    <meta property="og:description" content="Product designer since 2006. UX/UI, design systems, accessibility and front-end. Clients: SNCF Connect, Rail Europe, L'Équipe, Radio France." />
+    <meta property="og:image" content="https://julienbourcet.com/og-image.png" /><!-- TODO: ajouter une vraie og:image 1200×630px -->
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Julien Bourcet" />
+
+    <!-- ── Twitter Card ───────────────────────────────────────────────── -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Julien Bourcet — Product Designer" />
+    <meta name="twitter:description" content="Product designer since 2006. UX/UI, design systems, accessibility and front-end. Clients: SNCF Connect, Rail Europe, L'Équipe, Radio France." />
+    <meta name="twitter:image" content="https://julienbourcet.com/og-image.png" /><!-- TODO: même image que og:image -->
+
+    <!-- ── Theme color (mobile browser chrome) ───────────────────────── -->
+    <meta name="theme-color" content="#070071" />
+
+    <!-- ── Fonts — <link> in head > CSS @import (non-blocking, earlier) ─ -->
+    <!-- Weights actually used: Outfit 400/500/800 · Fraunces italic 700  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,300;1,9..144,700&family=Outfit:wght@400;500;800&display=swap" />
+
+    <!-- ── Structured data: Person ────────────────────────────────────── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Julien Bourcet",
+      "jobTitle": "Product Designer",
+      "url": "https://julienbourcet.com",
+      "description": "Product designer since 2006. Expertise in UX/UI, design systems, accessibility and front-end development.",
+      "knowsAbout": [
+        "UX Design", "UI Design", "Design Systems", "DesignOps",
+        "Product Design", "Accessibility", "Front-End Development", "UX Research"
+      ]
+    }
+    </script>
+
+    <!-- ── Structured data: WebSite ───────────────────────────────────── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Julien Bourcet — Product Designer",
+      "url": "https://julienbourcet.com",
+      "description": "Portfolio of Julien Bourcet, product designer specialized in UX/UI, design systems, accessibility and front-end development.",
+      "author": {
+        "@type": "Person",
+        "name": "Julien Bourcet"
+      }
+    }
+    </script>
+
+    <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
