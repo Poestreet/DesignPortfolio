@@ -697,40 +697,7 @@ export function CasesPage() {
         <AnimatedBackground />
       </div>
 
-      {/* Scrollable content */}
-      <div
-        ref={scrollRef}
-        style={{ position: "absolute", inset: 0, overflowY: "auto", overflowX: "hidden" }}
-      >
-        <AnimatedHero
-          id="sncf-hero"
-          image={imgSncfHero}
-          startDelay={SNCF_START_DELAY}
-          useIntersection={false}
-          heading="Optimisation and Redesign of the B2C Shopping Cart"
-          body="Shopping cart suffered from structural complexity and a lack of clarity, which was a source of frustration. The challenge was to reorganise the information hierarchy to simplify it and make it more effective (multi-product, key actions), whilst managing the legal constraints imposed by the legal team regarding the display of partnership offers (insurance) and mandatory disclosures."
-          onScrollNext={() => scrollTo("sncf-challenge")}
-          onShowContent={() => { casesNavShown = true; setShowNav(true); }}
-        />
-        <SncfChallenge />
-        <SncfRole />
-        <SncfResults />
-
-        <AnimatedHero
-          id="manutan-hero"
-          image={imgManutanHero}
-          startDelay={0}
-          useIntersection={true}
-          heading="Strategic Overhaul of Research: Design and Performance"
-          body="Search experience suffered from low search engine usage and a high bounce rate, particularly for paid traffic (SEA), which indicated a mismatch between the interface provided and users' expectations. The challenge was therefore to simplify the search experience, improve the relevance of results and make the tool more intuitive in order to encourage its use."
-          onScrollNext={() => scrollTo("manutan-challenge")}
-        />
-        <ManutanChallenge />
-        <ManutanRole />
-        <ManutanResults />
-      </div>
-
-      {/* Navigation */}
+      {/* Navigation — DOM-before-content for correct keyboard tab order (WCAG 2.4.3) */}
       <div
         style={{
           position: "absolute", top: 0, bottom: 0, right: 0, zIndex: 30,
@@ -798,6 +765,39 @@ export function CasesPage() {
             </motion.div>
           ))}
         </div>
+      </div>
+
+      {/* Scrollable content — DOM-after-nav so nav is reached first by keyboard */}
+      <div
+        ref={scrollRef}
+        style={{ position: "absolute", inset: 0, overflowY: "auto", overflowX: "hidden" }}
+      >
+        <AnimatedHero
+          id="sncf-hero"
+          image={imgSncfHero}
+          startDelay={SNCF_START_DELAY}
+          useIntersection={false}
+          heading="Optimisation and Redesign of the B2C Shopping Cart"
+          body="Shopping cart suffered from structural complexity and a lack of clarity, which was a source of frustration. The challenge was to reorganise the information hierarchy to simplify it and make it more effective (multi-product, key actions), whilst managing the legal constraints imposed by the legal team regarding the display of partnership offers (insurance) and mandatory disclosures."
+          onScrollNext={() => scrollTo("sncf-challenge")}
+          onShowContent={() => { casesNavShown = true; setShowNav(true); }}
+        />
+        <SncfChallenge />
+        <SncfRole />
+        <SncfResults />
+
+        <AnimatedHero
+          id="manutan-hero"
+          image={imgManutanHero}
+          startDelay={0}
+          useIntersection={true}
+          heading="Strategic Overhaul of Research: Design and Performance"
+          body="Search experience suffered from low search engine usage and a high bounce rate, particularly for paid traffic (SEA), which indicated a mismatch between the interface provided and users' expectations. The challenge was therefore to simplify the search experience, improve the relevance of results and make the tool more intuitive in order to encourage its use."
+          onScrollNext={() => scrollTo("manutan-challenge")}
+        />
+        <ManutanChallenge />
+        <ManutanRole />
+        <ManutanResults />
       </div>
     </div>
       </div>

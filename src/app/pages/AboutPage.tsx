@@ -123,6 +123,46 @@ export function AboutPage() {
       <div className="hidden md:block w-full h-full">
     <div className="relative w-full h-full overflow-hidden">
 
+      {/* ── Nav — DOM-first for correct keyboard tab order (WCAG 2.4.3) ── */}
+      <nav
+        className="absolute flex flex-col items-end z-20"
+        style={{ top: "16px", right: "16px", gap: "16px" }}
+      >
+        {[
+          { label: "Cases",    action: () => navigate("/cases") },
+          { label: "Contact",  action: () => navigate("/contact") },
+          { label: "Homepage", action: () => navigate("/") },
+        ].map(({ label, action }, i, arr) => (
+          <motion.button
+            key={label}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
+            exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08, ease: EASE_TUPLE } }}
+            transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: EASE_TUPLE }}
+            onClick={action}
+            className="flex items-center gap-2 group"
+            style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}
+          >
+            <span
+              className="block w-8 h-px transition-all duration-300 group-hover:w-12"
+              style={{ background: "#fafafa" }}
+            />
+            <span
+              className="uppercase"
+              style={{
+                fontSize: "11px",
+                letterSpacing: "0.2em",
+                color: "#fafafa",
+                fontFamily: "'Outfit', sans-serif",
+                fontWeight: 800,
+              }}
+            >
+              {label}
+            </span>
+          </motion.button>
+        ))}
+      </nav>
+
       {/* ── Animated background (full bleed) ── */}
       <div className="absolute inset-0">
         <AnimatedBackground />
@@ -298,46 +338,6 @@ export function AboutPage() {
         </div>
 
       </div>
-
-      {/* ── Nav — absolute top right ── */}
-      <nav
-        className="absolute flex flex-col items-end z-20"
-        style={{ top: "16px", right: "16px", gap: "16px" }}
-      >
-        {[
-          { label: "Cases",    action: () => navigate("/cases") },
-          { label: "Contact",  action: () => navigate("/contact") },
-          { label: "Homepage", action: () => navigate("/") },
-        ].map(({ label, action }, i, arr) => (
-          <motion.button
-            key={label}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
-            exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08, ease: EASE_TUPLE } }}
-            transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: EASE_TUPLE }}
-            onClick={action}
-            className="flex items-center gap-2 group"
-            style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}
-          >
-            <span
-              className="block w-8 h-px transition-all duration-300 group-hover:w-12"
-              style={{ background: "#fafafa" }}
-            />
-            <span
-              className="uppercase"
-              style={{
-                fontSize: "11px",
-                letterSpacing: "0.2em",
-                color: "#fafafa",
-                fontFamily: "'Outfit', sans-serif",
-                fontWeight: 800,
-              }}
-            >
-              {label}
-            </span>
-          </motion.button>
-        ))}
-      </nav>
 
     </div>
       </div>

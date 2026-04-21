@@ -125,6 +125,7 @@ export function Root() {
               position: "fixed",
               inset: 0,
               zIndex: topPage === "cases" ? 51 : 50,
+              color: "#fafafa",
             }}
           >
             <PageEntranceFlash />
@@ -146,6 +147,7 @@ export function Root() {
               position: "fixed",
               inset: 0,
               zIndex: topPage === "about" ? 51 : 50,
+              color: "#fafafa",
             }}
           >
             <PageEntranceFlash />
@@ -167,6 +169,7 @@ export function Root() {
               position: "fixed",
               inset: 0,
               zIndex: topPage === "contact" ? 51 : 50,
+              color: "#fafafa",
             }}
           >
             <PageEntranceFlash />

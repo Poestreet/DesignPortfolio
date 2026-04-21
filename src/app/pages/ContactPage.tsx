@@ -132,6 +132,47 @@ export function ContactPage() {
         {/* LeftCol — content + navigation */}
         <div className="relative flex-1 h-full min-w-0 flex flex-col items-center justify-center">
 
+          {/* ── Navigation — DOM-first for correct keyboard tab order (WCAG 2.4.3) ── */}
+          <nav
+            className="absolute flex flex-col items-end"
+            style={{ top: "16px", right: "16px", gap: "16px" }}
+          >
+            {[
+              { label: "Cases",    action: () => navigate("/cases") },
+              { label: "About",    action: () => navigate("/about") },
+              { label: "Homepage", action: () => navigate("/") },
+            ].map(({ label, action }, i, arr) => (
+              <motion.button
+                key={label}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
+                exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08, ease: EASE_TUPLE } }}
+                transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: EASE_TUPLE }}
+                onClick={action}
+                className="group flex items-center gap-2"
+                style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer" }}
+              >
+                <span
+                  className="block h-px transition-all duration-300 w-8 group-hover:w-12 shrink-0"
+                  style={{ background: "#fafafa" }}
+                />
+                <span
+                  style={{
+                    fontFamily: "'Outfit', sans-serif",
+                    fontWeight: 800,
+                    fontSize: "11px",
+                    lineHeight: "16.5px",
+                    letterSpacing: "3px",
+                    textTransform: "uppercase",
+                    color: "#fafafa",
+                  }}
+                >
+                  {label}
+                </span>
+              </motion.button>
+            ))}
+          </nav>
+
           {/* ── MainContent (607.5px) ── */}
           <div style={{ width: "607.5px", maxWidth: "calc(100% - 64px)", display: "flex", flexDirection: "column", gap: "24px" }}>
 
@@ -340,47 +381,6 @@ export function ContactPage() {
             </Reveal>
 
           </div>
-
-          {/* ── Navigation — absolute top right of LeftCol ── */}
-          <nav
-            className="absolute flex flex-col items-end"
-            style={{ top: "16px", right: "16px", gap: "16px" }}
-          >
-            {[
-              { label: "Cases",    action: () => navigate("/cases") },
-              { label: "About",    action: () => navigate("/about") },
-              { label: "Homepage", action: () => navigate("/") },
-            ].map(({ label, action }, i, arr) => (
-              <motion.button
-                key={label}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
-                exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08, ease: EASE_TUPLE } }}
-                transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: EASE_TUPLE }}
-                onClick={action}
-                className="group flex items-center gap-2"
-                style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer" }}
-              >
-                <span
-                  className="block h-px transition-all duration-300 w-8 group-hover:w-12 shrink-0"
-                  style={{ background: "#fafafa" }}
-                />
-                <span
-                  style={{
-                    fontFamily: "'Outfit', sans-serif",
-                    fontWeight: 800,
-                    fontSize: "11px",
-                    lineHeight: "16.5px",
-                    letterSpacing: "3px",
-                    textTransform: "uppercase",
-                    color: "#fafafa",
-                  }}
-                >
-                  {label}
-                </span>
-              </motion.button>
-            ))}
-          </nav>
 
         </div>
       </div>

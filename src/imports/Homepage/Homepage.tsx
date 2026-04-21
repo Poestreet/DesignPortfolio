@@ -107,6 +107,45 @@ export default function Homepage() {
       <div className="hidden md:block w-full h-full">
         <div className="bg-[#fafafa] relative size-full overflow-hidden">
 
+          {/* Navigation — DOM-first for correct keyboard tab order (WCAG 2.4.3) */}
+          <motion.nav
+            className="absolute flex flex-col items-end"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : -10 }}
+            transition={{ duration: 0.7, ease: EASE_TUPLE }}
+            style={{ top: "16px", right: "16px", gap: "16px", zIndex: 10 }}
+          >
+            {[
+              { label: "About",   action: () => navigate("/about") },
+              { label: "Cases",   action: () => navigate("/cases") },
+              { label: "Contact", action: () => navigate("/contact") },
+            ].map(({ label, action }) => (
+              <button
+                key={label}
+                onClick={action}
+                className="flex items-center gap-2 group"
+                style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0, color: "#070071" }}
+              >
+                <span
+                  className="block w-8 h-px transition-all duration-300 group-hover:w-12"
+                  style={{ background: "#070071" }}
+                />
+                <span
+                  className="uppercase"
+                  style={{
+                    fontSize: "11px",
+                    letterSpacing: "0.2em",
+                    color: "#070071",
+                    fontFamily: "'Outfit', sans-serif",
+                    fontWeight: 800,
+                  }}
+                >
+                  {label}
+                </span>
+              </button>
+            ))}
+          </motion.nav>
+
           {/* ── Binary mask — own mask, always at final position ── */}
           <motion.div
             className="absolute inset-0"
@@ -222,45 +261,6 @@ export default function Homepage() {
               <AnimatedBackground />
             </motion.div>
           </div>
-
-          {/* Navigation — appears after AnimatedBackground on first visit, after slide on repeat */}
-          <motion.nav
-            className="absolute flex flex-col items-end"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : -10 }}
-            transition={{ duration: 0.7, ease: EASE_TUPLE }}
-            style={{ top: "16px", right: "16px", gap: "16px", zIndex: 10 }}
-          >
-            {[
-              { label: "About",   action: () => navigate("/about") },
-              { label: "Cases",   action: () => navigate("/cases") },
-              { label: "Contact", action: () => navigate("/contact") },
-            ].map(({ label, action }) => (
-              <button
-                key={label}
-                onClick={action}
-                className="flex items-center gap-2 group"
-                style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}
-              >
-                <span
-                  className="block w-8 h-px transition-all duration-300 group-hover:w-12"
-                  style={{ background: "#070071" }}
-                />
-                <span
-                  className="uppercase"
-                  style={{
-                    fontSize: "11px",
-                    letterSpacing: "0.2em",
-                    color: "#070071",
-                    fontFamily: "'Outfit', sans-serif",
-                    fontWeight: 800,
-                  }}
-                >
-                  {label}
-                </span>
-              </button>
-            ))}
-          </motion.nav>
 
         </div>
       </div>

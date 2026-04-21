@@ -200,6 +200,47 @@ Page 404 personnalisée avec :
 | Opquast R223 | ✅ page 404 personnalisée |
 | Opquast R225 | ✅ navigation principale présente |
 
+### Ordre de navigation clavier — DOM-first (WCAG 2.4.3)
+
+La navigation est positionnée visuellement en `position: absolute` en haut à droite, mais était placée **en fin de DOM** dans chaque page — la rendant inatteignable facilement au clavier (Tab arrivait en dernier).
+
+**Correction appliquée sur 6 fichiers :**
+
+| Fichier | Action |
+|---------|--------|
+| `src/imports/Homepage/Homepage.tsx` | `<motion.nav>` déplacé comme **premier enfant** du wrapper (avant binary mask et AnimatedBackground) |
+| `src/app/components/mobile/MobileHomePage.tsx` | `<motion.nav>` déplacé comme **premier enfant** du wrapper |
+| `src/app/pages/AboutPage.tsx` | `<nav>` déplacé comme **premier enfant** du wrapper (avant AnimatedBackground et la flex row) |
+| `src/app/pages/ContactPage.tsx` | `<nav>` déplacé comme **premier enfant** de LeftCol (avant le bloc MainContent) |
+| `src/app/pages/CasesPage.tsx` | Bloc navigation déplacé **avant** le div scrollable — ordre keyboard : nav primaire → nav secondaire → contenu |
+
+**Principe :** `position: absolute/fixed` n'affecte que le rendu visuel, pas l'ordre de tabulation. L'ordre de tabulation suit le DOM source. Navigation DOM-first = keyboard-first, sans impact visuel.
+
+**Règle couverte :** WCAG 2.4.3 (Focus Order AA)
+
+---
+
+### `currentColor` sur les pages intérieures — Root.tsx (WCAG 2.4.11)
+
+Le soulignement de focus `box-shadow: 0 2px 0 0 currentColor` résolvait en couleur sombre sur les pages intérieures (Cases, About, Contact). Cause : les wrappers `motion.div` dans Root.tsx n'avaient pas de `color` défini, héritant donc du body (`oklch(0.145 0 0)` = quasi-noir).
+
+**Correction :** `color: "#fafafa"` ajouté sur les trois wrappers `motion.div` des pages intérieures dans `src/app/components/Root.tsx`.
+
+```tsx
+style={{
+  position: "fixed",
+  inset: 0,
+  zIndex: topPage === "cases" ? 51 : 50,
+  color: "#fafafa",  // ← nouveau — currentColor résout en #fafafa sur fond sombre
+}}
+```
+
+`currentColor` cascade correctement vers tous les éléments enfants (boutons, liens, champs de formulaire). La homepage garde son propre `color: "#070071"` explicite sur les boutons nav (fond blanc).
+
+**Règle couverte :** WCAG 2.4.11 (Focus Appearance AA) — contraste focus ≥ 3:1 : `#fafafa` sur fond sombre ≈ 17.5:1 ✅
+
+---
+
 ### src/styles/index.css — Focus visible global (WCAG 2.4.11)
 
 Règle `@layer base` couvrant tous les éléments interactifs du portfolio :
