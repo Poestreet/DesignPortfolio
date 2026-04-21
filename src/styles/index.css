@@ -16,7 +16,7 @@
 @layer base {
   :focus-visible {
     outline: none;
-    box-shadow: 0 2px 0 0 currentColor;
+    box-shadow: 0 1px 0 0 currentColor;
   }
 
   /* Champs de formulaire : design à bordure inférieure seule.
@@ -30,6 +30,6 @@
 
   /* Skip link : fond #fafafa clair → soulignement en bleu foncé */
   .skip-link:focus-visible {
-    box-shadow: 0 2px 0 0 #070071;
+    box-shadow: 0 1px 0 0 #070071;
   }
 }
