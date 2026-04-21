@@ -21,4 +21,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://julienbourcet.com/sitemap.xml
+Sitemap: https://www.julienbourcet.fr/sitemap.xml
