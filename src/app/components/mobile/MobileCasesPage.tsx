@@ -1,4 +1,6 @@
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { motion, AnimatePresence } from "motion/react";
 import { AnimatedBackground } from "../AnimatedBackground";
 import imgSncfHero from "figma:asset/f1725bc3c57cf3dd7645db13a41f98c510522e43.png";
 import imgSncfUI from "figma:asset/7725d6f86a5b9645928d53b0663fcffa1a5bba31.png";
@@ -40,6 +42,33 @@ const listStyle: React.CSSProperties = {
   margin: 0,
   listStylePosition: "inside",
 };
+
+// ── Scroll To Top Button ───────────────────────────────────────────────────────
+function ScrollToTopButton({ onClick }: { onClick: () => void }) {
+  return (
+    <motion.button
+      onClick={onClick}
+      whileTap={{ y: -6 }}
+      transition={{ type: "spring", stiffness: 300, damping: 12 }}
+      style={{
+        background: "transparent",
+        border: "none",
+        padding: 0,
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+      aria-label="Scroll to top"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fafafa" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="m16 12-4-4-4 4"/>
+        <path d="M12 16V8"/>
+      </svg>
+    </motion.button>
+  );
+}
 
 // ── Divider between cases ──────────────────────────────────────────────────────
 function CaseDivider() {
@@ -637,13 +666,45 @@ function ManutanCase() {
 // ── Main Mobile Cases Page ─────────────────────────────────────────────────────
 export function MobileCasesPage() {
   const navigate = useNavigate();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const handleScroll = () => {
+      const progress = el.scrollTop / (el.scrollHeight - el.clientHeight);
+      setShowScrollTop(progress > 0.35);
+    };
+    el.addEventListener("scroll", handleScroll, { passive: true });
+    return () => el.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
-    <div className="relative w-full h-full overflow-y-auto">
+    <div ref={scrollRef} className="relative w-full h-full overflow-y-auto">
       {/* ── Background (fixed) ── */}
       <div className="fixed inset-0" style={{ zIndex: 0 }}>
         <AnimatedBackground />
       </div>
+
+      {/* ── Scroll to top button ── */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 8 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            style={{ position: "fixed", bottom: 24, right: 16, zIndex: 50 }}
+          >
+            <ScrollToTopButton onClick={scrollToTop} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Content ── */}
       <div className="relative pb-16">
