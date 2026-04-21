@@ -77,6 +77,41 @@ export function MobileAboutPage() {
           className="absolute inset-x-0 bottom-0"
           style={{ height: 120, background: "linear-gradient(to bottom, transparent, rgba(0,0,0,0.5))" }}
         />
+        {/* ── Navigation — absolute top-right, scrolls with page ── */}
+        <nav
+          className="absolute flex flex-col items-end"
+          style={{ top: "16px", right: "16px", gap: "32px", zIndex: 10 }}
+        >
+          {[
+            { label: "Cases",    action: () => navigate("/cases") },
+            { label: "Contact",  action: () => navigate("/contact") },
+            { label: "Homepage", action: () => navigate("/") },
+          ].map(({ label, action }) => (
+            <button
+              key={label}
+              onClick={action}
+              className="group flex items-center gap-2"
+              style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer" }}
+            >
+              <span
+                className="block h-px transition-all duration-300 w-8 group-hover:w-12 shrink-0"
+                style={{ background: "#fafafa" }}
+              />
+              <span
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontWeight: 800,
+                  fontSize: "11px",
+                  letterSpacing: "3px",
+                  textTransform: "uppercase",
+                  color: "#fafafa",
+                }}
+              >
+                {label}
+              </span>
+            </button>
+          ))}
+        </nav>
       </div>
 
       {/* ── Content section ── */}
@@ -160,41 +195,6 @@ export function MobileAboutPage() {
         </div>
       </div>
 
-      {/* ── Navigation — fixed top-right ── */}
-      <nav
-        className="fixed flex flex-col items-end"
-        style={{ top: "16px", right: "16px", gap: "32px", zIndex: 100 }}
-      >
-        {[
-          { label: "Cases",    action: () => navigate("/cases") },
-          { label: "Contact",  action: () => navigate("/contact") },
-          { label: "Homepage", action: () => navigate("/") },
-        ].map(({ label, action }) => (
-          <button
-            key={label}
-            onClick={action}
-            className="group flex items-center gap-2"
-            style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer" }}
-          >
-            <span
-              className="block h-px transition-all duration-300 w-8 group-hover:w-12 shrink-0"
-              style={{ background: "#fafafa" }}
-            />
-            <span
-              style={{
-                fontFamily: "'Outfit', sans-serif",
-                fontWeight: 800,
-                fontSize: "11px",
-                letterSpacing: "3px",
-                textTransform: "uppercase",
-                color: "#fafafa",
-              }}
-            >
-              {label}
-            </span>
-          </button>
-        ))}
-      </nav>
 
     </div>
   );
