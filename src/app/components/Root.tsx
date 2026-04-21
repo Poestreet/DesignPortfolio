@@ -1,5 +1,5 @@
 import { useState, useLayoutEffect } from "react";
-import { EASE_TUPLE } from "./lib/animations";
+import { EASE_TUPLE } from "../lib/animations";
 import { useLocation } from "react-router";
 import { AnimatePresence, motion } from "motion/react";
 import Homepage from "../../imports/Homepage/Homepage";
