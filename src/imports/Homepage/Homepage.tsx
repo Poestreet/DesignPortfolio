@@ -12,13 +12,17 @@ let homepagePlayed = false;
 const BINARY_SEED =
   "10110100111010001101001110100011010011101000110100111010001101001110100011010011101000110100111010001101001110100011010011101000110100111010001101001110100011010011101000110100111010001101001110100011010011101000110100111010001101001110100011010011101000110100111010001101001110100011010011101000";
 const BINARY_FILL = Array.from(
-  { length: Math.ceil(5000 / BINARY_SEED.length) },
+  { length: Math.ceil(3600 / BINARY_SEED.length) },
   () => BINARY_SEED
-).join("").slice(0, 5000);
+).join("").slice(0, 3600);
 
-const CHARS_PER_TICK      = 120;
+// ~3200 chars to fill the DESIGN area (1120×218px at 9px monospace)
+// ~200 chars to fill the TAGLINE area (560×24px)
+const DESIGN_CHARS        = 3200;
+
+const CHARS_PER_TICK      = 80;
 const TICK_MS             = 16;
-const TYPING_START_DELAY  = 500;
+const TYPING_START_DELAY  = 300;
 const BG_FADE_DURATION    = 700;
 
 type Phase = "idle" | "typing" | "revealing" | "done";
@@ -117,16 +121,19 @@ export default function Homepage() {
               transition:         maskTransition,
             }}
           >
-            {/* Dark base — always present, gives depth to letter cutouts */}
-            <div className="absolute inset-0" style={{ background: "#070071" }} />
-
-            {/* Binary text layer — fades out after typing */}
+            {/* Binary text — DESIGN mask area */}
             <motion.div
-              className="absolute inset-0 overflow-hidden"
+              className="absolute overflow-hidden"
               initial={{ opacity: binaryOpacity }}
               animate={{ opacity: binaryOpacity }}
               transition={{ duration: BG_FADE_DURATION / 1000, ease: "easeInOut" }}
-              style={{ pointerEvents: "none" }}
+              style={{
+                left: DESIGN_X,
+                top: DESIGN_Y,
+                width: "1120px",
+                height: "218px",
+                pointerEvents: "none",
+              }}
             >
               <p
                 style={{
@@ -134,14 +141,53 @@ export default function Homepage() {
                   fontSize: "9px",
                   lineHeight: "1.5",
                   letterSpacing: "0.05em",
-                  color: "rgba(250,250,250,0.7)",
+                  color: "#070071",
                   wordBreak: "break-all",
-                  padding: "20px",
                   margin: 0,
+                  padding: 0,
                 }}
               >
-                {BINARY_FILL.slice(0, displayed)}
-                {phase === "typing" && (
+                {BINARY_FILL.slice(0, Math.min(displayed, DESIGN_CHARS))}
+                {phase === "typing" && displayed < DESIGN_CHARS && (
+                  <motion.span
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 0.8, repeat: Infinity }}
+                    style={{ display: "inline-block", width: "1ch" }}
+                  >
+                    _
+                  </motion.span>
+                )}
+              </p>
+            </motion.div>
+
+            {/* Binary text — TAGLINE mask area (starts after DESIGN is full) */}
+            <motion.div
+              className="absolute overflow-hidden"
+              initial={{ opacity: binaryOpacity }}
+              animate={{ opacity: binaryOpacity }}
+              transition={{ duration: BG_FADE_DURATION / 1000, ease: "easeInOut" }}
+              style={{
+                left: TAGLINE_X,
+                top: TAGLINE_Y,
+                width: "560px",
+                height: "24px",
+                pointerEvents: "none",
+              }}
+            >
+              <p
+                style={{
+                  fontFamily: "monospace",
+                  fontSize: "9px",
+                  lineHeight: "1.5",
+                  letterSpacing: "0.05em",
+                  color: "#070071",
+                  wordBreak: "break-all",
+                  margin: 0,
+                  padding: 0,
+                }}
+              >
+                {BINARY_FILL.slice(0, Math.max(0, displayed - DESIGN_CHARS))}
+                {phase === "typing" && displayed >= DESIGN_CHARS && (
                   <motion.span
                     animate={{ opacity: [1, 0, 1] }}
                     transition={{ duration: 0.8, repeat: Infinity }}
