@@ -20,7 +20,7 @@ const BINARY_FILL = Array.from(
 // ~200 chars to fill the TAGLINE area (560×24px)
 const DESIGN_CHARS        = 3200;
 
-const CHARS_PER_TICK      = 80;
+const CHARS_PER_TICK      = 12;
 const TICK_MS             = 16;
 const TYPING_START_DELAY  = 50;
 const BG_FADE_DURATION    = 700;
@@ -106,33 +106,33 @@ export default function Homepage() {
       <div className="hidden md:block w-full h-full">
         <div className="bg-[#fafafa] relative size-full overflow-hidden">
 
-          {/* Masked content */}
-          <div
+          {/* ── Binary mask — own mask, always at final position ── */}
+          <motion.div
             className="absolute inset-0"
+            initial={{ opacity: binaryOpacity }}
+            animate={{ opacity: binaryOpacity }}
+            transition={{ duration: BG_FADE_DURATION / 1000, ease: "easeInOut" }}
             style={{
               maskImage:          `url("${imgBackground}"), url("${imgBackground2}")`,
               WebkitMaskImage:    `url("${imgBackground}"), url("${imgBackground2}")`,
               maskRepeat:         "no-repeat, no-repeat",
               WebkitMaskRepeat:   "no-repeat, no-repeat",
-              maskSize,
-              WebkitMaskSize:     maskSize,
-              maskPosition:       `${designPos}, ${taglinePos}`,
-              WebkitMaskPosition: `${designPos}, ${taglinePos}`,
-              transition:         maskTransition,
+              maskSize:           "1120px 218px, 560px 24px",
+              WebkitMaskSize:     "1120px 218px, 560px 24px",
+              maskPosition:       `${DESIGN_X} ${DESIGN_Y}, ${TAGLINE_X} ${TAGLINE_Y}`,
+              WebkitMaskPosition: `${DESIGN_X} ${DESIGN_Y}, ${TAGLINE_X} ${TAGLINE_Y}`,
+              pointerEvents:      "none",
             }}
           >
-            {/* Binary text — DESIGN mask area */}
-            <motion.div
-              className="absolute overflow-hidden"
-              initial={{ opacity: binaryOpacity }}
-              animate={{ opacity: binaryOpacity }}
-              transition={{ duration: BG_FADE_DURATION / 1000, ease: "easeInOut" }}
+            {/* DESIGN area */}
+            <div
               style={{
+                position: "absolute",
                 left: DESIGN_X,
                 top: DESIGN_Y,
                 width: "1120px",
                 height: "218px",
-                pointerEvents: "none",
+                overflow: "hidden",
               }}
             >
               <p
@@ -158,20 +158,17 @@ export default function Homepage() {
                   </motion.span>
                 )}
               </p>
-            </motion.div>
+            </div>
 
-            {/* Binary text — TAGLINE mask area (starts after DESIGN is full) */}
-            <motion.div
-              className="absolute overflow-hidden"
-              initial={{ opacity: binaryOpacity }}
-              animate={{ opacity: binaryOpacity }}
-              transition={{ duration: BG_FADE_DURATION / 1000, ease: "easeInOut" }}
+            {/* TAGLINE area — starts after DESIGN is full */}
+            <div
               style={{
+                position: "absolute",
                 left: TAGLINE_X,
                 top: TAGLINE_Y,
                 width: "560px",
                 height: "24px",
-                pointerEvents: "none",
+                overflow: "hidden",
               }}
             >
               <p
@@ -197,9 +194,24 @@ export default function Homepage() {
                   </motion.span>
                 )}
               </p>
-            </motion.div>
+            </div>
+          </motion.div>
 
-            {/* AnimatedBackground — fades in after binary */}
+          {/* ── AnimatedBackground mask — CSS slide on repeat visits ── */}
+          <div
+            className="absolute inset-0"
+            style={{
+              maskImage:          `url("${imgBackground}"), url("${imgBackground2}")`,
+              WebkitMaskImage:    `url("${imgBackground}"), url("${imgBackground2}")`,
+              maskRepeat:         "no-repeat, no-repeat",
+              WebkitMaskRepeat:   "no-repeat, no-repeat",
+              maskSize,
+              WebkitMaskSize:     maskSize,
+              maskPosition:       `${designPos}, ${taglinePos}`,
+              WebkitMaskPosition: `${designPos}, ${taglinePos}`,
+              transition:         maskTransition,
+            }}
+          >
             <motion.div
               className="absolute inset-0"
               initial={{ opacity: bgOpacity }}
