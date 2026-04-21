@@ -1,0 +1,36 @@
+# Julien Bourcet, Designer
+
+> Le pont entre la stratégie et la haute fidélité. Product designer autodidacte depuis 1998.
+
+## Qui suis-je ?
+
+Julien Bourcet est product designer avec plus de 15 ans d'expérience. Autodidacte depuis 1998, il a évolué du graphisme print au product design digital. Il intervient sur des projets B2B, B2C, B2G, SaaS, mobilité et e-commerce, en France et à l'international.
+
+Sa conviction, inspirée de Christian Bobin : « Le simple est inépuisable. » Résoudre des problèmes complexes par des solutions épurées, performantes et centrées sur l'utilisateur.
+
+## Expertises
+
+- **Design Systems & DesignOps** — conception, gouvernance et scalabilité de systèmes de design
+- **UX Research & Product Discovery** — entretiens, tests utilisateurs, proto-personas, Jobs To Be Done
+- **UI Design & Prototypage haute fidélité** — Figma, animations, micro-interactions
+- **Accessibilité** — WCAG 2.2 AA, RGAA, Opquast
+- **Collaboration front-end** — React, Vue, TypeScript
+
+## Cas clients notables
+
+- **SNCF Connect** (2021–2023) — Senior Product Designer. Refonte du tunnel d'achat et du panier sur l'application de mobilité leader en France.
+- **Rail Europe** (2016–2021) — UXI Designer. Plateforme internationale de réservation de trains.
+- **Frontguys** (2023–2025) — Senior Product Designer. Cabinet spécialisé Design Systems, DesignOps et développement front-end.
+- **L'Équipe, Radio France, eDreams / GoVoyages / Opodo, Pixalione, ENSP** — missions antérieures depuis 2006.
+
+## Pages disponibles
+
+- Accueil : https://julienbourcet.com
+- À propos : https://julienbourcet.com/about
+- Cas clients : https://julienbourcet.com/cases
+- Contact : https://julienbourcet.com/contact
+
+## Contact
+
+- Email : bourcetjulien@gmail.com
+- Site : https://julienbourcet.com
