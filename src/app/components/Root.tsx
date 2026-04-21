@@ -12,6 +12,24 @@ const SLIDE = {
   ease: [0.4, 0, 0.05, 1] as [number, number, number, number],
 };
 
+// White flash that fades out as the slide completes — reveals the AnimatedBackground
+function PageEntranceFlash() {
+  return (
+    <motion.div
+      style={{
+        position: "absolute",
+        inset: 0,
+        background: "#ffffff",
+        zIndex: 100,
+        pointerEvents: "none",
+      }}
+      initial={{ opacity: 1 }}
+      animate={{ opacity: 0 }}
+      transition={{ duration: 0.5, delay: 0.7, ease: "easeOut" }}
+    />
+  );
+}
+
 type OverlayPage = "cases" | "about" | "contact" | null;
 
 export function Root() {
@@ -62,6 +80,7 @@ export function Root() {
               zIndex: topPage === "cases" ? 51 : 50,
             }}
           >
+            <PageEntranceFlash />
             <CasesPage />
           </motion.div>
         )}
@@ -82,6 +101,7 @@ export function Root() {
               zIndex: topPage === "about" ? 51 : 50,
             }}
           >
+            <PageEntranceFlash />
             <AboutPage />
           </motion.div>
         )}
@@ -102,6 +122,7 @@ export function Root() {
               zIndex: topPage === "contact" ? 51 : 50,
             }}
           >
+            <PageEntranceFlash />
             <ContactPage />
           </motion.div>
         )}

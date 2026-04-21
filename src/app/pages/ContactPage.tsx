@@ -52,12 +52,16 @@ const placeholderStyle: React.CSSProperties = {
 export function ContactPage() {
   const navigate = useNavigate();
   const [showText, setShowText] = useState(false);
+  const [showNav,  setShowNav]  = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
   useEffect(() => {
-    const t = setTimeout(() => setShowText(true), 700);
+    const t = setTimeout(() => {
+      setShowText(true);
+      setShowNav(true);
+    }, 1400);
     return () => clearTimeout(t);
   }, []);
 
@@ -129,14 +133,9 @@ export function ContactPage() {
     <div className="relative w-full h-full overflow-hidden">
 
       {/* ── Animated background ── */}
-      <motion.div
-        className="absolute inset-0"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.4, ease: "easeInOut" }}
-      >
+      <div className="absolute inset-0">
         <AnimatedBackground />
-      </motion.div>
+      </div>
 
       {/* ── Two-column layout ── */}
       <div className="absolute inset-0 flex items-start">
@@ -151,7 +150,7 @@ export function ContactPage() {
           <div style={{ width: "607.5px", maxWidth: "calc(100% - 64px)", display: "flex", flexDirection: "column", gap: "24px" }}>
 
             {/* ── FormSection ── */}
-            <Reveal show={showText} delay={0}>
+            <Reveal show={showText} delay={0.2}>
               <form
                 onSubmit={handleSubmit}
                 style={{ display: "flex", flexDirection: "column", gap: "24px" }}
@@ -256,7 +255,7 @@ export function ContactPage() {
             </Reveal>
 
             {/* ── LinksSection ── */}
-            <Reveal show={showText} delay={0.2}>
+            <Reveal show={showText} delay={0}>
               <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
 
                 {/* EyeBrow 02 . Links */}
@@ -314,9 +313,12 @@ export function ContactPage() {
               { label: "Cases",    action: () => navigate("/cases") },
               { label: "About",    action: () => navigate("/about") },
               { label: "Homepage", action: () => navigate("/") },
-            ].map(({ label, action }) => (
-              <button
+            ].map(({ label, action }, i, arr) => (
+              <motion.button
                 key={label}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
+                transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: [0.4, 0, 0.05, 1] }}
                 onClick={action}
                 className="group flex items-center gap-2"
                 style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer" }}
@@ -338,7 +340,7 @@ export function ContactPage() {
                 >
                   {label}
                 </span>
-              </button>
+              </motion.button>
             ))}
           </nav>
 

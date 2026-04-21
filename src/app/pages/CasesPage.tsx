@@ -24,7 +24,7 @@ const CHARS_PER_TICK      = 200;
 const TICK_MS             = 16;
 const PHOTO_FADE_DURATION = 800;
 const TEXT_REVEAL_DELAY   = 600;
-const SNCF_START_DELAY    = 1900;
+const SNCF_START_DELAY    = 1400;
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type CaseId    = "sncf" | "manutan";
@@ -183,6 +183,7 @@ interface AnimatedHeroProps {
   startDelay?: number;
   useIntersection?: boolean;
   onScrollNext?: () => void;
+  onShowContent?: () => void;
 }
 
 function AnimatedHero({
@@ -193,6 +194,7 @@ function AnimatedHero({
   startDelay = 0,
   useIntersection = false,
   onScrollNext,
+  onShowContent,
 }: AnimatedHeroProps) {
   const [phase,       setPhase]       = useState<AnimPhase>("idle");
   const [displayed,   setDisplayed]   = useState(0);
@@ -215,7 +217,10 @@ function AnimatedHero({
             clearInterval(intervalRef.current!);
             setTimeout(() => setPhase("revealing"), 200);
             setTimeout(() => setPhase("done"),      200 + PHOTO_FADE_DURATION);
-            setTimeout(() => setShowContent(true),  200 + PHOTO_FADE_DURATION + TEXT_REVEAL_DELAY);
+            setTimeout(() => {
+              setShowContent(true);
+              onShowContent?.();
+            }, 200 + PHOTO_FADE_DURATION + TEXT_REVEAL_DELAY);
           }
           return next;
         });
@@ -223,7 +228,7 @@ function AnimatedHero({
     }, startDelay);
 
     return t;
-  }, [startDelay]);
+  }, [startDelay, onShowContent]);
 
   useEffect(() => {
     if (useIntersection) return;
@@ -296,13 +301,13 @@ function AnimatedHero({
       {/* Gradient vignette */}
       <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.45) 100%)", zIndex: 3 }} />
 
-      {/* Text content */}
+      {/* Text content — bottom-to-top stagger: scroll → body → heading */}
       <div style={{ position: "relative", zIndex: 4, width: "100%", display: "flex", justifyContent: "center", padding: "0 64px 40px" }}>
         <div className="flex flex-col gap-6" style={{ maxWidth: 608, width: "100%" }}>
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 18 }}
-            transition={{ duration: 0.7, delay: 0, ease: [0.4, 0, 0.05, 1] }}
+            transition={{ duration: 0.7, delay: 0.4, ease: [0.4, 0, 0.05, 1] }}
           >
             <SectionH1>{heading}</SectionH1>
           </motion.div>
@@ -318,7 +323,7 @@ function AnimatedHero({
               style={{ marginTop: 32, display: "flex", justifyContent: "center" }}
               initial={{ opacity: 0 }}
               animate={{ opacity: showContent ? 1 : 0 }}
-              transition={{ duration: 0.6, delay: 0.5, ease: "easeOut" }}
+              transition={{ duration: 0.6, delay: 0, ease: "easeOut" }}
             >
               <ScrollDownButton onClick={onScrollNext} />
             </motion.div>
@@ -620,6 +625,7 @@ export function CasesPage() {
 
   const [activeCase,       setActiveCase]       = useState<CaseId>("sncf");
   const [activeSubSection, setActiveSubSection] = useState<SubId>("hero");
+  const [showNav,          setShowNav]          = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -672,6 +678,7 @@ export function CasesPage() {
           heading="Optimisation and Redesign of the B2C Shopping Cart"
           body="Shopping cart suffered from structural complexity and a lack of clarity, which was a source of frustration. The challenge was to reorganise the information hierarchy to simplify it and make it more effective (multi-product, key actions), whilst managing the legal constraints imposed by the legal team regarding the display of partnership offers (insurance) and mandatory disclosures."
           onScrollNext={() => scrollTo("sncf-challenge")}
+          onShowContent={() => setShowNav(true)}
         />
         <SncfChallenge />
         <SncfRole />
@@ -700,14 +707,32 @@ export function CasesPage() {
         }}
       >
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 16 }}>
-          <NavBtn label="About"    onClick={() => navigate("/about")} />
-          <NavBtn label="Contact"  onClick={() => navigate("/contact")} />
-          <NavBtn label="Homepage" onClick={() => navigate("/")} />
+          {(["About", "Contact", "Homepage"] as const).map((label, i, arr) => (
+            <motion.div
+              key={label}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
+              transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: [0.4, 0, 0.05, 1] }}
+            >
+              <NavBtn
+                label={label}
+                onClick={() => navigate(label === "Homepage" ? "/" : `/${label.toLowerCase()}`)}
+              />
+            </motion.div>
+          ))}
         </div>
 
         <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "flex-end", justifyContent: "center", gap: 20 }}>
-          {CASES.map(({ id, label }) => (
-            <motion.div layout key={id} className="flex flex-col items-end" style={{ gap: 10 }}>
+          {CASES.map(({ id, label }, i, arr) => (
+            <motion.div
+              layout
+              key={id}
+              className="flex flex-col items-end"
+              style={{ gap: 10 }}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
+              transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12 + 0.24, ease: [0.4, 0, 0.05, 1] }}
+            >
               <CaseNavItem
                 label={label}
                 active={activeCase === id}

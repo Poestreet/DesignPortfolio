@@ -16,7 +16,7 @@ const BINARY_FILL = Array.from(
 
 const CHARS_PER_TICK      = 64;
 const TICK_MS             = 16;
-const TYPING_START_DELAY  = 1900;
+const TYPING_START_DELAY  = 1400;
 const PHOTO_FADE_DURATION = 800;
 const TEXT_REVEAL_DELAY   = 600;
 
@@ -80,6 +80,7 @@ export function AboutPage() {
   const [phase,     setPhase]     = useState<Phase>("idle");
   const [displayed, setDisplayed] = useState(0);
   const [showText,  setShowText]  = useState(false);
+  const [showNav,   setShowNav]   = useState(false);
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);;
 
@@ -94,7 +95,10 @@ export function AboutPage() {
             clearInterval(intervalRef.current!);
             setTimeout(() => setPhase("revealing"), 200);
             setTimeout(() => setPhase("done"),      200 + PHOTO_FADE_DURATION);
-            setTimeout(() => setShowText(true),     200 + PHOTO_FADE_DURATION + TEXT_REVEAL_DELAY);
+            setTimeout(() => {
+              setShowText(true);
+              setShowNav(true);
+            }, 200 + PHOTO_FADE_DURATION + TEXT_REVEAL_DELAY);
           }
           return next;
         });
@@ -122,14 +126,9 @@ export function AboutPage() {
     <div className="relative w-full h-full overflow-hidden">
 
       {/* ── Animated background (full bleed) ── */}
-      <motion.div
-        className="absolute inset-0"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2, delay: 0.7, ease: "easeInOut" }}
-      >
+      <div className="absolute inset-0">
         <AnimatedBackground />
-      </motion.div>
+      </div>
 
       {/* ── Flex row layout ── */}
       <div className="absolute inset-0 flex">
@@ -309,9 +308,12 @@ export function AboutPage() {
           { label: "Cases",    action: () => navigate("/cases") },
           { label: "Contact",  action: () => navigate("/contact") },
           { label: "Homepage", action: () => navigate("/") },
-        ].map(({ label, action }) => (
-          <button
+        ].map(({ label, action }, i, arr) => (
+          <motion.button
             key={label}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
+            transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: [0.4, 0, 0.05, 1] }}
             onClick={action}
             className="flex items-center gap-2 group"
             style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}
@@ -332,7 +334,7 @@ export function AboutPage() {
             >
               {label}
             </span>
-          </button>
+          </motion.button>
         ))}
       </nav>
 
