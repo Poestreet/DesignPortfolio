@@ -169,63 +169,107 @@ export function MobileContactPage() {
               Get in touch!
             </h1>
 
+            {/* Form status — announced to screen readers (WCAG 4.1.3) */}
+            <div role="status" aria-live="polite" aria-atomic="true" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap" }}>
+              {status === "sent"  && "Message sent successfully. I'll reach you soon!"}
+              {status === "error" && "There was an error sending your message. Please try again."}
+            </div>
+
             <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
 
+              {/* Who's writing — IDs prefixed m- to avoid R236 duplicate with desktop form */}
               <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                <label style={labelStyle}>Who's writing?</label>
+                <label htmlFor="m-contact-name" style={labelStyle}>Who's writing?</label>
                 <input
+                  id="m-contact-name"
                   type="text"
                   value={name}
                   onChange={(e) => { setName(e.target.value); clearFieldError("name"); }}
                   placeholder="your name"
+                  required
+                  autoComplete="name"
+                  aria-required="true"
+                  aria-invalid={fieldErrors.name || undefined}
+                  aria-describedby={fieldErrors.name ? "m-contact-name-error" : undefined}
                   style={{
                     ...fieldStyle,
                     borderBottomColor: fieldErrors.name ? "#ff4d4d" : "#fafafa",
                     transition: "border-color 0.2s ease",
                   }}
                 />
+                {fieldErrors.name && (
+                  <span id="m-contact-name-error" role="alert" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap" }}>
+                    Name is required.
+                  </span>
+                )}
               </div>
 
+              {/* How do i reach you */}
               <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                <label style={labelStyle}>How do i reach you?</label>
+                <label htmlFor="m-contact-email" style={labelStyle}>How do i reach you?</label>
                 <input
-                  type="text"
+                  id="m-contact-email"
+                  type="email"
                   value={email}
                   onChange={(e) => { setEmail(e.target.value); clearFieldError("email"); }}
                   placeholder="your email"
+                  required
+                  autoComplete="email"
+                  aria-required="true"
+                  aria-invalid={(fieldErrors.email || status === "invalid-email") || undefined}
+                  aria-describedby={(fieldErrors.email || status === "invalid-email") ? "m-contact-email-error" : undefined}
                   style={{
                     ...fieldStyle,
                     borderBottomColor: (fieldErrors.email || status === "invalid-email") ? "#ff4d4d" : "#fafafa",
                     transition: "border-color 0.2s ease",
                   }}
                 />
+                {(fieldErrors.email || status === "invalid-email") && (
+                  <span id="m-contact-email-error" role="alert" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap" }}>
+                    {status === "invalid-email" ? "Please enter a valid email address." : "Email is required."}
+                  </span>
+                )}
               </div>
 
+              {/* Tell me more */}
               <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-                <label style={labelStyle}>Tell me more?</label>
+                <label htmlFor="m-contact-message" style={labelStyle}>Tell me more?</label>
                 <textarea
+                  id="m-contact-message"
                   value={message}
                   onChange={(e) => { setMessage(e.target.value); clearFieldError("message"); }}
                   placeholder="whatever you want to talk about, anything..."
+                  required
+                  autoComplete="off"
+                  aria-required="true"
+                  aria-invalid={fieldErrors.message || undefined}
+                  aria-describedby={fieldErrors.message ? "m-contact-message-error" : undefined}
                   style={{
                     ...fieldStyle,
                     resize: "none",
                     paddingBottom: "96px",
+                    fontFamily: "'Outfit', sans-serif",
                     borderBottomColor: fieldErrors.message ? "#ff4d4d" : "#fafafa",
                     transition: "border-color 0.2s ease",
                   }}
                 />
+                {fieldErrors.message && (
+                  <span id="m-contact-message-error" role="alert" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap" }}>
+                    Message is required.
+                  </span>
+                )}
               </div>
 
               <button
                 type="submit"
                 disabled={status === "sending" || status === "sent"}
                 className="group flex items-center gap-2"
-                style={{ background: "transparent", border: "none", padding: 0, cursor: status === "sent" ? "default" : "pointer", opacity: status === "sending" ? 0.6 : 1 }}
+                style={{ background: "transparent", border: "none", padding: 0, cursor: status === "sent" ? "default" : "pointer", opacity: status === "sending" ? 0.6 : 1, transition: "opacity 0.2s ease" }}
               >
                 <span
                   className="block h-px transition-all duration-300 w-8 group-hover:w-12 shrink-0"
                   style={{ background: "#fafafa" }}
+                  aria-hidden="true"
                 />
                 <span
                   style={{
@@ -253,14 +297,15 @@ export function MobileContactPage() {
             </h2>
 
             {[
-              { label: "linkedin", href: "https://linkedin.com/in/julienbourcet" },
-              { label: "medium",   href: "https://medium.com/@julienbourcet" },
-            ].map(({ label, href }) => (
+              { label: "linkedin", href: "https://linkedin.com/in/julienbourcet", ariaLabel: "LinkedIn (opens in new tab)" },
+              { label: "medium",   href: "https://medium.com/@julienbourcet",     ariaLabel: "Medium (opens in new tab)" },
+            ].map(({ label, href, ariaLabel }) => (
               <a
                 key={label}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={ariaLabel}
                 className="group inline-flex items-center gap-2"
                 style={{ textDecoration: "none" }}
               >

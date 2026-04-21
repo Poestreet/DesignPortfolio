@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- ── Favicon (R104 Opquast) ───────────────────────────────────── -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
     <!-- ── Primary meta ───────────────────────────────────────────────── -->
     <title>Julien Bourcet, Designer</title>
     <meta name="description" content="Le pont entre la stratégie et la haute fidélité. Autodidacte depuis 1998. Design Systems, accessibilité, UX centré utilisateur. SNCF Connect, Rail Europe, L'Équipe." />
@@ -133,10 +136,24 @@
     }
     </script>
 
-    <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
+    <style>
+      html, body { height: 100%; margin: 0; }
+      #root { height: 100%; }
+      /* Skip link — visually hidden until focused (WCAG 2.4.1) */
+      .skip-link {
+        position: absolute; top: -100%; left: 16px;
+        padding: 8px 16px; background: #fafafa; color: #070071;
+        font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 14px;
+        text-decoration: none; z-index: 9999;
+        border-radius: 0 0 4px 4px;
+        transition: top 0.1s;
+      }
+      .skip-link:focus { top: 0; }
+    </style>
   </head>
 
   <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

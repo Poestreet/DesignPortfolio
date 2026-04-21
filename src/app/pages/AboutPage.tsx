@@ -73,6 +73,16 @@ export function AboutPage() {
   useEffect(() => {
     if (aboutAnimPlayed) return;
 
+    // Skip animation if user prefers reduced motion (WCAG 2.3.3 / prefers-reduced-motion)
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      aboutAnimPlayed = true;
+      setPhase("done");
+      setDisplayed(BINARY_FILL.length);
+      setShowText(true);
+      setShowNav(true);
+      return;
+    }
+
     const startTimer = setTimeout(() => {
       setPhase("typing");
       intervalRef.current = setInterval(() => {
@@ -124,9 +134,10 @@ export function AboutPage() {
         {/* ── Left column — photo / binary ── */}
         <div className="relative flex-1 min-w-0">
 
-          {/* Binary typewriter */}
+          {/* Binary typewriter — decorative, hidden from AT */}
           <motion.div
             className="absolute inset-0 overflow-hidden"
+            aria-hidden="true"
             animate={{ opacity: binaryOpacity }}
             transition={{ duration: PHOTO_FADE_DURATION / 1000, ease: "easeInOut" }}
             style={{ pointerEvents: "none" }}

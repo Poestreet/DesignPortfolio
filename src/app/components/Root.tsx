@@ -1,7 +1,7 @@
-import { useState, useLayoutEffect, useEffect } from "react";
+import { useState, useLayoutEffect, useEffect, useRef } from "react";
 import { EASE_TUPLE } from "../lib/animations";
 import { useLocation } from "react-router";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import Homepage from "../../imports/Homepage/Homepage";
 import { CasesPage } from "../pages/CasesPage";
 import { AboutPage } from "../pages/AboutPage";
@@ -15,8 +15,8 @@ const SLIDE = {
 
 // Slide direction: left→right on desktop, bottom→top on mobile
 const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
-const SLIDE_INITIAL = isMobile ? { x: 0, y: "100%" } : { x: "100%", y: 0 };
-const SLIDE_EXIT    = isMobile ? { x: 0, y: "100%" } : { x: "100%", y: 0 };
+const SLIDE_NORMAL  = isMobile ? { x: 0, y: "100%" } : { x: "100%", y: 0 };
+const SLIDE_REDUCED = { x: 0, y: 0 }; // no movement when reduced motion is preferred
 
 // White flash that fades out as the slide completes — reveals the AnimatedBackground
 function PageEntranceFlash() {
@@ -47,14 +47,29 @@ const PAGE_TITLES: Record<string, string> = {
 type OverlayPage = "cases" | "about" | "contact" | null;
 
 export function Root() {
-  const location = useLocation();
+  const location           = useLocation();
+  const prefersReduced     = useReducedMotion();
+  const isFirstRender      = useRef(true);
+  const [announcement, setAnnouncement] = useState("");
+
   const isCases   = location.pathname === "/cases";
   const isAbout   = location.pathname === "/about";
   const isContact = location.pathname === "/contact";
 
-  // Update document.title on every route change
+  // Slide variants — instant when prefers-reduced-motion
+  const slideInitial = prefersReduced ? SLIDE_REDUCED : SLIDE_NORMAL;
+  const slideExit    = prefersReduced ? SLIDE_REDUCED : SLIDE_NORMAL;
+  const slideDuration = prefersReduced ? 0 : 1;
+
+  // Update title + announce route to screen readers on navigation
   useEffect(() => {
-    document.title = PAGE_TITLES[location.pathname] ?? "Julien Bourcet, Designer";
+    const title = PAGE_TITLES[location.pathname] ?? "Julien Bourcet, Designer";
+    document.title = title;
+    // Skip announcement on initial render — screen reader reads <title> on load
+    if (isFirstRender.current) { isFirstRender.current = false; return; }
+    setAnnouncement(title);
+    // Move focus to main content landmark for keyboard / AT users
+    document.getElementById("main-content")?.focus();
   }, [location.pathname]);
 
   const [topPage, setTopPage] = useState<OverlayPage>(() =>
@@ -74,6 +89,19 @@ export function Root() {
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }}>
 
+      {/* Screen reader route announcer (aria-live) — WCAG 4.1.3 */}
+      <div
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        style={{ position: "absolute", width: 1, height: 1, padding: 0, margin: -1, overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap", borderWidth: 0 }}
+      >
+        {announcement}
+      </div>
+
+      {/* Skip link target — WCAG 2.4.1 */}
+      <div id="main-content" tabIndex={-1} style={{ outline: "none" }} />
+
       {/* Homepage — always underneath */}
       <Homepage />
 
@@ -89,10 +117,10 @@ export function Root() {
         {isCases && (
           <motion.div
             key="cases"
-            initial={SLIDE_INITIAL}
+            initial={slideInitial}
             animate={{ x: 0, y: 0 }}
-            exit={SLIDE_EXIT}
-            transition={SLIDE}
+            exit={slideExit}
+            transition={{ duration: slideDuration, ease: EASE_TUPLE }}
             style={{
               position: "fixed",
               inset: 0,
@@ -110,10 +138,10 @@ export function Root() {
         {isAbout && (
           <motion.div
             key="about"
-            initial={SLIDE_INITIAL}
+            initial={slideInitial}
             animate={{ x: 0, y: 0 }}
-            exit={SLIDE_EXIT}
-            transition={SLIDE}
+            exit={slideExit}
+            transition={{ duration: slideDuration, ease: EASE_TUPLE }}
             style={{
               position: "fixed",
               inset: 0,
@@ -131,10 +159,10 @@ export function Root() {
         {isContact && (
           <motion.div
             key="contact"
-            initial={SLIDE_INITIAL}
+            initial={slideInitial}
             animate={{ x: 0, y: 0 }}
-            exit={SLIDE_EXIT}
-            transition={SLIDE}
+            exit={slideExit}
+            transition={{ duration: slideDuration, ease: EASE_TUPLE }}
             style={{
               position: "fixed",
               inset: 0,

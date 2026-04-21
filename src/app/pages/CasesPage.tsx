@@ -216,6 +216,16 @@ function AnimatedHero({
     if (startedRef.current) return;
     startedRef.current = true;
 
+    // Skip animation if user prefers reduced motion (WCAG 2.3.3)
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      playedHeroIds.add(id);
+      setPhase("done");
+      setDisplayed(BINARY_FILL.length);
+      setShowContent(true);
+      onShowContentRef.current?.();
+      return;
+    }
+
     const t = setTimeout(() => {
       setPhase("typing");
       intervalRef.current = setInterval(() => {
@@ -282,9 +292,10 @@ function AnimatedHero({
       id={id}
       style={{ position: "relative", height: "100vh", display: "flex", alignItems: "flex-end", overflow: "hidden" }}
     >
-      {/* Binary typewriter */}
+      {/* Binary typewriter — decorative, hidden from AT */}
       <motion.div
         className="absolute inset-0"
+        aria-hidden="true"
         animate={{ opacity: binaryOpacity }}
         transition={{ duration: PHOTO_FADE_DURATION / 1000, ease: "easeInOut" }}
         style={{ zIndex: 1, pointerEvents: "none" }}
@@ -592,8 +603,9 @@ function CaseNavItem({ label, active, onClick }: { label: string; active: boolea
   if (active) {
     return (
       <button onClick={onClick} className="flex items-center gap-2"
+        aria-current="location"
         style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}>
-        <span className="rounded-full shrink-0" style={{ width: 8, height: 8, background: "#fafafa" }} />
+        <span className="rounded-full shrink-0" aria-hidden="true" style={{ width: 8, height: 8, background: "#fafafa" }} />
         <span className="uppercase" style={{ fontSize: "14px", letterSpacing: "0.2em", color: "#fafafa", fontFamily: "'Outfit', sans-serif", fontWeight: 600 }}>
           {label}
         </span>
@@ -617,6 +629,7 @@ function CaseNavItem({ label, active, onClick }: { label: string; active: boolea
 function SubNavItem({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
     <button onClick={onClick} className="flex items-center gap-2"
+      aria-current={active ? "step" : undefined}
       style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}>
       <span
         className="block h-px shrink-0 transition-all duration-300"
