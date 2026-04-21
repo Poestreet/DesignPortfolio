@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import { motion } from "motion/react";
 import { AnimatedBackground } from "../AnimatedBackground";
 
 const labelStyle: React.CSSProperties = {
@@ -300,19 +301,17 @@ export function MobileContactPage() {
               { label: "linkedin", href: "https://linkedin.com/in/julienbourcet", ariaLabel: "LinkedIn (opens in new tab)" },
               { label: "medium",   href: "https://medium.com/@julienbourcet",     ariaLabel: "Medium (opens in new tab)" },
             ].map(({ label, href, ariaLabel }) => (
-              <a
+              <motion.a
                 key={label}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={ariaLabel}
-                className="group inline-flex items-center gap-2"
+                initial="rest"
+                whileHover="hover"
+                className="inline-flex items-center gap-2"
                 style={{ textDecoration: "none" }}
               >
-                <span
-                  className="block h-px transition-all duration-300 w-8 group-hover:w-12 shrink-0"
-                  style={{ background: "#fafafa" }}
-                />
                 <span
                   style={{
                     fontFamily: "'Outfit', sans-serif",
@@ -325,7 +324,19 @@ export function MobileContactPage() {
                 >
                   {label}
                 </span>
-              </a>
+                <motion.span
+                  variants={{ rest: { y: 0 }, hover: { y: 6 } }}
+                  transition={{ type: "spring", stiffness: 300, damping: 12 }}
+                  aria-hidden="true"
+                  style={{ display: "inline-flex" }}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fafafa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M15 3h6v6"/>
+                    <path d="M10 14 21 3"/>
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  </svg>
+                </motion.span>
+              </motion.a>
             ))}
 
           </div>
