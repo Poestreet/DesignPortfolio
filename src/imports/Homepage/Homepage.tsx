@@ -1,68 +1,108 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import { useNavigate } from "react-router";
 import { AnimatedBackground } from "../../app/components/AnimatedBackground";
 import { MobileHomePage } from "../../app/components/mobile/MobileHomePage";
 import { imgBackground, imgBackground2 } from "../HomePageDesktop/svg-pta88";
 
+// ── One-shot flag — persists across remounts within the same session ───────────
+let homepagePlayed = false;
+
+// ── Binary animation constants ─────────────────────────────────────────────────
+const BINARY_SEED =
+  "10110100111010001101001110100011010011101000110100111010001101001110100011010011101000110100111010001101001110100011010011101000110100111010001101001110100011010011101000110100111010001101001110100011010011101000110100111010001101001110100011010011101000110100111010001101001110100011010011101000";
+const BINARY_FILL = Array.from(
+  { length: Math.ceil(5000 / BINARY_SEED.length) },
+  () => BINARY_SEED
+).join("").slice(0, 5000);
+
+const CHARS_PER_TICK      = 120;
+const TICK_MS             = 16;
+const TYPING_START_DELAY  = 500;
+const BG_FADE_DURATION    = 700;
+
+type Phase = "idle" | "typing" | "revealing" | "done";
+
 // ── Mask geometry (from Figma) ─────────────────────────────────────────────────
-//
-// Figma uses a 1527×1024 container, centered on viewport:
-//   left: calc(50% - 0.5px) + translateX(-50%)  →  left edge = 50vw - 764px
-//   top:  50%               + translateY(-50%)  →  top edge  = 50vh - 512px
-//
-// DESIGN  mask (1120×218) at container position x=76, y=734:
-//   viewport x = (50vw - 764) + 76  = 50vw - 688px
-//   viewport y = (50vh - 512) + 734 = 50vh + 222px
-//
-// Tagline mask (560×24)  at container position x=77, y=969
-//   (tagline container: left=calc(50%-1.5px), top=calc(50%-1px)):
-//   left edge = 50vw - 765px, top edge = 50vh - 513px
-//   viewport x = (50vw - 765) + 77  = 50vw - 688px
-//   viewport y = (50vh - 513) + 969 = 50vh + 456px
-//
-// NB: mask-position % ≠ element %. Using vw/vh gives true absolute offsets.
-// ─────────────────────────────────────────────────────────────────────────────
-
 const DESIGN_X   = "16px";
-const DESIGN_Y   = "calc(100vh - 274px)"; // tagline(24) + gap(16) + design(218) + bottom(16)
-const DESIGN_Y0  = "calc(100vh + 400px)"; // below viewport (start of animation)
-
+const DESIGN_Y   = "calc(100vh - 274px)";
+const DESIGN_Y0  = "calc(100vh + 400px)";
 const TAGLINE_X  = "16px";
-const TAGLINE_Y  = "calc(100vh - 40px)"; // tagline(24) + bottom(16)
+const TAGLINE_Y  = "calc(100vh - 40px)";
 
 export default function Homepage() {
   const navigate = useNavigate();
-  const [entered, setEntered] = useState(false);
 
+  // First visit  → entered=true  (masks at final pos, no CSS slide, binary plays)
+  // Repeat visit → entered=false (CSS slide plays, AnimatedBackground visible immediately)
+  const [entered,   setEntered]   = useState<boolean>(() => !homepagePlayed);
+  const [phase,     setPhase]     = useState<Phase>(() => homepagePlayed ? "done" : "idle");
+  const [displayed, setDisplayed] = useState<number>(() => homepagePlayed ? BINARY_FILL.length : 0);
+
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // ── Repeat-visit: trigger CSS slide ──────────────────────────────────────────
   useEffect(() => {
+    if (!homepagePlayed) return; // first visit handled by binary sequence below
     const t = setTimeout(() => setEntered(true), 80);
     return () => clearTimeout(t);
   }, []);
 
-  // DESIGN:  slides up from below (mask-position-y animates)
-  // Tagline: reveals via height growth (mask-size-height animates)
+  // ── First-visit: binary typing sequence ──────────────────────────────────────
+  useEffect(() => {
+    if (homepagePlayed) return;
+
+    const startTimer = setTimeout(() => {
+      setPhase("typing");
+      intervalRef.current = setInterval(() => {
+        setDisplayed((prev) => {
+          const next = Math.min(prev + CHARS_PER_TICK, BINARY_FILL.length);
+          if (next >= BINARY_FILL.length) {
+            clearInterval(intervalRef.current!);
+            setTimeout(() => setPhase("revealing"), 200);
+            setTimeout(() => {
+              setPhase("done");
+              homepagePlayed = true;
+            }, 200 + BG_FADE_DURATION);
+          }
+          return next;
+        });
+      }, TICK_MS);
+    }, TYPING_START_DELAY);
+
+    return () => {
+      clearTimeout(startTimer);
+      clearInterval(intervalRef.current!);
+    };
+  }, []);
+
+  // ── Mask position / size ──────────────────────────────────────────────────────
   const designPos  = `${DESIGN_X} ${entered ? DESIGN_Y : DESIGN_Y0}`;
   const taglinePos = `${TAGLINE_X} ${TAGLINE_Y}`;
-
-  const maskSize = entered
+  const maskSize   = entered
     ? "1120px 218px, 560px 24px"
     : "1120px 218px, 560px 0px";
 
-  // DESIGN position transitions first (delay 0.2s), tagline size second (delay 0.75s)
-  const maskTransition = [
-    "mask-position 0.95s cubic-bezier(0.4, 0, 0.05, 1) 0.2s",
-    "-webkit-mask-position 0.95s cubic-bezier(0.4, 0, 0.05, 1) 0.2s",
-    "mask-size 0.65s ease 0.75s",
-    "-webkit-mask-size 0.65s ease 0.75s",
-  ].join(", ");
+  // CSS transition only on repeat visits (slide animation)
+  const maskTransition = homepagePlayed
+    ? [
+        "mask-position 0.95s cubic-bezier(0.4, 0, 0.05, 1) 0.2s",
+        "-webkit-mask-position 0.95s cubic-bezier(0.4, 0, 0.05, 1) 0.2s",
+        "mask-size 0.65s ease 0.75s",
+        "-webkit-mask-size 0.65s ease 0.75s",
+      ].join(", ")
+    : "none";
+
+  const bgOpacity     = (phase === "revealing" || phase === "done") ? 1 : 0;
+  const binaryOpacity = (phase === "idle"      || phase === "typing") ? 1 : 0;
 
   return (
     <>
       {/* ── Desktop (md and above) ── */}
       <div className="hidden md:block w-full h-full">
         <div className="bg-[#fafafa] relative size-full overflow-hidden">
-          {/* Masked animated background */}
+
+          {/* Masked content */}
           <div
             className="absolute inset-0"
             style={{
@@ -77,7 +117,51 @@ export default function Homepage() {
               transition:         maskTransition,
             }}
           >
-            <AnimatedBackground />
+            {/* Dark base — always present, gives depth to letter cutouts */}
+            <div className="absolute inset-0" style={{ background: "#070071" }} />
+
+            {/* Binary text layer — fades out after typing */}
+            <motion.div
+              className="absolute inset-0 overflow-hidden"
+              initial={{ opacity: binaryOpacity }}
+              animate={{ opacity: binaryOpacity }}
+              transition={{ duration: BG_FADE_DURATION / 1000, ease: "easeInOut" }}
+              style={{ pointerEvents: "none" }}
+            >
+              <p
+                style={{
+                  fontFamily: "monospace",
+                  fontSize: "9px",
+                  lineHeight: "1.5",
+                  letterSpacing: "0.05em",
+                  color: "rgba(250,250,250,0.7)",
+                  wordBreak: "break-all",
+                  padding: "20px",
+                  margin: 0,
+                }}
+              >
+                {BINARY_FILL.slice(0, displayed)}
+                {phase === "typing" && (
+                  <motion.span
+                    animate={{ opacity: [1, 0, 1] }}
+                    transition={{ duration: 0.8, repeat: Infinity }}
+                    style={{ display: "inline-block", width: "1ch" }}
+                  >
+                    _
+                  </motion.span>
+                )}
+              </p>
+            </motion.div>
+
+            {/* AnimatedBackground — fades in after binary */}
+            <motion.div
+              className="absolute inset-0"
+              initial={{ opacity: bgOpacity }}
+              animate={{ opacity: bgOpacity }}
+              transition={{ duration: BG_FADE_DURATION / 1000, ease: "easeInOut" }}
+            >
+              <AnimatedBackground />
+            </motion.div>
           </div>
 
           {/* Navigation */}
@@ -105,13 +189,20 @@ export default function Homepage() {
                 />
                 <span
                   className="uppercase"
-                  style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#070071", fontFamily: "'Outfit', sans-serif", fontWeight: 800 }}
+                  style={{
+                    fontSize: "11px",
+                    letterSpacing: "0.2em",
+                    color: "#070071",
+                    fontFamily: "'Outfit', sans-serif",
+                    fontWeight: 800,
+                  }}
                 >
                   {label}
                 </span>
               </button>
             ))}
           </motion.nav>
+
         </div>
       </div>
 
