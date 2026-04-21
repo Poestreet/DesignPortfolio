@@ -42,14 +42,16 @@ export default function Homepage() {
   const [entered,   setEntered]   = useState<boolean>(() => !homepagePlayed);
   const [phase,     setPhase]     = useState<Phase>(() => homepagePlayed ? "done" : "idle");
   const [displayed, setDisplayed] = useState<number>(() => homepagePlayed ? BINARY_FILL.length : 0);
+  const [showNav,   setShowNav]   = useState<boolean>(false);
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // ── Repeat-visit: trigger CSS slide ──────────────────────────────────────────
+  // ── Repeat-visit: trigger CSS slide + nav at original timing ─────────────────
   useEffect(() => {
-    if (!homepagePlayed) return; // first visit handled by binary sequence below
-    const t = setTimeout(() => setEntered(true), 80);
-    return () => clearTimeout(t);
+    if (!homepagePlayed) return;
+    const t1 = setTimeout(() => setEntered(true), 80);
+    const t2 = setTimeout(() => setShowNav(true), 1350);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
 
   // ── First-visit: binary typing sequence ──────────────────────────────────────
@@ -67,6 +69,7 @@ export default function Homepage() {
             setTimeout(() => {
               setPhase("done");
               homepagePlayed = true;
+              setShowNav(true);
             }, 200 + BG_FADE_DURATION);
           }
           return next;
@@ -222,12 +225,12 @@ export default function Homepage() {
             </motion.div>
           </div>
 
-          {/* Navigation */}
+          {/* Navigation — appears after AnimatedBackground on first visit, after slide on repeat */}
           <motion.nav
             className="absolute flex flex-col items-end"
             initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.35, ease: [0.4, 0, 0.05, 1] }}
+            animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : -10 }}
+            transition={{ duration: 0.7, ease: [0.4, 0, 0.05, 1] }}
             style={{ top: "16px", right: "16px", gap: "16px", zIndex: 10 }}
           >
             {[
