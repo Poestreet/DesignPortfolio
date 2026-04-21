@@ -628,12 +628,12 @@ function CaseNavItem({ label, active, onClick }: { label: string; active: boolea
 
 function SubNavItem({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
-    <button onClick={onClick} className="flex items-center gap-2"
+    <button onClick={onClick} className="flex items-center gap-2 group"
       aria-current={active ? "step" : undefined}
       style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}>
       <span
-        className="block h-px shrink-0 transition-all duration-300"
-        style={{ width: active ? 16 : 8, background: "#fafafa" }}
+        className={`block h-px shrink-0 transition-all duration-300 ${active ? "w-4" : "w-2 group-hover:w-6"}`}
+        style={{ background: "#fafafa" }}
       />
       <span
         className="uppercase transition-all duration-300"
@@ -749,7 +749,7 @@ export function CasesPage() {
                     transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
                     style={{ overflow: "hidden" }}
                   >
-                    <div className="flex flex-col items-end" style={{ gap: 8, paddingTop: 2 }}>
+                    <div className="flex flex-col items-end" style={{ gap: 8, paddingTop: 2, paddingBottom: 4 }}>
                       {SUB_NAV_ITEMS.map(({ sub, label: subLabel }) => (
                         <SubNavItem
                           key={sub}

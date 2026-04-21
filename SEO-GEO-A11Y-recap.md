@@ -267,6 +267,46 @@ Règle `@layer base` couvrant tous les éléments interactifs du portfolio :
 
 ---
 
+### CasesPage — SubNavItem : focus "Results" clippé (WCAG 2.4.11)
+
+Le dernier `SubNavItem` ("Results") affichait son indicateur de focus (`box-shadow: 0 2px 0 0 currentColor`) clippé par le parent `overflow: hidden` du `motion.div` d'AnimatePresence (utilisé pour l'animation de hauteur).
+
+**Cause :** `box-shadow` est dessiné 2px sous la bordure inférieure du bouton. Sans espace sous le dernier item, le parent `overflow: hidden` coupe ces 2px.
+
+**Fix — `CasesPage.tsx` :**
+```jsx
+// Avant
+<div className="flex flex-col items-end" style={{ gap: 8, paddingTop: 2 }}>
+
+// Après — paddingBottom libère la place pour le shadow de focus
+<div className="flex flex-col items-end" style={{ gap: 8, paddingTop: 2, paddingBottom: 4 }}>
+```
+
+**Règle couverte :** WCAG 2.4.11 (Focus Appearance AA) — l'indicateur de focus ne doit pas être masqué ou clippé.
+
+---
+
+### CasesPage — SubNavItem : tiret sans animation au hover
+
+Le tiret de `SubNavItem` (indicateur actif/inactif) utilisait `style={{ width: active ? 16 : 8 }}` (style inline, spécificité 1-0-0-0), rendant toute classe Tailwind `group-hover:*` inopérante. De plus, le `<button>` n'avait pas la classe `group` nécessaire au mécanisme Tailwind.
+
+**Fix — `CasesPage.tsx` :**
+```jsx
+// Avant
+<button onClick={onClick} className="flex items-center gap-2" ...>
+  <span className="block h-px shrink-0 transition-all duration-300"
+    style={{ width: active ? 16 : 8, background: "#fafafa" }} />
+
+// Après — group sur le parent, width en className pour permettre group-hover
+<button onClick={onClick} className="flex items-center gap-2 group" ...>
+  <span className={`block h-px shrink-0 transition-all duration-300 ${active ? "w-4" : "w-2 group-hover:w-6"}`}
+    style={{ background: "#fafafa" }} />
+```
+
+**Impact UX :** feedback visuel au survol cohérent avec l'état actif (tiret 8px → 24px). Aucun impact sur l'accessibilité directe, mais améliore la compréhension de l'affordance interactive (WCAG 1.3.3 — les caractéristiques sensorielles ne sont pas le seul moyen de distinguer les éléments).
+
+---
+
 ## 4. Ce qui reste hors périmètre code React (côté serveur)
 
 Ces règles Opquast nécessitent une configuration serveur (Infomaniak / Netlify) :
