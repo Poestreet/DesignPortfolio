@@ -123,9 +123,9 @@ function SncfCase() {
           gap: "16px",
         }}
       >
-        <p style={headingStyle}>
+        <h1 style={headingStyle}>
           Optimisation and Redesign of the B2C Shopping Cart
-        </p>
+        </h1>
         <p style={bodyStyle}>
           Shopping cart suffered from structural complexity and
           a lack of clarity, which was a source of frustration.
@@ -154,7 +154,7 @@ function SncfCase() {
             gap: "24px",
           }}
         >
-          <p style={headingStyle}>Challenge</p>
+          <h2 style={headingStyle}>Challenge</h2>
           <p style={bodyStyle}>
             Reduce shopping basket abandonment rates and secure
             a critical stage in the conversion funnel. The
@@ -171,7 +171,7 @@ function SncfCase() {
             gap: "24px",
           }}
         >
-          <p style={headingStyle}>Objectives</p>
+          <h2 style={headingStyle}>Objectives</h2>
           <ol style={listStyle}>
             <li>
               Optimisation: incorporate arrival times, comments
@@ -224,9 +224,9 @@ function SncfCase() {
           gap: "24px",
         }}
       >
-        <p style={headingStyle}>
+        <h3 style={headingStyle}>
           As lead designer for this redesign:
-        </p>
+        </h3>
         <ul style={{ ...listStyle, listStyleType: "disc" }}>
           <li>
             <strong
@@ -336,7 +336,7 @@ function SncfCase() {
             gap: "24px",
           }}
         >
-          <p style={headingStyle}>Environment</p>
+          <h2 style={headingStyle}>Environment</h2>
           <p style={bodyStyle}>
             A public sector organisation (operating in a highly
             regulated environment) working on a high-volume B2C
@@ -354,7 +354,7 @@ function SncfCase() {
             gap: "24px",
           }}
         >
-          <p style={headingStyle}>Results</p>
+          <h2 style={headingStyle}>Results</h2>
           <p style={bodyStyle}>
             Delivery on schedule and unanimous approval from the
             various stakeholders (Product, Tech, Legal). The
@@ -412,9 +412,9 @@ function ManutanCase() {
           gap: "16px",
         }}
       >
-        <p style={headingStyle}>
+        <h1 style={headingStyle}>
           Strategic Overhaul of Research: Design and Performance
-        </p>
+        </h1>
         <p style={bodyStyle}>
           Search experience suffered from low search engine
           usage and a high bounce rate, particularly for paid
@@ -442,7 +442,7 @@ function ManutanCase() {
             gap: "24px",
           }}
         >
-          <p style={headingStyle}>Challenge</p>
+          <h2 style={headingStyle}>Challenge</h2>
           <p style={bodyStyle}>
             The search journey has been identified as a key
             driver of growth for 2025. The challenge, therefore,
@@ -460,7 +460,7 @@ function ManutanCase() {
             gap: "24px",
           }}
         >
-          <p style={headingStyle}>Objectives</p>
+          <h2 style={headingStyle}>Objectives</h2>
           <ol style={listStyle}>
             <li>Reduce the bounce rate for SEA pages.</li>
             <li>
@@ -508,10 +508,10 @@ function ManutanCase() {
           gap: "24px",
         }}
       >
-        <p style={headingStyle}>
+        <h3 style={headingStyle}>
           Responsible for redesigning the user experience (UX)
           and user interface (UI)
-        </p>
+        </h3>
         <ul style={{ ...listStyle, listStyleType: "disc" }}>
           <li>
             <strong
@@ -595,7 +595,7 @@ function ManutanCase() {
             gap: "24px",
           }}
         >
-          <p style={headingStyle}>Environment</p>
+          <h2 style={headingStyle}>Environment</h2>
           <p style={bodyStyle}>
             A joint project with the lead project manager,
             carried out in close collaboration with the
@@ -613,7 +613,7 @@ function ManutanCase() {
             gap: "24px",
           }}
         >
-          <p style={headingStyle}>Results</p>
+          <h2 style={headingStyle}>Results</h2>
           <ul style={{ ...listStyle, listStyleType: "disc" }}>
             <li>
               Reduction in bounce rate following the

@@ -151,12 +151,12 @@ export function MobileContactPage() {
           {/* ── FormSection ── */}
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
 
-            <div style={eyeBrowStyle}>
+            <p aria-hidden="true" style={{ ...eyeBrowStyle, margin: 0 }}>
               <span style={{ fontFamily: "'Fraunces', serif", fontStyle: "italic", fontWeight: 700 }}>01 .</span>
               <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 800 }}>Contact</span>
-            </div>
+            </p>
 
-            <p style={{
+            <h1 style={{
               fontFamily: "'Fraunces', serif",
               fontStyle: "italic",
               fontWeight: 700,
@@ -167,7 +167,7 @@ export function MobileContactPage() {
               fontVariationSettings: "'SOFT' 0, 'WONK' 1",
             }}>
               Get in touch!
-            </p>
+            </h1>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
 
@@ -247,10 +247,10 @@ export function MobileContactPage() {
           {/* ── LinksSection ── */}
           <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
 
-            <div style={eyeBrowStyle}>
+            <h2 style={{ ...eyeBrowStyle, margin: 0, fontWeight: "normal" }}>
               <span style={{ fontFamily: "'Fraunces', serif", fontStyle: "italic", fontWeight: 700 }}>02 .</span>
               <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 800 }}>Links</span>
-            </div>
+            </h2>
 
             {[
               { label: "linkedin", href: "https://linkedin.com/in/julienbourcet" },
