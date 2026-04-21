@@ -159,7 +159,8 @@ Les schémas `Person` et `CreativeWork` alimentent les LLMs qui extraient des en
 | `aria-label="LinkedIn (opens in new tab)"` et Medium | Opquast R137/R146 |
 | Liens LinkedIn/Medium : icône SVG `external-link` à droite du label | WCAG 1.1.1 · Opquast R137 |
 | Icône SVG externe `aria-hidden="true"` (nom accessible porté par `aria-label` du lien) | WCAG 1.1.1 |
-| Animation icône : `whileHover={{ y: 6 }}` spring via variant parent `motion.a → motion.span` | UX |
+| Zone de clic limitée au contenu (`alignItems: "flex-start"` sur le conteneur) | Opquast R142 |
+| Animation icône : `x: 4` spring (gauche → droite) via variant `motion.a → motion.span` | UX |
 
 ### MobileContactPage.tsx
 
@@ -176,7 +177,8 @@ Réécriture complète — mêmes garanties que le desktop, plus :
 | `<div role="status" aria-live="polite">` | Opquast R85 |
 | `aria-label` + icône `external-link` sur liens LinkedIn/Medium | Opquast R137/R146 |
 | `aria-hidden="true"` sur icône SVG externe | WCAG 1.1.1 |
-| Animation icône identique au desktop (variant Framer Motion parent→enfant) | UX |
+| Zone de clic limitée au contenu (`alignSelf: "flex-start"` sur chaque `motion.a`) | Opquast R142 |
+| Animation icône : `x: 4` spring (gauche → droite), identique au desktop | UX |
 
 ### AboutPage.tsx — photo
 

@@ -291,7 +291,7 @@ export function ContactPage() {
                 </div>
 
                 {/* Links */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                <div style={{ display: "flex", flexDirection: "column", gap: "12px", alignItems: "flex-start" }}>
                   {[
                     { label: "LinkedIn", href: "https://linkedin.com/in/julienbourcet", ariaLabel: "LinkedIn (opens in new tab)" },
                     { label: "Medium",   href: "https://medium.com/@julienbourcet",     ariaLabel: "Medium (opens in new tab)" },
@@ -321,7 +321,7 @@ export function ContactPage() {
                         {label}
                       </span>
                       <motion.span
-                        variants={{ rest: { y: 0 }, hover: { y: 6 } }}
+                        variants={{ rest: { x: 0 }, hover: { x: 4 } }}
                         transition={{ type: "spring", stiffness: 300, damping: 12 }}
                         aria-hidden="true"
                         style={{ display: "inline-flex" }}
