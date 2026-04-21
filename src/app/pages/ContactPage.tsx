@@ -3,33 +3,11 @@ import { useNavigate } from "react-router";
 import { motion } from "motion/react";
 import { AnimatedBackground } from "../components/AnimatedBackground";
 import { MobileContactPage } from "../components/mobile/MobileContactPage";
+import { Reveal } from "../components/Reveal";
+import { EASE_TUPLE } from "../lib/animations";
 
 // One-shot flag — persists across remounts within the same session
 let contactAnimPlayed = false;
-
-// ── Staggered reveal ──────────────────────────────────────────────────────────
-function Reveal({
-  children,
-  delay = 0,
-  exitDelay = 0,
-  show,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  exitDelay?: number;
-  show: boolean;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 18 }}
-      animate={{ opacity: show ? 1 : 0, y: show ? 0 : 18 }}
-      exit={{ opacity: 0, y: 18, transition: { duration: 0.35, delay: exitDelay, ease: [0.4, 0, 0.05, 1] } }}
-      transition={{ duration: 0.7, delay, ease: [0.4, 0, 0.05, 1] }}
-    >
-      {children}
-    </motion.div>
-  );
-}
 
 // ── Shared field styles ───────────────────────────────────────────────────────
 const labelStyle: React.CSSProperties = {
@@ -326,8 +304,8 @@ export function ContactPage() {
                 key={label}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
-                exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08, ease: [0.4, 0, 0.05, 1] } }}
-                transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: [0.4, 0, 0.05, 1] }}
+                exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08, ease: EASE_TUPLE } }}
+                transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: EASE_TUPLE }}
                 onClick={action}
                 className="group flex items-center gap-2"
                 style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer" }}

@@ -11,6 +11,8 @@ import imgManutanHero    from "figma:asset/fee28166fa517fd8c22922535651ddcc807c8
 import imgManutanUI      from "figma:asset/07bbb20152618083166542a433ca2836c88af76c.png";
 import imgManutanScreens from "figma:asset/92e0ff13a74b454f6b79d4e6bc4b979656a5b149.png";
 
+import { Phase, EASE_TUPLE, TICK_MS, PHOTO_FADE_DURATION, TEXT_REVEAL_DELAY, TYPING_START_DELAY } from "../lib/animations";
+
 // ── Binary animation constants ─────────────────────────────────────────────────
 const BINARY =
   "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001111011111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
@@ -20,11 +22,8 @@ const BINARY_FILL = Array.from(
   () => BINARY
 ).join("").slice(0, 40000);
 
-const CHARS_PER_TICK      = 500;
-const TICK_MS             = 16;
-const PHOTO_FADE_DURATION = 600;
-const TEXT_REVEAL_DELAY   = 350;
-const SNCF_START_DELAY    = 1400;
+const CHARS_PER_TICK   = 500; // page-specific typing speed
+const SNCF_START_DELAY = TYPING_START_DELAY; // alias for readability
 
 // ── One-shot flags — persist across remounts within the same session ───────────
 const playedHeroIds = new Set<string>();
@@ -33,7 +32,7 @@ let   casesNavShown = false;
 // ── Types ─────────────────────────────────────────────────────────────────────
 type CaseId    = "sncf" | "manutan";
 type SubId     = "hero" | "challenge" | "role" | "results";
-type AnimPhase = "idle" | "typing" | "revealing" | "done";
+type AnimPhase = Phase; // alias — Phase imported from lib/animations
 
 const ALL_SECTIONS: { caseId: CaseId; sub: SubId; id: string }[] = [
   { caseId: "sncf",    sub: "hero",      id: "sncf-hero" },
@@ -102,7 +101,7 @@ function Reveal({
       style={style}
       initial={{ opacity: 0, y: 18 }}
       animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 18 }}
-      transition={{ duration: 0.7, delay: baseDelay + index * 0.18, ease: [0.4, 0, 0.05, 1] }}
+      transition={{ duration: 0.7, delay: baseDelay + index * 0.18, ease: EASE_TUPLE }}
     >
       {children}
     </motion.div>
@@ -324,16 +323,16 @@ function AnimatedHero({
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 18 }}
-            exit={{ opacity: 0, y: 18, transition: { duration: 0.35, delay: 0, ease: [0.4, 0, 0.05, 1] } }}
-            transition={{ duration: 0.7, delay: 0.4, ease: [0.4, 0, 0.05, 1] }}
+            exit={{ opacity: 0, y: 18, transition: { duration: 0.35, delay: 0, ease: EASE_TUPLE } }}
+            transition={{ duration: 0.7, delay: 0.4, ease: EASE_TUPLE }}
           >
             <SectionH1>{heading}</SectionH1>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: showContent ? 1 : 0, y: showContent ? 0 : 18 }}
-            exit={{ opacity: 0, y: 18, transition: { duration: 0.35, delay: 0.08, ease: [0.4, 0, 0.05, 1] } }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.4, 0, 0.05, 1] }}
+            exit={{ opacity: 0, y: 18, transition: { duration: 0.35, delay: 0.08, ease: EASE_TUPLE } }}
+            transition={{ duration: 0.7, delay: 0.2, ease: EASE_TUPLE }}
           >
             <BodyText>{body}</BodyText>
           </motion.div>
@@ -732,8 +731,8 @@ export function CasesPage() {
               key={label}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
-              exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08, ease: [0.4, 0, 0.05, 1] } }}
-              transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: [0.4, 0, 0.05, 1] }}
+              exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08, ease: EASE_TUPLE } }}
+              transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: EASE_TUPLE }}
             >
               <NavBtn
                 label={label}
@@ -752,8 +751,8 @@ export function CasesPage() {
               style={{ gap: 10 }}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
-              exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08 + 0.16, ease: [0.4, 0, 0.05, 1] } }}
-              transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12 + 0.24, ease: [0.4, 0, 0.05, 1] }}
+              exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08 + 0.16, ease: EASE_TUPLE } }}
+              transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12 + 0.24, ease: EASE_TUPLE }}
             >
               <CaseNavItem
                 label={label}

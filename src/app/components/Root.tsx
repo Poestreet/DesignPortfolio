@@ -1,4 +1,5 @@
 import { useState, useLayoutEffect } from "react";
+import { EASE_TUPLE } from "./lib/animations";
 import { useLocation } from "react-router";
 import { AnimatePresence, motion } from "motion/react";
 import Homepage from "../../imports/Homepage/Homepage";
@@ -9,7 +10,7 @@ import { AnimatedBackground } from "./AnimatedBackground";
 
 const SLIDE = {
   duration: 1,
-  ease: [0.4, 0, 0.05, 1] as [number, number, number, number],
+  ease: EASE_TUPLE,
 };
 
 // Slide direction: left→right on desktop, bottom→top on mobile

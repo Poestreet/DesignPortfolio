@@ -3,9 +3,18 @@ import { useNavigate } from "react-router";
 import { motion } from "motion/react";
 import { AnimatedBackground } from "../components/AnimatedBackground";
 import { MobileAboutPage } from "../components/mobile/MobileAboutPage";
+import { Reveal } from "../components/Reveal";
+import {
+  Phase,
+  EASE_TUPLE,
+  TICK_MS,
+  PHOTO_FADE_DURATION,
+  TEXT_REVEAL_DELAY,
+  TYPING_START_DELAY,
+} from "../lib/animations";
 import photo from "figma:asset/4b4a98ebdf8ee3d638fcd41fb40af9b5b6aa4999.png";
 
-// ── Binary entrance (same pattern as before) ──────────────────────────────────
+// ── Binary entrance ───────────────────────────────────────────────────────────
 const BINARY =
   "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001111011111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
 
@@ -14,40 +23,10 @@ const BINARY_FILL = Array.from(
   () => BINARY
 ).join("").slice(0, 25000);
 
-const CHARS_PER_TICK      = 400;
-const TICK_MS             = 16;
-const TYPING_START_DELAY  = 1400;
-const PHOTO_FADE_DURATION = 600;
-const TEXT_REVEAL_DELAY   = 350;
-
-type Phase = "idle" | "typing" | "revealing" | "done";
+const CHARS_PER_TICK = 400; // page-specific typing speed
 
 // One-shot flag — persists across remounts within the same session
 let aboutAnimPlayed = false;
-
-// ── Staggered reveal wrapper ──────────────────────────────────────────────────
-function Reveal({
-  children,
-  delay = 0,
-  exitDelay = 0,
-  show,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  exitDelay?: number;
-  show: boolean;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 18 }}
-      animate={{ opacity: show ? 1 : 0, y: show ? 0 : 18 }}
-      exit={{ opacity: 0, y: 18, transition: { duration: 0.35, delay: exitDelay, ease: [0.4, 0, 0.05, 1] } }}
-      transition={{ duration: 0.7, delay, ease: [0.4, 0, 0.05, 1] }}
-    >
-      {children}
-    </motion.div>
-  );
-}
 
 // ── Tag pill (from Figma) ─────────────────────────────────────────────────────
 function Tag({ label }: { label: string }) {
@@ -323,8 +302,8 @@ export function AboutPage() {
             key={label}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
-            exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08, ease: [0.4, 0, 0.05, 1] } }}
-            transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: [0.4, 0, 0.05, 1] }}
+            exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08, ease: EASE_TUPLE } }}
+            transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: EASE_TUPLE }}
             onClick={action}
             className="flex items-center gap-2 group"
             style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}

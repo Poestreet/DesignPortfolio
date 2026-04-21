@@ -20,12 +20,10 @@ const BINARY_FILL = Array.from(
 // ~200 chars to fill the TAGLINE area (560×24px)
 const DESIGN_CHARS        = 3200;
 
-const CHARS_PER_TICK      = 12;
-const TICK_MS             = 16;
-const TYPING_START_DELAY  = 50;
-const BG_FADE_DURATION    = 700;
+const CHARS_PER_TICK     = 12;  // page-specific typing speed
+const TYPING_START_DELAY = 50;  // homepage starts faster than other pages
 
-type Phase = "idle" | "typing" | "revealing" | "done";
+import { Phase, EASE_TUPLE, TICK_MS, BG_FADE_DURATION } from "../../app/lib/animations";
 
 // ── Mask geometry (from Figma) ─────────────────────────────────────────────────
 const DESIGN_X   = "16px";
@@ -230,7 +228,7 @@ export default function Homepage() {
             className="absolute flex flex-col items-end"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : -10 }}
-            transition={{ duration: 0.7, ease: [0.4, 0, 0.05, 1] }}
+            transition={{ duration: 0.7, ease: EASE_TUPLE }}
             style={{ top: "16px", right: "16px", gap: "16px", zIndex: 10 }}
           >
             {[

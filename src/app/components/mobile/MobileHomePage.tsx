@@ -18,12 +18,10 @@ const BINARY_FILL = Array.from(
 // On a 390px mobile: DESIGN area ≈ 358×70px → ~315 chars; 400 covers it safely
 const MOBILE_DESIGN_CHARS = 400;
 
-const CHARS_PER_TICK     = 4;   // slow enough to see left→right within each line
-const TICK_MS            = 16;
-const TYPING_START_DELAY = 50;
-const BG_FADE_DURATION   = 700;
+const CHARS_PER_TICK     = 4;  // page-specific — slow for mobile letter shapes
+const TYPING_START_DELAY = 50; // starts fast, same as desktop homepage
 
-type Phase = "idle" | "typing" | "revealing" | "done";
+import { Phase, EASE_TUPLE, TICK_MS, BG_FADE_DURATION } from "../../lib/animations";
 
 // ── Mask geometry (fluid, from original MobileHomePage) ───────────────────────
 const D_X     = "16px";
@@ -227,7 +225,7 @@ export function MobileHomePage() {
         className="absolute flex flex-col items-end"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : -10 }}
-        transition={{ duration: 0.7, ease: [0.4, 0, 0.05, 1] }}
+        transition={{ duration: 0.7, ease: EASE_TUPLE }}
         style={{ top: "16px", right: "16px", gap: "32px", zIndex: 10 }}
       >
         {[
