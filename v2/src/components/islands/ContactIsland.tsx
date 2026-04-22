@@ -92,7 +92,7 @@ export default function ContactPage() {
       formData.append("name", name);
       formData.append("email", email);
       formData.append("message", message);
-      const res = await fetch("/", {
+      const res = await fetch("/contact/", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: formData.toString(),
