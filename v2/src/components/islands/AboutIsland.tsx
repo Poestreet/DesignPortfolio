@@ -1,7 +1,7 @@
 import { useNavigate } from "../../lib/navigate";
 import { motion } from "motion/react";
-import { AnimatedBackground } from "./AnimatedBackground";
 import { MobileAboutPage } from "../mobile/MobileAboutPage";
+import { usePageReady } from "../../lib/usePageReady";
 import { Reveal } from "./Reveal";
 import { EASE_TUPLE } from "../../lib/animations";
 
@@ -41,9 +41,10 @@ function Tag({ label }: { label: string }) {
 export default function AboutPage() {
   const navigate = useNavigate();
 
-  // Binary entrance removed — contenu visible immédiatement
-  const showText = true;
-  const showNav  = true;
+  // Visible uniquement après la fin de la View Transition (astro:page-load)
+  const ready    = usePageReady();
+  const showText = ready;
+  const showNav  = ready;
 
   return (
     <>
@@ -95,11 +96,6 @@ export default function AboutPage() {
           </motion.button>
         ))}
       </nav>
-
-      {/* ── Animated background (full bleed) ── */}
-      <div className="absolute inset-0">
-        <AnimatedBackground />
-      </div>
 
       {/* ── Flex row layout ── */}
       <div className="absolute inset-0 flex">

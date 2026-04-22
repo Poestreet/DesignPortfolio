@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "../../lib/navigate";
 import { motion } from "motion/react";
-import { AnimatedBackground } from "../islands/AnimatedBackground";
 
 const labelStyle: React.CSSProperties = {
   fontFamily: "'Fraunces', serif",
@@ -102,11 +101,6 @@ export function MobileContactPage() {
 
   return (
     <div className="relative w-full h-full overflow-y-auto">
-
-      {/* ── Background ── */}
-      <div className="fixed inset-0" style={{ zIndex: 0 }}>
-        <AnimatedBackground />
-      </div>
 
       {/* ── Content ── */}
       <div className="relative" style={{ zIndex: 1 }}>

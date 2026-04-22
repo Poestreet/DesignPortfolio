@@ -1,6 +1,7 @@
 ---
 import { ViewTransitions } from "astro:transitions";
 import ContactIsland from "../components/islands/ContactIsland";
+import StaticBackground from "../components/StaticBackground.astro";
 import "../styles/global.css";
 
 const seo = {
@@ -62,7 +63,10 @@ const seo = {
       <textarea name="message"></textarea>
     </form>
 
-    <div style="position:fixed;inset:0;" aria-hidden="true">
+    <div style="position:fixed;inset:0;z-index:0;" aria-hidden="true">
+      <StaticBackground />
+    </div>
+    <div style="position:fixed;inset:0;z-index:1;" aria-hidden="true">
       <ContactIsland client:load />
     </div>
   </body>

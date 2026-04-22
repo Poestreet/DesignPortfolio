@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "../../lib/navigate";
 import { motion, AnimatePresence } from "motion/react";
-import { AnimatedBackground } from "../islands/AnimatedBackground";
 const imgSncfHero = "/assets/f1725bc3c57cf3dd7645db13a41f98c510522e43.png";
 const imgSncfUI = "/assets/7725d6f86a5b9645928d53b0663fcffa1a5bba31.png";
 const imgSncfScreens = "/assets/91d3823d08cc55b2dfeef9f9cf95ea29b755b2df.png";
@@ -686,10 +685,6 @@ export function MobileCasesPage() {
 
   return (
     <div ref={scrollRef} className="relative w-full h-full overflow-y-auto">
-      {/* ── Background (fixed) ── */}
-      <div className="fixed inset-0" style={{ zIndex: 0 }}>
-        <AnimatedBackground />
-      </div>
 
       {/* ── Scroll to top button ── */}
       <AnimatePresence>

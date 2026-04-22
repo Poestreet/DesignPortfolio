@@ -1,5 +1,4 @@
 import { useNavigate } from "../../lib/navigate";
-import { AnimatedBackground } from "../islands/AnimatedBackground";
 const photo = "/assets/4b4a98ebdf8ee3d638fcd41fb40af9b5b6aa4999.png";
 
 function Tag({ label }: { label: string }) {
@@ -55,14 +54,7 @@ export function MobileAboutPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="relative w-full h-full overflow-y-auto bg-[#fafafa]">
-
-      {/* ── Background image (full bleed behind everything) ── */}
-      <div className="sticky top-0 left-0 w-full" style={{ height: 0, zIndex: 0 }}>
-        <div className="absolute inset-0" style={{ height: "100vh" }}>
-          <AnimatedBackground />
-        </div>
-      </div>
+    <div className="relative w-full h-full overflow-y-auto">
 
       {/* ── Photo section (first screen height) ── */}
       <div className="relative w-full shrink-0" style={{ height: "85vh", zIndex: 1 }}>
@@ -116,10 +108,6 @@ export function MobileAboutPage() {
 
       {/* ── Content section ── */}
       <div className="relative w-full" style={{ zIndex: 1 }}>
-        {/* Content background */}
-        <div className="absolute inset-0" style={{ zIndex: 0 }}>
-          <AnimatedBackground />
-        </div>
 
         <div className="relative px-4 py-8 flex flex-col gap-6" style={{ zIndex: 1 }}>
 

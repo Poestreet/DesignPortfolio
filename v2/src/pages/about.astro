@@ -1,6 +1,7 @@
 ---
 import { ViewTransitions } from "astro:transitions";
 import AboutIsland from "../components/islands/AboutIsland";
+import StaticBackground from "../components/StaticBackground.astro";
 import "../styles/global.css";
 
 const seo = {
@@ -66,7 +67,10 @@ const seo = {
       </nav>
     </main>
 
-    <div style="position:fixed;inset:0;" aria-hidden="true">
+    <div style="position:fixed;inset:0;z-index:0;" aria-hidden="true">
+      <StaticBackground />
+    </div>
+    <div style="position:fixed;inset:0;z-index:1;" aria-hidden="true">
       <AboutIsland client:load />
     </div>
   </body>

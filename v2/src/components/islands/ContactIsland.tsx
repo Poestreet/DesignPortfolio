@@ -1,14 +1,10 @@
 import { useNavigate } from "../../lib/navigate";
-import { useState, useEffect, useRef } from "react";
-;
+import { useState } from "react";
 import { motion } from "motion/react";
-import { AnimatedBackground } from "./AnimatedBackground";
 import { MobileContactPage } from "../mobile/MobileContactPage";
+import { usePageReady } from "../../lib/usePageReady";
 import { Reveal } from "./Reveal";
 import { EASE_TUPLE } from "../../lib/animations";
-
-// One-shot flag — persists across remounts within the same session
-let contactAnimPlayed = false;
 
 // ── Shared field styles ───────────────────────────────────────────────────────
 const labelStyle: React.CSSProperties = {
@@ -36,21 +32,12 @@ const placeholderStyle: React.CSSProperties = {
 
 export default function ContactPage() {
   const navigate = useNavigate();
-  const [showText, setShowText] = useState<boolean>(() => contactAnimPlayed);
-  const [showNav,  setShowNav]  = useState<boolean>(() => contactAnimPlayed);
+  const ready    = usePageReady();
+  const showText = ready;
+  const showNav  = ready;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    if (contactAnimPlayed) return;
-    const t = setTimeout(() => {
-      contactAnimPlayed = true;
-      setShowText(true);
-      setShowNav(true);
-    }, 1400);
-    return () => clearTimeout(t);
-  }, []);
 
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error" | "invalid-email">("idle");
   const [fieldErrors, setFieldErrors] = useState({ name: false, email: false, message: false });
@@ -119,11 +106,6 @@ export default function ContactPage() {
       {/* ── Desktop (md and above) ── */}
       <div className="hidden md:block w-full h-full">
     <div className="relative w-full h-full overflow-hidden">
-
-      {/* ── Animated background ── */}
-      <div className="absolute inset-0">
-        <AnimatedBackground />
-      </div>
 
       {/* ── Two-column layout ── */}
       <div className="absolute inset-0 flex items-start">

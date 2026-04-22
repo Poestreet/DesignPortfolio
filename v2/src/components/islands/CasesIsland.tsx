@@ -1,8 +1,8 @@
 import { useNavigate } from "../../lib/navigate";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { AnimatedBackground } from "./AnimatedBackground";
 import { MobileCasesPage } from "../mobile/MobileCasesPage";
+import { usePageReady } from "../../lib/usePageReady";
 import { EASE_TUPLE } from "../../lib/animations";
 
 const imgSncfHero       = "/assets/f1725bc3c57cf3dd7645db13a41f98c510522e43.webp";
@@ -14,7 +14,6 @@ const imgManutanScreens = "/assets/92e0ff13a74b454f6b79d4e6bc4b979656a5b149.png"
 
 // ── One-shot flags — persist across remounts within the same session ───────────
 const playedHeroIds = new Set<string>();
-let   casesNavShown = false;
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 type CaseId = "sncf" | "manutan";
@@ -184,8 +183,10 @@ function AnimatedHero({
   onShowContent,
 }: AnimatedHeroProps) {
   const alreadyPlayed = playedHeroIds.has(id);
+  const ready         = usePageReady();
 
-  const [showContent, setShowContent] = useState<boolean>(() => alreadyPlayed);
+  // Always start hidden — content appears only after View Transition (astro:page-load)
+  const [showContent, setShowContent] = useState(false);
 
   const containerRef     = useRef<HTMLDivElement>(null);
   const startedRef       = useRef(false);
@@ -201,15 +202,18 @@ function AnimatedHero({
     onShowContentRef.current?.();
   }, [id]); // onShowContent excluded — accessed via ref
 
-  // First visit: trigger immediately. Subsequent visits: fire callback immediately (nav already visible).
+  // Wait for View Transition to complete before showing content.
+  // Repeat visits: content shown immediately after transition (nav callback also fires).
   useEffect(() => {
+    if (!ready) return;
     if (alreadyPlayed) {
+      setShowContent(true);
       onShowContentRef.current?.();
       return;
     }
     if (useIntersection) return;
     triggerAnimation();
-  }, [useIntersection, triggerAnimation, alreadyPlayed]);
+  }, [useIntersection, triggerAnimation, alreadyPlayed, ready]);
 
   useEffect(() => {
     if (!useIntersection) return;
@@ -579,7 +583,7 @@ export default function CasesPage() {
 
   const [activeCase,       setActiveCase]       = useState<CaseId>("sncf");
   const [activeSubSection, setActiveSubSection] = useState<SubId>("hero");
-  const [showNav,          setShowNav]          = useState(() => casesNavShown);
+  const [showNav,          setShowNav]          = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -613,11 +617,6 @@ export default function CasesPage() {
       {/* ── Desktop (md and above) ── */}
       <div className="hidden md:block w-full h-full">
     <div style={{ position: "absolute", inset: 0 }}>
-
-      {/* Background */}
-      <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
-        <AnimatedBackground />
-      </div>
 
       {/* Navigation — DOM-before-content for correct keyboard tab order (WCAG 2.4.3) */}
       <div
@@ -701,7 +700,7 @@ export default function CasesPage() {
           heading="Optimisation and Redesign of the B2C Shopping Cart"
           body="Shopping cart suffered from structural complexity and a lack of clarity, which was a source of frustration. The challenge was to reorganise the information hierarchy to simplify it and make it more effective (multi-product, key actions), whilst managing the legal constraints imposed by the legal team regarding the display of partnership offers (insurance) and mandatory disclosures."
           onScrollNext={() => scrollTo("sncf-challenge")}
-          onShowContent={() => { casesNavShown = true; setShowNav(true); }}
+          onShowContent={() => setShowNav(true)}
         />
         <SncfChallenge />
         <SncfRole />

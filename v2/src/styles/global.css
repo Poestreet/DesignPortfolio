@@ -85,29 +85,41 @@ textarea:-webkit-autofill:focus {
 }
 
 /* ── Page transition — Astro View Transitions ───────────────────────────────────
-   Réplique le slide depuis la droite de la v1 (desktop)
-   et depuis le bas (mobile). */
+   Entrée  : slide depuis la droite (desktop) / depuis le bas (mobile).
+   Sortie  : slide vers la gauche / vers le bas — effet miroir.
+   Durée   : 700ms — astro:page-load se déclenche à la fin,
+             synchronisé avec usePageReady() dans les islands React. */
 @keyframes slide-in-from-right {
   from { transform: translateX(100%); }
   to   { transform: translateX(0); }
 }
-
+@keyframes slide-out-to-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
 @keyframes slide-in-from-bottom {
   from { transform: translateY(100%); }
   to   { transform: translateY(0); }
 }
+@keyframes slide-out-to-bottom {
+  from { transform: translateY(0); }
+  to   { transform: translateY(100%); }
+}
 
 @media (prefers-reduced-motion: no-preference) {
   ::view-transition-new(root) {
-    animation: 1s cubic-bezier(0.4, 0, 0.05, 1) slide-in-from-right;
+    animation: 0.7s cubic-bezier(0.4, 0, 0.05, 1) slide-in-from-right both;
   }
   ::view-transition-old(root) {
-    display: none;
+    animation: 0.7s cubic-bezier(0.4, 0, 0.05, 1) slide-out-to-left both;
   }
 
   @media (max-width: 768px) {
     ::view-transition-new(root) {
-      animation: 1s cubic-bezier(0.4, 0, 0.05, 1) slide-in-from-bottom;
+      animation: 0.7s cubic-bezier(0.4, 0, 0.05, 1) slide-in-from-bottom both;
+    }
+    ::view-transition-old(root) {
+      animation: 0.7s cubic-bezier(0.4, 0, 0.05, 1) slide-out-to-bottom both;
     }
   }
 }
