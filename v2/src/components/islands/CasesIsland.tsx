@@ -554,7 +554,7 @@ function SubNavItem({ label, active, onClick }: { label: string; active: boolean
       aria-current={active ? "step" : undefined}
       style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}>
       <span
-        className={`block h-px shrink-0 transition-all duration-300 ${active ? "w-4" : "w-2 group-hover:w-6"}`}
+        className={`block h-px shrink-0 transition-all duration-300 ${active ? "w-4" : "w-3 group-hover:w-6"}`}
         style={{ background: "#fafafa" }}
       />
       <span
@@ -628,13 +628,13 @@ export default function CasesPage() {
         }}
       >
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 16 }}>
-          {(["About", "Contact", "Homepage"] as const).map((label, i, arr) => (
+          {(["About", "Contact", "Homepage"] as const).map((label, i) => (
             <motion.div
               key={label}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
               exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08, ease: EASE_TUPLE } }}
-              transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12, ease: EASE_TUPLE }}
+              transition={{ duration: 0.5, delay: i * 0.06, ease: EASE_TUPLE }}
             >
               <NavBtn
                 label={label}
@@ -645,7 +645,7 @@ export default function CasesPage() {
         </div>
 
         <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "flex-end", justifyContent: "center", gap: 20 }}>
-          {CASES.map(({ id, label }, i, arr) => (
+          {CASES.map(({ id, label }, i) => (
             <motion.div
               layout
               key={id}
@@ -654,7 +654,7 @@ export default function CasesPage() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
               exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08 + 0.16, ease: EASE_TUPLE } }}
-              transition={{ duration: 0.6, delay: (arr.length - 1 - i) * 0.12 + 0.24, ease: EASE_TUPLE }}
+              transition={{ duration: 0.5, delay: i * 0.08 + 0.12, ease: EASE_TUPLE }}
             >
               <CaseNavItem
                 label={label}
