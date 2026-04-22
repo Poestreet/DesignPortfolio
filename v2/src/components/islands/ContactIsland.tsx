@@ -20,7 +20,7 @@ const placeholderStyle: React.CSSProperties = {
   fontFamily: "'Outfit', sans-serif",
   fontWeight: 400,
   fontSize: "14px",
-  color: "rgba(250,250,250,0.7)",
+  color: "#fafafa",
   background: "transparent",
   border: "none",
   borderBottom: "1px solid rgba(250,250,250,0.6)",
@@ -206,7 +206,7 @@ export default function ContactPage() {
                       style={{
                         ...placeholderStyle,
                         caretColor: "#fafafa",
-                        borderBottomColor: fieldErrors.name ? "#ff4d4d" : "#fafafa",
+                        borderBottomColor: fieldErrors.name ? "#ff4d4d" : "rgba(250,250,250,0.6)",
                         transition: "border-color 0.2s ease",
                       }}
                     />
@@ -234,7 +234,7 @@ export default function ContactPage() {
                       style={{
                         ...placeholderStyle,
                         caretColor: "#fafafa",
-                        borderBottomColor: (fieldErrors.email || status === "invalid-email") ? "#ff4d4d" : "#fafafa",
+                        borderBottomColor: (fieldErrors.email || status === "invalid-email") ? "#ff4d4d" : "rgba(250,250,250,0.6)",
                         transition: "border-color 0.2s ease",
                       }}
                     />
@@ -262,10 +262,10 @@ export default function ContactPage() {
                       style={{
                         ...placeholderStyle,
                         resize: "none",
-                        paddingBottom: "96px",
+                        minHeight: "120px",
                         fontFamily: "'Outfit', sans-serif",
                         caretColor: "#fafafa",
-                        borderBottomColor: fieldErrors.message ? "#ff4d4d" : "#fafafa",
+                        borderBottomColor: fieldErrors.message ? "#ff4d4d" : "rgba(250,250,250,0.6)",
                         transition: "border-color 0.2s ease",
                       }}
                     />

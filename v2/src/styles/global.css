@@ -51,6 +51,14 @@ html, body {
   }
 }
 
+/* ── Placeholder — distingue le texte saisi (#fafafa) du placeholder ───────────
+   La propriété color inline ne cible pas ::placeholder, règle globale requise. */
+input::placeholder,
+textarea::placeholder {
+  color: rgba(250, 250, 250, 0.4);
+  opacity: 1; /* Firefox applique opacity: 0.54 par défaut */
+}
+
 /* ── Autofill — supprime le fond navigateur (Chrome/Safari) ────────────────────
    Le fond jaune/bleu de l'autofill écrase background:transparent inline.
    box-shadow inset avec la couleur brand simule un fond transparent. */
@@ -60,7 +68,7 @@ input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
 textarea:-webkit-autofill:focus {
-  -webkit-text-fill-color: rgba(250, 250, 250, 0.7);
+  -webkit-text-fill-color: #fafafa;
   -webkit-box-shadow: 0 0 0px 1000px #070071 inset;
   transition: background-color 5000s ease-in-out 0s;
 }
