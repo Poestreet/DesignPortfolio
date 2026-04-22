@@ -653,7 +653,7 @@ function SubNavItem({ label, active, onClick }: { label: string; active: boolean
 }
 
 // ── Main Page ──────────────────────────────────────────────────────────────────
-export function CasesPage() {
+export default function CasesPage() {
   const navigate = useNavigate();
 
   const [activeCase,       setActiveCase]       = useState<CaseId>("sncf");

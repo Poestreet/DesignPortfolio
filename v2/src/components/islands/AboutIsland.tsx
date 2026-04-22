@@ -60,7 +60,7 @@ function Tag({ label }: { label: string }) {
   );
 }
 
-export function AboutPage() {
+export default function AboutPage() {
   const navigate = useNavigate();
 
   const [phase,     setPhase]     = useState<Phase>(() => aboutAnimPlayed ? "done" : "idle");

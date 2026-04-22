@@ -34,7 +34,7 @@ const placeholderStyle: React.CSSProperties = {
   /* outline: none retiré — géré par input:focus-visible dans index.css (WCAG 2.4.11) */
 };
 
-export function ContactPage() {
+export default function ContactPage() {
   const navigate = useNavigate();
   const [showText, setShowText] = useState<boolean>(() => contactAnimPlayed);
   const [showNav,  setShowNav]  = useState<boolean>(() => contactAnimPlayed);
