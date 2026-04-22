@@ -130,7 +130,7 @@ export function MobileHomePage() {
             <span
               style={{
                 fontFamily: "'Outfit', sans-serif",
-                fontWeight: 800,
+                fontWeight: 400,
                 fontSize: "11px",
                 letterSpacing: "3px",
                 textTransform: "uppercase",

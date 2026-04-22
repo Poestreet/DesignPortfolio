@@ -154,7 +154,7 @@ export function AboutPage() {
                 letterSpacing: "0.2em",
                 color: "#fafafa",
                 fontFamily: "'Outfit', sans-serif",
-                fontWeight: 800,
+                fontWeight: 400,
               }}
             >
               {label}

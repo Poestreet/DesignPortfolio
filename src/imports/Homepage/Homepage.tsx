@@ -137,7 +137,7 @@ export default function Homepage() {
                     letterSpacing: "0.2em",
                     color: "#070071",
                     fontFamily: "'Outfit', sans-serif",
-                    fontWeight: 800,
+                    fontWeight: 400,
                   }}
                 >
                   {label}
