@@ -269,7 +269,7 @@ export default function ContactPage() {
                       value={message}
                       onChange={(e) => { setMessage(e.target.value); clearFieldError("message"); autoResize(e.target); }}
                       placeholder="whatever you want to talk about, anything..."
-                      rows={1}
+                      rows={4}
                       required
                       autoComplete="off"
                       aria-required="true"
@@ -281,7 +281,6 @@ export default function ContactPage() {
                         overflow: "hidden",
                         fontFamily: "'Outfit', sans-serif",
                         caretColor: "#fafafa",
-                        backgroundColor: "#070071",
                         borderBottomColor: fieldErrors.message ? "#ff4d4d" : "rgba(250,250,250,0.6)",
                         transition: "border-color 0.2s ease",
                       }}

@@ -51,6 +51,13 @@ html, body {
   }
 }
 
+/* ── Textarea background — reset du fond UA navigateur ─────────────────────────
+   Les navigateurs appliquent un background-color système aux <textarea>
+   qui résiste à background:transparent inline. Règle globale requise. */
+textarea {
+  background-color: transparent;
+}
+
 /* ── Placeholder — distingue le texte saisi (#fafafa) du placeholder ───────────
    La propriété color inline ne cible pas ::placeholder, règle globale requise. */
 input::placeholder,
