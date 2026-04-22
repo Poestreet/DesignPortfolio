@@ -1,33 +1,11 @@
 import { useNavigate } from "../../lib/navigate";
-import { useState, useEffect, useRef } from "react";
-;
 import { motion } from "motion/react";
 import { AnimatedBackground } from "./AnimatedBackground";
 import { MobileAboutPage } from "../mobile/MobileAboutPage";
 import { Reveal } from "./Reveal";
-import {
-  Phase,
-  EASE_TUPLE,
-  TICK_MS,
-  PHOTO_FADE_DURATION,
-  TEXT_REVEAL_DELAY,
-  TYPING_START_DELAY,
-} from "../../lib/animations";
+import { EASE_TUPLE } from "../../lib/animations";
+
 const photo = "/assets/4b4a98ebdf8ee3d638fcd41fb40af9b5b6aa4999.png";
-
-// ── Binary entrance ───────────────────────────────────────────────────────────
-const BINARY =
-  "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001111011111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
-
-const BINARY_FILL = Array.from(
-  { length: Math.ceil(1200 / BINARY.length) },
-  () => BINARY
-).join("").slice(0, 1200);
-
-const CHARS_PER_TICK = 4; // wide column ~110 chars/line → 440ms/line = 28 frames, clearly left→right
-
-// One-shot flag — persists across remounts within the same session
-let aboutAnimPlayed = false;
 
 // ── Tag pill (from Figma) ─────────────────────────────────────────────────────
 function Tag({ label }: { label: string }) {
@@ -63,55 +41,9 @@ function Tag({ label }: { label: string }) {
 export default function AboutPage() {
   const navigate = useNavigate();
 
-  const [phase,     setPhase]     = useState<Phase>(() => aboutAnimPlayed ? "done" : "idle");
-  const [displayed, setDisplayed] = useState<number>(() => aboutAnimPlayed ? BINARY_FILL.length : 0);
-  const [showText,  setShowText]  = useState<boolean>(() => aboutAnimPlayed);
-  const [showNav,   setShowNav]   = useState<boolean>(() => aboutAnimPlayed);
-
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  // ── Entrance sequence — plays once per session ────────────────────────────────
-  useEffect(() => {
-    if (aboutAnimPlayed) return;
-
-    // Skip animation if user prefers reduced motion (WCAG 2.3.3 / prefers-reduced-motion)
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      aboutAnimPlayed = true;
-      setPhase("done");
-      setDisplayed(BINARY_FILL.length);
-      setShowText(true);
-      setShowNav(true);
-      return;
-    }
-
-    const startTimer = setTimeout(() => {
-      setPhase("typing");
-      intervalRef.current = setInterval(() => {
-        setDisplayed((prev) => {
-          const next = Math.min(prev + CHARS_PER_TICK, BINARY_FILL.length);
-          if (next >= BINARY_FILL.length) {
-            clearInterval(intervalRef.current!);
-            setTimeout(() => setPhase("revealing"), 200);
-            setTimeout(() => setPhase("done"),      200 + PHOTO_FADE_DURATION);
-            setTimeout(() => {
-              aboutAnimPlayed = true;
-              setShowText(true);
-              setShowNav(true);
-            }, 200 + PHOTO_FADE_DURATION + TEXT_REVEAL_DELAY);
-          }
-          return next;
-        });
-      }, TICK_MS);
-    }, TYPING_START_DELAY);
-
-    return () => {
-      clearTimeout(startTimer);
-      clearInterval(intervalRef.current!);
-    };
-  }, []);
-
-  const binaryOpacity = phase === "revealing" || phase === "done" ? 0 : 1;
-  const photoOpacity  = phase === "revealing" || phase === "done" ? 1 : 0;
+  // Binary entrance removed — contenu visible immédiatement
+  const showText = true;
+  const showNav  = true;
 
   return (
     <>
@@ -172,49 +104,16 @@ export default function AboutPage() {
       {/* ── Flex row layout ── */}
       <div className="absolute inset-0 flex">
 
-        {/* ── Left column — photo / binary ── */}
+        {/* ── Left column — photo ── */}
         <div className="relative flex-1 min-w-0">
-
-          {/* Binary typewriter — decorative, hidden from AT */}
-          <motion.div
-            className="absolute inset-0 overflow-hidden"
-            aria-hidden="true"
-            animate={{ opacity: binaryOpacity }}
-            transition={{ duration: PHOTO_FADE_DURATION / 1000, ease: "easeInOut" }}
-            style={{ pointerEvents: "none" }}
-          >
-            <p
-              style={{
-                fontFamily: "monospace",
-                fontSize: "9px",
-                lineHeight: "1.5",
-                letterSpacing: "0.05em",
-                color: "rgba(250,250,250,0.55)",
-                wordBreak: "break-all",
-                padding: "20px",
-                margin: 0,
-              }}
-            >
-              {BINARY_FILL.slice(0, displayed)}
-              {phase === "typing" && (
-                <motion.span
-                  animate={{ opacity: [1, 0, 1] }}
-                  transition={{ duration: 0.8, repeat: Infinity }}
-                  style={{ display: "inline-block", width: "1ch" }}
-                >
-                  _
-                </motion.span>
-              )}
-            </p>
-          </motion.div>
 
           {/* Photo */}
           <motion.div
             className="absolute inset-0"
             initial={{ opacity: 0 }}
-            animate={{ opacity: photoOpacity }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0, transition: { duration: 0.35, delay: 0.2, ease: "easeIn" } }}
-            transition={{ duration: PHOTO_FADE_DURATION / 1000, ease: "easeInOut" }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
           >
             <img
               src={photo}

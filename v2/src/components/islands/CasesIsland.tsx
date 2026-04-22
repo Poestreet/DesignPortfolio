@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { AnimatedBackground } from "./AnimatedBackground";
 import { MobileCasesPage } from "../mobile/MobileCasesPage";
-import { Phase, EASE_TUPLE, TICK_MS, PHOTO_FADE_DURATION, TEXT_REVEAL_DELAY, TYPING_START_DELAY } from "../../lib/animations";
+import { EASE_TUPLE } from "../../lib/animations";
 
 const imgSncfHero       = "/assets/f1725bc3c57cf3dd7645db13a41f98c510522e43.webp";
 const imgSncfUI         = "/assets/7725d6f86a5b9645928d53b0663fcffa1a5bba31.webp";
@@ -12,26 +12,13 @@ const imgManutanHero    = "/assets/fee28166fa517fd8c22922535651ddcc807c8fee.webp
 const imgManutanUI      = "/assets/07bbb20152618083166542a433ca2836c88af76c.png";
 const imgManutanScreens = "/assets/92e0ff13a74b454f6b79d4e6bc4b979656a5b149.png";
 
-// ── Binary animation constants ─────────────────────────────────────────────────
-const BINARY =
-  "111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111110000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000111111100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001111011111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111";
-
-const BINARY_FILL = Array.from(
-  { length: Math.ceil(4000 / BINARY.length) },
-  () => BINARY
-).join("").slice(0, 4000);
-
-const CHARS_PER_TICK   = 12; // matches homepage — visible left→right motion
-const SNCF_START_DELAY = TYPING_START_DELAY; // alias for readability
-
 // ── One-shot flags — persist across remounts within the same session ───────────
 const playedHeroIds = new Set<string>();
 let   casesNavShown = false;
 
 // ── Types ─────────────────────────────────────────────────────────────────────
-type CaseId    = "sncf" | "manutan";
-type SubId     = "hero" | "challenge" | "role" | "results";
-type AnimPhase = Phase; // alias — Phase imported from lib/animations
+type CaseId = "sncf" | "manutan";
+type SubId  = "hero" | "challenge" | "role" | "results";
 
 const ALL_SECTIONS: { caseId: CaseId; sub: SubId; id: string }[] = [
   { caseId: "sncf",    sub: "hero",      id: "sncf-hero" },
@@ -182,7 +169,6 @@ interface AnimatedHeroProps {
   image: string;
   heading: React.ReactNode;
   body: React.ReactNode;
-  startDelay?: number;
   useIntersection?: boolean;
   onScrollNext?: () => void;
   onShowContent?: () => void;
@@ -193,19 +179,15 @@ function AnimatedHero({
   image,
   heading,
   body,
-  startDelay = 0,
   useIntersection = false,
   onScrollNext,
   onShowContent,
 }: AnimatedHeroProps) {
   const alreadyPlayed = playedHeroIds.has(id);
 
-  const [phase,       setPhase]       = useState<AnimPhase>(() => alreadyPlayed ? "done" : "idle");
-  const [displayed,   setDisplayed]   = useState<number>(() => alreadyPlayed ? BINARY_FILL.length : 0);
   const [showContent, setShowContent] = useState<boolean>(() => alreadyPlayed);
 
   const containerRef     = useRef<HTMLDivElement>(null);
-  const intervalRef      = useRef<ReturnType<typeof setInterval> | null>(null);
   const startedRef       = useRef(false);
   // Stable ref for callback — avoids re-triggering useEffect on every render
   const onShowContentRef = useRef(onShowContent);
@@ -214,52 +196,19 @@ function AnimatedHero({
   const triggerAnimation = useCallback(() => {
     if (startedRef.current) return;
     startedRef.current = true;
+    playedHeroIds.add(id);
+    setShowContent(true);
+    onShowContentRef.current?.();
+  }, [id]); // onShowContent excluded — accessed via ref
 
-    // Skip animation if user prefers reduced motion (WCAG 2.3.3)
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      playedHeroIds.add(id);
-      setPhase("done");
-      setDisplayed(BINARY_FILL.length);
-      setShowContent(true);
-      onShowContentRef.current?.();
-      return;
-    }
-
-    const t = setTimeout(() => {
-      setPhase("typing");
-      intervalRef.current = setInterval(() => {
-        setDisplayed((prev) => {
-          const next = Math.min(prev + CHARS_PER_TICK, BINARY_FILL.length);
-          if (next >= BINARY_FILL.length) {
-            clearInterval(intervalRef.current!);
-            setTimeout(() => setPhase("revealing"), 200);
-            setTimeout(() => setPhase("done"),      200 + PHOTO_FADE_DURATION);
-            setTimeout(() => {
-              playedHeroIds.add(id);
-              setShowContent(true);
-              onShowContentRef.current?.();
-            }, 200 + PHOTO_FADE_DURATION + TEXT_REVEAL_DELAY);
-          }
-          return next;
-        });
-      }, TICK_MS);
-    }, startDelay);
-
-    return t;
-  }, [startDelay, id]); // onShowContent excluded — accessed via ref
-
-  // First visit: run animation. Subsequent visits: fire callback immediately (nav already visible).
+  // First visit: trigger immediately. Subsequent visits: fire callback immediately (nav already visible).
   useEffect(() => {
     if (alreadyPlayed) {
       onShowContentRef.current?.();
       return;
     }
     if (useIntersection) return;
-    const t = triggerAnimation();
-    return () => {
-      if (t !== undefined) clearTimeout(t);
-      clearInterval(intervalRef.current!);
-    };
+    triggerAnimation();
   }, [useIntersection, triggerAnimation, alreadyPlayed]);
 
   useEffect(() => {
@@ -276,14 +225,8 @@ function AnimatedHero({
     );
     const el = containerRef.current;
     if (el) observer.observe(el);
-    return () => {
-      observer.disconnect();
-      clearInterval(intervalRef.current!);
-    };
+    return () => observer.disconnect();
   }, [useIntersection, triggerAnimation, alreadyPlayed]);
-
-  const binaryOpacity = phase === "revealing" || phase === "done" ? 0 : 1;
-  const imageVisible  = phase === "revealing" || phase === "done";
 
   return (
     <div
@@ -291,33 +234,13 @@ function AnimatedHero({
       id={id}
       style={{ position: "relative", height: "100vh", display: "flex", alignItems: "flex-end", overflow: "hidden" }}
     >
-      {/* Binary typewriter — decorative, hidden from AT */}
-      <motion.div
-        className="absolute inset-0"
-        aria-hidden="true"
-        animate={{ opacity: binaryOpacity }}
-        transition={{ duration: PHOTO_FADE_DURATION / 1000, ease: "easeInOut" }}
-        style={{ zIndex: 1, pointerEvents: "none" }}
-      >
-        <p style={{ fontFamily: "monospace", fontSize: "9px", lineHeight: "1.5", letterSpacing: "0.05em", color: "rgba(250,250,250,0.55)", wordBreak: "break-all", padding: "20px", margin: 0, height: "100%", overflow: "hidden" }}>
-          {BINARY_FILL.slice(0, displayed)}
-          {phase === "typing" && (
-            <motion.span
-              animate={{ opacity: [1, 0, 1] }}
-              transition={{ duration: 0.8, repeat: Infinity }}
-              style={{ display: "inline-block", width: "1ch" }}
-            >_</motion.span>
-          )}
-        </p>
-      </motion.div>
-
       {/* Hero image — fades out after text on exit */}
       <motion.div
         className="absolute inset-0"
         initial={{ opacity: 0 }}
-        animate={{ opacity: imageVisible ? 1 : 0 }}
+        animate={{ opacity: 1 }}
         exit={{ opacity: 0, transition: { duration: 0.35, delay: 0.2, ease: "easeIn" } }}
-        transition={{ duration: PHOTO_FADE_DURATION / 1000, ease: "easeInOut" }}
+        transition={{ duration: 0.8, ease: "easeInOut" }}
         style={{ zIndex: 2 }}
       >
         <img src={image} alt="" className="w-full h-full object-cover"
@@ -774,7 +697,6 @@ export default function CasesPage() {
         <AnimatedHero
           id="sncf-hero"
           image={imgSncfHero}
-          startDelay={SNCF_START_DELAY}
           useIntersection={false}
           heading="Optimisation and Redesign of the B2C Shopping Cart"
           body="Shopping cart suffered from structural complexity and a lack of clarity, which was a source of frustration. The challenge was to reorganise the information hierarchy to simplify it and make it more effective (multi-product, key actions), whilst managing the legal constraints imposed by the legal team regarding the display of partnership offers (insurance) and mandatory disclosures."
@@ -788,7 +710,6 @@ export default function CasesPage() {
         <AnimatedHero
           id="manutan-hero"
           image={imgManutanHero}
-          startDelay={0}
           useIntersection={true}
           heading="Strategic Overhaul of Research: Design and Performance"
           body="Search experience suffered from low search engine usage and a high bounce rate, particularly for paid traffic (SEA), which indicated a mismatch between the interface provided and users' expectations. The challenge was therefore to simplify the search experience, improve the relevance of results and make the tool more intuitive in order to encourage its use."
