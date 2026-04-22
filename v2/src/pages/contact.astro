@@ -55,6 +55,13 @@ const seo = {
       </nav>
     </main>
 
+    <!-- Formulaire statique pour détection Netlify Forms au build -->
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text"  name="name" />
+      <input type="email" name="email" />
+      <textarea name="message"></textarea>
+    </form>
+
     <div style="position:fixed;inset:0;" aria-hidden="true">
       <ContactIsland client:load />
     </div>

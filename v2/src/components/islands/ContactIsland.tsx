@@ -87,16 +87,17 @@ export default function ContactPage() {
     setFieldErrors({ name: false, email: false, message: false });
     setStatus("sending");
     try {
-      const res = await fetch("/contact.php", {
+      const formData = new URLSearchParams();
+      formData.append("form-name", "contact");
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("message", message);
+      const res = await fetch("/", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: formData.toString(),
       });
-      const text = await res.text();
-      let data: { success: boolean };
-      try { data = JSON.parse(text); }
-      catch { setStatus("error"); return; }
-      if (data.success) {
+      if (res.ok) {
         setStatus("sent");
         setName(""); setEmail(""); setMessage("");
         setTimeout(() => setStatus("idle"), 3000);
@@ -180,6 +181,8 @@ export default function ContactPage() {
             {/* ── FormSection ── */}
             <Reveal show={showText} delay={0.2} exitDelay={0}>
               <form
+                name="contact"
+                data-netlify="true"
                 onSubmit={handleSubmit}
                 style={{ display: "flex", flexDirection: "column", gap: "24px" }}
               >
