@@ -1,5 +1,5 @@
 import { useNavigate } from "../../lib/navigate";
-import { useState, useRef } from "react";
+import { useState, useRef, useLayoutEffect } from "react";
 import { motion } from "motion/react";
 import { MobileContactPage } from "../mobile/MobileContactPage";
 import { usePageReady } from "../../lib/usePageReady";
@@ -45,6 +45,10 @@ export default function ContactPage() {
     el.style.height = "auto";
     el.style.height = `${el.scrollHeight}px`;
   };
+
+  useLayoutEffect(() => {
+    if (textareaRef.current) autoResize(textareaRef.current);
+  }, [formKey]);
 
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error" | "invalid-email">("idle");
   const [fieldErrors, setFieldErrors] = useState({ name: false, email: false, message: false });
@@ -277,6 +281,7 @@ export default function ContactPage() {
                         overflow: "hidden",
                         fontFamily: "'Outfit', sans-serif",
                         caretColor: "#fafafa",
+                        backgroundColor: "#070071",
                         borderBottomColor: fieldErrors.message ? "#ff4d4d" : "rgba(250,250,250,0.6)",
                         transition: "border-color 0.2s ease",
                       }}

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useLayoutEffect } from "react";
 import { useNavigate } from "../../lib/navigate";
 import { motion } from "motion/react";
 
@@ -52,6 +52,10 @@ export function MobileContactPage() {
     el.style.height = "auto";
     el.style.height = `${el.scrollHeight}px`;
   };
+
+  useLayoutEffect(() => {
+    if (textareaRef.current) autoResize(textareaRef.current);
+  }, [formKey]);
 
   const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
@@ -259,6 +263,7 @@ export function MobileContactPage() {
                     resize: "none",
                     overflow: "hidden",
                     fontFamily: "'Outfit', sans-serif",
+                    backgroundColor: "#070071",
                     borderBottomColor: fieldErrors.message ? "#ff4d4d" : "rgba(250,250,250,0.6)",
                     transition: "border-color 0.2s ease",
                   }}
