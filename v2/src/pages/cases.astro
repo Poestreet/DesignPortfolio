@@ -1,0 +1,106 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import CasesIsland from "../components/islands/CasesIsland";
+import "../styles/global.css";
+
+const seo = {
+  title:       "Cases — Julien Bourcet, Senior Product Designer",
+  description: "Études de cas : refonte du panier SNCF Connect et optimisation du moteur de recherche Manutan.",
+  ogImage:     "/og/og.jpg",
+  url:         "https://julienbourcet.fr/cases",
+  canonical:   "https://julienbourcet.fr/cases",
+};
+---
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    <link rel="canonical" href={seo.canonical} />
+
+    <meta property="og:title"       content={seo.title} />
+    <meta property="og:description" content={seo.description} />
+    <meta property="og:image"       content={seo.ogImage} />
+    <meta property="og:url"         content={seo.url} />
+    <meta property="og:type"        content="website" />
+    <meta property="og:locale"      content="fr_FR" />
+
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={seo.title} />
+    <meta name="twitter:description" content={seo.description} />
+    <meta name="twitter:image"       content={seo.ogImage} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,700&family=Outfit:wght@400;500;600;800&display=swap"
+    />
+
+    <ViewTransitions />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+    <!-- Contenu statique — SEO et lecteurs d'écran -->
+    <main id="main-content" tabindex="-1" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">
+      <h1>Études de cas — Julien Bourcet</h1>
+
+      <article>
+        <h2>SNCF Connect — Refonte du panier B2C</h2>
+        <p>
+          Optimisation et refonte structurelle du panier d'achat SNCF Connect.
+          Challenge : réorganiser la hiérarchie d'information pour simplifier le parcours
+          et intégrer les contraintes légales (assurances, mentions obligatoires).
+        </p>
+        <h3>Mon rôle</h3>
+        <ul>
+          <li>Gouvernance et stratégie UX/UI de la refonte</li>
+          <li>Priorisation et conception du nouveau panier</li>
+          <li>Design et validation des cas complexes (produits multiples)</li>
+          <li>Collaboration équipe légale pour la conformité</li>
+          <li>Validation par tests utilisateurs ciblés</li>
+        </ul>
+        <h3>Résultats</h3>
+        <p>
+          Livraison dans les délais, validation unanime de toutes les parties prenantes.
+          La page est toujours en ligne deux ans après le lancement.
+        </p>
+      </article>
+
+      <article>
+        <h2>Manutan — Optimisation du moteur de recherche</h2>
+        <p>
+          Transformation du parcours de recherche Manutan en avantage concurrentiel.
+          Objectif : réduire le taux de rebond SEA et augmenter le taux de conversion.
+        </p>
+        <h3>Mon rôle</h3>
+        <ul>
+          <li>Analyse quantitative et qualitative des données</li>
+          <li>Conception itérative (formulaires, filtres, visualisation des résultats)</li>
+          <li>Validation par tests A/B et interviews utilisateurs</li>
+        </ul>
+        <h3>Résultats mesurés</h3>
+        <ul>
+          <li>+22% à +33% de clics sur les produits</li>
+          <li>+22% à +66% d'ajouts au panier</li>
+          <li>+92% à +123% de clics sur les catégories</li>
+          <li>+2.9% de taux de conversion lié à la recherche</li>
+          <li>+2.8% de part de revenus issue de la recherche</li>
+        </ul>
+      </article>
+
+      <nav aria-label="Navigation principale">
+        <a href="/">Accueil</a>
+        <a href="/about">À propos</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </main>
+
+    <div style="position:fixed;inset:0;" aria-hidden="true">
+      <CasesIsland client:load />
+    </div>
+  </body>
+</html>

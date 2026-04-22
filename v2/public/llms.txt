@@ -1,0 +1,38 @@
+# Julien Bourcet — Senior Product Designer
+
+> Portfolio de Julien Bourcet, Senior Product Designer avec 20 ans d'expérience.
+> Spécialisé en Design System, UX Research, UI Design & Prototypage, et Front-End (React, TypeScript).
+> Disponible pour des missions en cabinet ou en freelance.
+
+## À propos
+
+Julien Bourcet est un designer autodidacte formé depuis 1998. Il a travaillé sur des produits
+B2C et B2B dans des secteurs variés : mobilité (SNCF Connect, Rail Europe), e-commerce (Manutan,
+eDreams/GoVoyages), presse (L'Équipe), audiovisuel (Radio France), et services numériques.
+
+Expertises principales : Design System & DesignOps, accessibilité numérique (WCAG 2.2 AA / RGAA),
+UX Research & Product Discovery, Figma & Prototypage, développement Front-End React/TypeScript.
+
+## Pages
+
+- [Homepage](https://julienbourcet.fr): Introduction et positionnement
+- [Cases](https://julienbourcet.fr/cases): Études de cas — SNCF Connect (refonte panier B2C) et Manutan (optimisation moteur de recherche)
+- [About](https://julienbourcet.fr/about): Parcours et expertises
+- [Contact](https://julienbourcet.fr/contact): Prise de contact
+
+## Études de cas
+
+### SNCF Connect — Refonte du panier B2C
+Optimisation structurelle du panier d'achat de l'application SNCF Connect.
+Réorganisation de la hiérarchie d'information, gestion des cas complexes (multi-produits),
+conformité légale (assurances, mentions obligatoires). Page toujours en ligne 2 ans après le lancement.
+
+### Manutan — Optimisation du moteur de recherche
+Transformation du parcours de recherche en avantage concurrentiel.
+Résultats mesurés : +22% à +33% de clics produits, +92% à +123% de clics catégories,
++2.9% de taux de conversion, +2.8% de part de revenus.
+
+## Stack technique
+
+Ce portfolio v2 est construit avec Astro (SSG), React Islands, Framer Motion, Tailwind CSS
+et TypeScript. Déployé sur Netlify. Design system et animations prototypées dans Figma.

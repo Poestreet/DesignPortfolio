@@ -1,0 +1,68 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import HomepageIsland from "../components/islands/HomepageIsland";
+import "../styles/global.css";
+
+const seo = {
+  title:       "Julien Bourcet — Senior Product Designer",
+  description: "Portfolio de Julien Bourcet, Senior Product Designer. Design System, UX Research, UI Design & Prototypage.",
+  ogImage:     "/og/og.jpg",
+  url:         "https://julienbourcet.fr/",
+  canonical:   "https://julienbourcet.fr/",
+};
+---
+
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    <link rel="canonical" href={seo.canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:title"       content={seo.title} />
+    <meta property="og:description" content={seo.description} />
+    <meta property="og:image"       content={seo.ogImage} />
+    <meta property="og:url"         content={seo.url} />
+    <meta property="og:type"        content="website" />
+    <meta property="og:locale"      content="fr_FR" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={seo.title} />
+    <meta name="twitter:description" content={seo.description} />
+    <meta name="twitter:image"       content={seo.ogImage} />
+
+    <!-- Google Fonts — preconnect + stylesheet -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,700&family=Outfit:wght@400;500;600;800&display=swap"
+    />
+
+    <!-- Astro View Transitions — slide entre les pages -->
+    <ViewTransitions />
+  </head>
+  <body>
+    <!-- Skip link — WCAG 2.4.1 -->
+    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+
+    <!-- Contenu statique visible sans JS — pour SEO et lecteurs d'écran -->
+    <main id="main-content" tabindex="-1" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">
+      <h1>Julien Bourcet — Senior Product Designer</h1>
+      <p>Portfolio de Julien Bourcet. Design System, UX Research, UI Design et développement Front-End.</p>
+      <nav aria-label="Navigation principale">
+        <a href="/about">À propos</a>
+        <a href="/cases">Études de cas</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </main>
+
+    <!-- Island React : couche interactive et animée (desktop + mobile) -->
+    <div style="position:fixed;inset:0;" aria-hidden="true">
+      <HomepageIsland client:load />
+    </div>
+  </body>
+</html>
