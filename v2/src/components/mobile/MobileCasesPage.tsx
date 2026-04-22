@@ -2,12 +2,12 @@ import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "../../lib/navigate";
 import { motion, AnimatePresence } from "motion/react";
 import { AnimatedBackground } from "../islands/AnimatedBackground";
-import imgSncfHero from "figma:asset/f1725bc3c57cf3dd7645db13a41f98c510522e43.png";
-import imgSncfUI from "figma:asset/7725d6f86a5b9645928d53b0663fcffa1a5bba31.png";
-import imgSncfScreens from "figma:asset/91d3823d08cc55b2dfeef9f9cf95ea29b755b2df.png";
-import imgManutanHero from "figma:asset/fee28166fa517fd8c22922535651ddcc807c8fee.png";
-import imgManutanUI from "figma:asset/07bbb20152618083166542a433ca2836c88af76c.png";
-import imgManutanScreens from "figma:asset/92e0ff13a74b454f6b79d4e6bc4b979656a5b149.png";
+const imgSncfHero = "/assets/f1725bc3c57cf3dd7645db13a41f98c510522e43.png";
+const imgSncfUI = "/assets/7725d6f86a5b9645928d53b0663fcffa1a5bba31.png";
+const imgSncfScreens = "/assets/91d3823d08cc55b2dfeef9f9cf95ea29b755b2df.png";
+const imgManutanHero = "/assets/fee28166fa517fd8c22922535651ddcc807c8fee.png";
+const imgManutanUI = "/assets/07bbb20152618083166542a433ca2836c88af76c.png";
+const imgManutanScreens = "/assets/92e0ff13a74b454f6b79d4e6bc4b979656a5b149.png";
 
 // ── Shared text styles ─────────────────────────────────────────────────────────
 const headingStyle: React.CSSProperties = {

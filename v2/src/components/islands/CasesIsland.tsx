@@ -1,18 +1,16 @@
 import { useNavigate } from "../../lib/navigate";
 import { useState, useEffect, useRef, useCallback } from "react";
-;
 import { AnimatePresence, motion } from "motion/react";
 import { AnimatedBackground } from "./AnimatedBackground";
 import { MobileCasesPage } from "../mobile/MobileCasesPage";
-
-import imgSncfHero       from "figma:asset/f1725bc3c57cf3dd7645db13a41f98c510522e43.webp";
-import imgSncfUI         from "figma:asset/7725d6f86a5b9645928d53b0663fcffa1a5bba31.webp";
-import imgSncfScreens    from "figma:asset/91d3823d08cc55b2dfeef9f9cf95ea29b755b2df.png";
-import imgManutanHero    from "figma:asset/fee28166fa517fd8c22922535651ddcc807c8fee.webp";
-import imgManutanUI      from "figma:asset/07bbb20152618083166542a433ca2836c88af76c.png";
-import imgManutanScreens from "figma:asset/92e0ff13a74b454f6b79d4e6bc4b979656a5b149.png";
-
 import { Phase, EASE_TUPLE, TICK_MS, PHOTO_FADE_DURATION, TEXT_REVEAL_DELAY, TYPING_START_DELAY } from "../../lib/animations";
+
+const imgSncfHero       = "/assets/f1725bc3c57cf3dd7645db13a41f98c510522e43.webp";
+const imgSncfUI         = "/assets/7725d6f86a5b9645928d53b0663fcffa1a5bba31.webp";
+const imgSncfScreens    = "/assets/91d3823d08cc55b2dfeef9f9cf95ea29b755b2df.png";
+const imgManutanHero    = "/assets/fee28166fa517fd8c22922535651ddcc807c8fee.webp";
+const imgManutanUI      = "/assets/07bbb20152618083166542a433ca2836c88af76c.png";
+const imgManutanScreens = "/assets/92e0ff13a74b454f6b79d4e6bc4b979656a5b149.png";
 
 // ── Binary animation constants ─────────────────────────────────────────────────
 const BINARY =

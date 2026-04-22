@@ -1,5 +1,5 @@
 // Identique à la v1 — figma:asset/ résolu par le plugin Vite dans astro.config.mjs
-import exampleImage from "figma:asset/05ecf1ce226d7b081d77b91c5a9eada68ab72e0a.png";
+const exampleImage = "/assets/05ecf1ce226d7b081d77b91c5a9eada68ab72e0a.webp";
 
 export function AnimatedBackground({ className = "" }: { className?: string }) {
   return (

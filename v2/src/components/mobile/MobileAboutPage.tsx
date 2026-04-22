@@ -1,6 +1,6 @@
 import { useNavigate } from "../../lib/navigate";
 import { AnimatedBackground } from "../islands/AnimatedBackground";
-import photo from "figma:asset/4b4a98ebdf8ee3d638fcd41fb40af9b5b6aa4999.png";
+const photo = "/assets/4b4a98ebdf8ee3d638fcd41fb40af9b5b6aa4999.png";
 
 function Tag({ label }: { label: string }) {
   return (

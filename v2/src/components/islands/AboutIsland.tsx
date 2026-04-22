@@ -13,7 +13,7 @@ import {
   TEXT_REVEAL_DELAY,
   TYPING_START_DELAY,
 } from "../../lib/animations";
-import photo from "figma:asset/4b4a98ebdf8ee3d638fcd41fb40af9b5b6aa4999.png";
+const photo = "/assets/4b4a98ebdf8ee3d638fcd41fb40af9b5b6aa4999.png";
 
 // ── Binary entrance ───────────────────────────────────────────────────────────
 const BINARY =
