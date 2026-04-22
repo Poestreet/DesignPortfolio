@@ -507,12 +507,19 @@ function ManutanResults() {
   );
 }
 
-// ── Nav components ─────────────────────────────────────────────────────────────
+// ── Nav components — inline styles uniquement (pas de classes Tailwind dynamiques) ──
+
 function NavBtn({ label, onClick, href }: { label: string; onClick?: () => void; href?: string }) {
+  const [hovered, setHovered] = useState(false);
+  const lineW = hovered ? 48 : 32;
   const inner = (
-    <span className="flex items-center gap-2 group">
-      <span className="block w-8 h-px transition-all duration-300 group-hover:w-12" style={{ background: "#fafafa" }} />
-      <span className="uppercase" style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#fafafa", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}>
+    <span
+      style={{ display: "flex", alignItems: "center", gap: 8 }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <span style={{ display: "block", width: lineW, height: 1, background: "#fafafa", flexShrink: 0, transition: "width 0.3s ease" }} />
+      <span style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#fafafa", fontFamily: "'Outfit', sans-serif", fontWeight: 400, textTransform: "uppercase" }}>
         {label}
       </span>
     </span>
@@ -526,26 +533,29 @@ function NavBtn({ label, onClick, href }: { label: string; onClick?: () => void;
 }
 
 function CaseNavItem({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
+  const [hovered, setHovered] = useState(false);
+
   if (active) {
     return (
-      <button onClick={onClick} className="flex items-center gap-2"
-        aria-current="location"
-        style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}>
-        <span className="rounded-full shrink-0" aria-hidden="true" style={{ width: 8, height: 8, background: "#fafafa" }} />
-        <span className="uppercase" style={{ fontSize: "14px", letterSpacing: "0.2em", color: "#fafafa", fontFamily: "'Outfit', sans-serif", fontWeight: 600 }}>
+      <button onClick={onClick} aria-current="location"
+        style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0, display: "flex", alignItems: "center", gap: 8 }}>
+        <span aria-hidden="true" style={{ width: 8, height: 8, borderRadius: "50%", background: "#fafafa", flexShrink: 0 }} />
+        <span style={{ fontSize: "14px", letterSpacing: "0.2em", color: "#fafafa", fontFamily: "'Outfit', sans-serif", fontWeight: 600, textTransform: "uppercase" }}>
           {label}
         </span>
       </button>
     );
   }
   return (
-    <button onClick={onClick} className="flex items-center gap-2 group"
-      style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}>
-      <span className="relative flex items-center justify-center shrink-0 transition-all duration-300 w-2 h-2 group-hover:w-8">
-        <span className="absolute rounded-full border border-white transition-opacity duration-300 group-hover:opacity-0" style={{ width: 8, height: 8 }} />
-        <span className="absolute inset-x-0 h-px bg-white opacity-0 transition-opacity duration-300 group-hover:opacity-100" style={{ top: "50%", transform: "translateY(-50%)" }} />
+    <button onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0, display: "flex", alignItems: "center", gap: 8 }}>
+      <span style={{ position: "relative", width: hovered ? 32 : 8, height: 8, flexShrink: 0, transition: "width 0.3s ease", display: "flex", alignItems: "center" }}>
+        <span style={{ position: "absolute", width: 8, height: 8, borderRadius: "50%", border: "1px solid #fafafa", opacity: hovered ? 0 : 1, transition: "opacity 0.3s ease" }} />
+        <span style={{ position: "absolute", left: 0, right: 0, height: 1, background: "#fafafa", opacity: hovered ? 1 : 0, transition: "opacity 0.3s ease" }} />
       </span>
-      <span className="uppercase" style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#fafafa", fontFamily: "'Outfit', sans-serif", fontWeight: 400 }}>
+      <span style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#fafafa", fontFamily: "'Outfit', sans-serif", fontWeight: 400, textTransform: "uppercase" }}>
         {label}
       </span>
     </button>
@@ -553,24 +563,16 @@ function CaseNavItem({ label, active, onClick }: { label: string; active: boolea
 }
 
 function SubNavItem({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
+  const [hovered, setHovered] = useState(false);
+  const lineW = active ? 16 : hovered ? 24 : 12;
   return (
-    <button onClick={onClick} className="flex items-center gap-2 group"
+    <button onClick={onClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       aria-current={active ? "step" : undefined}
-      style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}>
-      <span
-        className={`block h-px shrink-0 transition-all duration-300 ${active ? "w-4" : "w-3 group-hover:w-6"}`}
-        style={{ background: "#fafafa" }}
-      />
-      <span
-        className="uppercase transition-all duration-300"
-        style={{
-          fontSize: "10px",
-          letterSpacing: "0.15em",
-          fontFamily: "'Outfit', sans-serif",
-          fontWeight: active ? 500 : 400,
-          color: "#fafafa",
-        }}
-      >
+      style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0, display: "flex", alignItems: "center", gap: 8 }}>
+      <span style={{ display: "block", width: lineW, height: 1, background: "#fafafa", flexShrink: 0, transition: "width 0.3s ease" }} />
+      <span style={{ fontSize: "10px", letterSpacing: "0.15em", fontFamily: "'Outfit', sans-serif", fontWeight: active ? 500 : 400, color: "#fafafa", textTransform: "uppercase", transition: "font-weight 0.3s ease" }}>
         {label}
       </span>
     </button>

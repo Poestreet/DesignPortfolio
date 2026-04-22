@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "../../lib/navigate";
 import { motion } from "motion/react";
 
@@ -44,6 +44,14 @@ export function MobileContactPage() {
   const [message, setMessage] = useState("");
   const [status,  setStatus]  = useState<"idle" | "sending" | "sent" | "error" | "invalid-email">("idle");
   const [fieldErrors, setFieldErrors] = useState({ name: false, email: false, message: false });
+  // Incrémenté à chaque envoi réussi → force le re-mount des inputs (efface le fond autofill)
+  const [formKey, setFormKey] = useState(0);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const autoResize = (el: HTMLTextAreaElement) => {
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight}px`;
+  };
 
   const isValidEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
@@ -90,6 +98,7 @@ export function MobileContactPage() {
       if (res.ok) {
         setStatus("sent");
         setName(""); setEmail(""); setMessage("");
+        setFormKey(k => k + 1); // re-mount inputs → efface le fond autofill navigateur
         setTimeout(() => setStatus("idle"), 3000);
       } else {
         setStatus("error");
@@ -177,6 +186,7 @@ export function MobileContactPage() {
               <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                 <label htmlFor="m-contact-name" style={labelStyle}>Who's writing?</label>
                 <input
+                  key={`name-${formKey}`}
                   id="m-contact-name"
                   type="text"
                   value={name}
@@ -204,6 +214,7 @@ export function MobileContactPage() {
               <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                 <label htmlFor="m-contact-email" style={labelStyle}>How do i reach you?</label>
                 <input
+                  key={`email-${formKey}`}
                   id="m-contact-email"
                   type="email"
                   value={email}
@@ -231,10 +242,13 @@ export function MobileContactPage() {
               <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                 <label htmlFor="m-contact-message" style={labelStyle}>Tell me more?</label>
                 <textarea
+                  key={`message-${formKey}`}
+                  ref={textareaRef}
                   id="m-contact-message"
                   value={message}
-                  onChange={(e) => { setMessage(e.target.value); clearFieldError("message"); }}
+                  onChange={(e) => { setMessage(e.target.value); clearFieldError("message"); autoResize(e.target); }}
                   placeholder="whatever you want to talk about, anything..."
+                  rows={1}
                   required
                   autoComplete="off"
                   aria-required="true"
@@ -243,7 +257,7 @@ export function MobileContactPage() {
                   style={{
                     ...fieldStyle,
                     resize: "none",
-                    minHeight: "120px",
+                    overflow: "hidden",
                     fontFamily: "'Outfit', sans-serif",
                     borderBottomColor: fieldErrors.message ? "#ff4d4d" : "rgba(250,250,250,0.6)",
                     transition: "border-color 0.2s ease",

@@ -1,5 +1,5 @@
 import { useNavigate } from "../../lib/navigate";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "motion/react";
 import { MobileContactPage } from "../mobile/MobileContactPage";
 import { usePageReady } from "../../lib/usePageReady";
@@ -38,6 +38,13 @@ export default function ContactPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [formKey, setFormKey] = useState(0);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const autoResize = (el: HTMLTextAreaElement) => {
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight}px`;
+  };
 
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error" | "invalid-email">("idle");
   const [fieldErrors, setFieldErrors] = useState({ name: false, email: false, message: false });
@@ -87,6 +94,7 @@ export default function ContactPage() {
       if (res.ok) {
         setStatus("sent");
         setName(""); setEmail(""); setMessage("");
+        setFormKey(k => k + 1);
         setTimeout(() => setStatus("idle"), 3000);
       } else {
         setStatus("error");
@@ -193,6 +201,7 @@ export default function ContactPage() {
                   <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                     <label htmlFor="contact-name" style={labelStyle}>Who's writing?</label>
                     <input
+                      key={`name-${formKey}`}
                       id="contact-name"
                       type="text"
                       value={name}
@@ -221,6 +230,7 @@ export default function ContactPage() {
                   <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                     <label htmlFor="contact-email" style={labelStyle}>How do i reach you?</label>
                     <input
+                      key={`email-${formKey}`}
                       id="contact-email"
                       type="email"
                       value={email}
@@ -249,9 +259,11 @@ export default function ContactPage() {
                   <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                     <label htmlFor="contact-message" style={labelStyle}>Tell me more?</label>
                     <textarea
+                      key={`message-${formKey}`}
+                      ref={textareaRef}
                       id="contact-message"
                       value={message}
-                      onChange={(e) => { setMessage(e.target.value); clearFieldError("message"); }}
+                      onChange={(e) => { setMessage(e.target.value); clearFieldError("message"); autoResize(e.target); }}
                       placeholder="whatever you want to talk about, anything..."
                       rows={1}
                       required
@@ -262,7 +274,7 @@ export default function ContactPage() {
                       style={{
                         ...placeholderStyle,
                         resize: "none",
-                        minHeight: "120px",
+                        overflow: "hidden",
                         fontFamily: "'Outfit', sans-serif",
                         caretColor: "#fafafa",
                         borderBottomColor: fieldErrors.message ? "#ff4d4d" : "rgba(250,250,250,0.6)",
