@@ -69,9 +69,10 @@ textarea::placeholder {
   opacity: 1; /* Firefox applique opacity: 0.54 par défaut */
 }
 
-/* ── Autofill — supprime le fond navigateur (Chrome/Safari) ────────────────────
-   Le fond jaune/bleu de l'autofill écrase background:transparent inline.
-   box-shadow inset avec la couleur brand simule un fond transparent. */
+/* ── Autofill — supprime le fond navigateur (Chrome/Safari/Firefox) ────────────
+   Le box-shadow inset #070071 rendait les inputs solides ≠ textarea transparente.
+   Solution : transition 9999s retarde le fond autofill indéfiniment → tous les
+   champs restent visuellement transparents, autofill ou non. */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -79,8 +80,7 @@ textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
 textarea:-webkit-autofill:focus {
   -webkit-text-fill-color: #fafafa;
-  -webkit-box-shadow: 0 0 0px 1000px #070071 inset;
-  transition: background-color 5000s ease-in-out 0s;
+  transition: background-color 9999s ease-in-out 0s;
 }
 
 /* ── Skip link ──────────────────────────────────────────────────────────────── */
