@@ -6,14 +6,14 @@ import "../styles/global.css";
 
 const seo = {
   title:       "Contact — Julien Bourcet, Senior Product Designer",
-  description: "Prendre contact avec Julien Bourcet, Senior Product Designer.",
+  description: "Get in touch with Julien Bourcet, Senior Product Designer.",
   ogImage:     "/og/OGimage.png",
   url:         "https://julienbourcet.fr/contact",
   canonical:   "https://julienbourcet.fr/contact",
 };
 ---
 
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -26,7 +26,7 @@ const seo = {
     <meta property="og:image"       content={seo.ogImage} />
     <meta property="og:url"         content={seo.url} />
     <meta property="og:type"        content="website" />
-    <meta property="og:locale"      content="fr_FR" />
+    <meta property="og:locale"      content="en_US" />
 
     <meta name="twitter:card"        content="summary_large_image" />
     <meta name="twitter:title"       content={seo.title} />
@@ -43,16 +43,16 @@ const seo = {
     <ViewTransitions />
   </head>
   <body>
-    <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
     <!-- Contenu statique — SEO et lecteurs d'écran -->
     <main id="main-content" tabindex="-1" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">
       <h1>Contact — Julien Bourcet</h1>
-      <p>Prendre contact avec Julien Bourcet, Senior Product Designer.</p>
-      <nav aria-label="Navigation principale">
-        <a href="/">Accueil</a>
-        <a href="/cases">Études de cas</a>
-        <a href="/about">À propos</a>
+      <p>Get in touch with Julien Bourcet, Senior Product Designer.</p>
+      <nav aria-label="Main navigation">
+        <a href="/">Home</a>
+        <a href="/cases">Cases</a>
+        <a href="/about">About</a>
       </nav>
     </main>
 

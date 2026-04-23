@@ -34,8 +34,9 @@ if (typeof document !== "undefined") {
 }
 
 export function usePageReady(): boolean {
-  // Initialise à l'état courant au moment du mount (évite le flash si déjà prêt)
-  const [ready, setReady] = useState(() => _isReady);
+  // Toujours false au SSR — garantit que l'hydratation React correspond au HTML serveur.
+  // useEffect (client-only) corrige immédiatement si l'événement est déjà passé.
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     // Déjà prêt (premier chargement, événement reçu avant le mount)
