@@ -178,6 +178,8 @@ export function MobileAboutPage() {
                   <Tag key={tag} label={tag} />
                 ))}
               </div>
+              
+
             </div>
           </div>
 

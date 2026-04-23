@@ -180,7 +180,7 @@ export default function AboutPage() {
 
             {/* ── 02 . Experiences section ── */}
             <Reveal show={showText} delay={0.2} exitDelay={0}>
-              <div style={{ display: "flex", flexDirection: "column", gap: "24px", color: "#fafafa" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "24px", color: "#fafafa", marginBottom: "24px" }}>
 
                 {/* EyeBrow */}
                 <div style={{ display: "flex", gap: "4px", alignItems: "center", fontSize: "12px", color: "#fafafa", whiteSpace: "nowrap" }}>
@@ -289,6 +289,11 @@ export default function AboutPage() {
               </div>
             </Reveal>
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> d932c2153ed93cdb03d5153fc966b424425315db
           </div>
         </div>
 
