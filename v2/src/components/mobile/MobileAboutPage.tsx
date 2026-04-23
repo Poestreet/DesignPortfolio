@@ -1,5 +1,6 @@
 import { useNavigate } from "../../lib/navigate";
 import { motion } from "motion/react";
+import { ExternalLinkIcon } from "../ExternalLinkIcon";
 const photo = "/assets/4b4a98ebdf8ee3d638fcd41fb40af9b5b6aa4999.png";
 
 function Tag({ label }: { label: string }) {
@@ -154,11 +155,7 @@ export function MobileAboutPage() {
                   }}
                 >
                   I have written here
-                  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fafafa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ width: "12px", height: "12px", flexShrink: 0 }}>
-                    <path d="M15 3h6v6"/>
-                    <path d="M10 14 21 3"/>
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                  </svg>
+                  <ExternalLinkIcon size={12} />
                 </motion.a>
                 {", "}I am continuously training myself in data, accessibility, front-end, methodology, artificial intelligence, and design systems.
               </p>
@@ -250,11 +247,7 @@ export function MobileAboutPage() {
                     aria-hidden="true"
                     style={{ display: "inline-flex" }}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fafafa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M15 3h6v6"/>
-                      <path d="M10 14 21 3"/>
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                    </svg>
+                    <ExternalLinkIcon />
                   </motion.span>
                 </motion.a>
               ))}
