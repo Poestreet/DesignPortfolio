@@ -1,4 +1,5 @@
 import { useNavigate } from "../../lib/navigate";
+import { motion } from "motion/react";
 const photo = "/assets/4b4a98ebdf8ee3d638fcd41fb40af9b5b6aa4999.png";
 
 function Tag({ label }: { label: string }) {
@@ -177,6 +178,58 @@ export function MobileAboutPage() {
                   <Tag key={tag} label={tag} />
                 ))}
               </div>
+            </div>
+          </div>
+
+          {/* ── 03 . Links ── */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "24px", width: "100%" }}>
+            <div style={eyeBrowStyle}>
+              <span style={{ fontFamily: "'Fraunces', serif", fontStyle: "italic", fontWeight: 700 }}>03 .</span>
+              <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 800 }}>Links</span>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px", alignItems: "flex-start" }}>
+              {[
+                { label: "linkedin", href: "https://linkedin.com/in/julienbourcet", ariaLabel: "LinkedIn (opens in new tab)" },
+                { label: "medium",   href: "https://medium.com/@julienbourcet",     ariaLabel: "Medium (opens in new tab)" },
+              ].map(({ label, href, ariaLabel }) => (
+                <motion.a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={ariaLabel}
+                  initial="rest"
+                  whileHover="hover"
+                  className="inline-flex items-center gap-2"
+                  style={{ textDecoration: "none", alignSelf: "flex-start" }}
+                >
+                  <span
+                    style={{
+                      fontFamily: "'Outfit', sans-serif",
+                      fontWeight: 800,
+                      fontSize: "11px",
+                      letterSpacing: "3px",
+                      textTransform: "uppercase",
+                      color: "#fafafa",
+                    }}
+                  >
+                    {label}
+                  </span>
+                  <motion.span
+                    variants={{ rest: { x: 0 }, hover: { x: 4 } }}
+                    transition={{ type: "spring", stiffness: 300, damping: 12 }}
+                    aria-hidden="true"
+                    style={{ display: "inline-flex" }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fafafa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M15 3h6v6"/>
+                      <path d="M10 14 21 3"/>
+                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                    </svg>
+                  </motion.span>
+                </motion.a>
+              ))}
             </div>
           </div>
 
