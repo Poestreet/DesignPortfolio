@@ -168,7 +168,33 @@ export default function AboutPage() {
                   color: "#fafafa",
                 }}>
                   <p style={{ margin: 0 }}>
-                    Self-taught, I discovered « the graphic arts » – as they were called at the time – in 1998. My career path then consisted of training and working first as a computer graphics artist, as a webdesigner, then as a UX/UI designer and now as a product designer. I worked in both print and web, on a freelance and salaried basis, and both on his own and in teams of various sizes. And since the profession is constantly evolving, as I have written here, I am continuously training myself in data, accessibility, front-end, methodology, artificial intelligence, and design systems.
+                    Self-taught, I discovered « the graphic arts » – as they were called at the time – in 1998. My career path then consisted of training and working first as a computer graphics artist, as a webdesigner, then as a UX/UI designer and now as a product designer. I worked in both print and web, on a freelance and salaried basis, and both on his own and in teams of various sizes. And since the profession is constantly evolving, as{" "}
+                    <motion.a
+                      href="https://medium.com/@julienbourcet/du-webdesigner-au-product-designer-une-mutation-strat%C3%A9gique-5510b4e30ab4"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label="I have written here — article Medium (opens in new tab)"
+                      initial={{ boxShadow: "0px 0px 0px 0px rgba(250,250,250,0)" }}
+                      whileHover={{ boxShadow: "0px 3px 0px 0px rgba(250,250,250,1)" }}
+                      transition={{ duration: 0.2 }}
+                      style={{
+                        color: "#fafafa",
+                        textDecoration: "none",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "3px",
+                        borderBottom: "1px solid rgba(250,250,250,0.6)",
+                        paddingBottom: "1px",
+                      }}
+                    >
+                      I have written here
+                      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fafafa" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M15 3h6v6"/>
+                        <path d="M10 14 21 3"/>
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                      </svg>
+                    </motion.a>
+                    {", "}I am continuously training myself in data, accessibility, front-end, methodology, artificial intelligence, and design systems.
                   </p>
                   <p style={{ margin: 0 }}>
                     Sports and the free press, European association, tourism, airlines, mobility, retail, e-commerce, B2B, B2C, B2G, design OPS, I had the opportunity to deal with a wide variety of issues (national and international), and i'm keen to bring my experience to other fields, helping to solve clients' problems while satisfying my curiosity.
@@ -289,11 +315,6 @@ export default function AboutPage() {
               </div>
             </Reveal>
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> d932c2153ed93cdb03d5153fc966b424425315db
           </div>
         </div>
 
