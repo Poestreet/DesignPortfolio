@@ -731,8 +731,8 @@ export function MobileCasesPage() {
               }}
             >
               <span
-                className="block h-px transition-all duration-300 w-8 group-hover:w-12 shrink-0"
-                style={{ background: "#fafafa" }}
+                className="block transition-all duration-300 w-8 group-hover:w-12 shrink-0"
+                style={{ height: 0, borderTop: "1px solid #fafafa" }}
               />
               <span
                 style={{

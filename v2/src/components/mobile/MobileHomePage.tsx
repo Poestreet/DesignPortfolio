@@ -124,8 +124,8 @@ export function MobileHomePage() {
             style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer", color: "#070071" }}
           >
             <span
-              className="block h-px transition-all duration-300 w-8 group-hover:w-12 shrink-0"
-              style={{ background: "#070071" }}
+              className="block transition-all duration-300 w-8 group-hover:w-12 shrink-0"
+              style={{ height: 0, borderTop: "1px solid #070071" }}
             />
             <span
               style={{

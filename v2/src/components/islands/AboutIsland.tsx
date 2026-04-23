@@ -78,8 +78,8 @@ export default function AboutPage() {
             style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}
           >
             <span
-              className="block w-8 h-px transition-all duration-300 group-hover:w-12"
-              style={{ background: "#fafafa" }}
+              className="block w-8 transition-all duration-300 group-hover:w-12"
+              style={{ height: 0, borderTop: "1px solid #fafafa" }}
             />
             <span
               className="uppercase"

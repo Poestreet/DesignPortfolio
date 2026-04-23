@@ -518,7 +518,7 @@ function NavBtn({ label, onClick, href }: { label: string; onClick?: () => void;
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <span style={{ display: "block", width: lineW, height: "1px", background: "#fafafa", flexShrink: 0, alignSelf: "center", transition: "width 0.3s ease" }} />
+      <span style={{ display: "block", width: lineW, height: 0, borderTop: "1px solid #fafafa", flexShrink: 0, alignSelf: "center", transition: "width 0.3s ease" }} />
       <span style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#fafafa", fontFamily: "'Outfit', sans-serif", fontWeight: 400, textTransform: "uppercase" }}>
         {label}
       </span>
@@ -553,7 +553,7 @@ function CaseNavItem({ label, active, onClick }: { label: string; active: boolea
       style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0, display: "flex", alignItems: "center", gap: 8 }}>
       <span style={{ position: "relative", width: hovered ? 32 : 8, height: 8, flexShrink: 0, transition: "width 0.3s ease", display: "flex", alignItems: "center" }}>
         <span style={{ position: "absolute", width: 8, height: 8, borderRadius: "50%", border: "1px solid #fafafa", opacity: hovered ? 0 : 1, transition: "opacity 0.3s ease" }} />
-        <span style={{ position: "absolute", left: 0, right: 0, height: "1px", background: "#fafafa", opacity: hovered ? 1 : 0, transition: "opacity 0.3s ease", alignSelf: "center" }} />
+        <span style={{ position: "absolute", left: 0, right: 0, top: "50%", height: 0, borderTop: "1px solid #fafafa", opacity: hovered ? 1 : 0, transition: "opacity 0.3s ease" }} />
       </span>
       <span style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#fafafa", fontFamily: "'Outfit', sans-serif", fontWeight: 400, textTransform: "uppercase" }}>
         {label}
@@ -571,7 +571,7 @@ function SubNavItem({ label, active, onClick }: { label: string; active: boolean
       onMouseLeave={() => setHovered(false)}
       aria-current={active ? "step" : undefined}
       style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0, display: "flex", alignItems: "center", gap: 8 }}>
-      <span style={{ display: "block", width: lineW, height: "1px", background: "#fafafa", flexShrink: 0, alignSelf: "center", transition: "width 0.3s ease" }} />
+      <span style={{ display: "block", width: lineW, height: 0, borderTop: "1px solid #fafafa", flexShrink: 0, alignSelf: "center", transition: "width 0.3s ease" }} />
       <span style={{ fontSize: "10px", letterSpacing: "0.15em", fontFamily: "'Outfit', sans-serif", fontWeight: active ? 500 : 400, color: "#fafafa", textTransform: "uppercase", transition: "font-weight 0.3s ease" }}>
         {label}
       </span>

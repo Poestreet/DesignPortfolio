@@ -128,8 +128,8 @@ export default function Homepage() {
                 style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0, color: "#070071" }}
               >
                 <span
-                  className="block w-8 h-px transition-all duration-300 group-hover:w-12"
-                  style={{ background: "#070071" }}
+                  className="block w-8 transition-all duration-300 group-hover:w-12"
+                  style={{ height: 0, borderTop: "1px solid #070071" }}
                 />
                 <span
                   className="uppercase"
