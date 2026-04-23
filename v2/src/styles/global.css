@@ -52,9 +52,12 @@ html, body {
 }
 
 /* ── Textarea background — reset du fond UA navigateur ─────────────────────────
-   Les navigateurs appliquent un background-color système aux <textarea>
-   qui résiste à background:transparent inline. Règle globale requise. */
-textarea {
+   Les navigateurs réappliquent un background-color système aux <textarea>
+   à l'état default, focus et pendant la saisie. Couvre tous les états. */
+textarea,
+textarea:focus,
+textarea:active,
+textarea:focus-visible {
   background-color: transparent;
 }
 
