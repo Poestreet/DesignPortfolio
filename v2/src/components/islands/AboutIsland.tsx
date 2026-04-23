@@ -237,7 +237,7 @@ export default function AboutPage() {
 
                 {/* EyeBrow 03 . Links */}
                 <div style={{ display: "flex", gap: "4px", alignItems: "center", fontSize: "12px", color: "#fafafa", lineHeight: "normal" }}>
-                  <span style={{ fontFamily: "'Fraunces', serif", fontStyle: "italic", fontWeight: 700 }}>02 .</span>
+                  <span style={{ fontFamily: "'Fraunces', serif", fontStyle: "italic", fontWeight: 700 }}>03 .</span>
                   <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 800 }}>Links</span>
                 </div>
 
