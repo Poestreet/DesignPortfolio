@@ -17,7 +17,7 @@ const fieldStyle: React.CSSProperties = {
   fontWeight: 400,
   fontSize: "14px",
   color: "#fafafa",
-  background: "transparent",
+  backgroundColor: "#070071",
   border: "none",
   borderBottom: "1px solid rgba(250,250,250,0.6)",
   width: "100%",
@@ -135,8 +135,8 @@ export function MobileContactPage() {
               style={{ background: "transparent", border: "none", padding: 0, cursor: "pointer" }}
             >
               <span
-                className="block h-px transition-all duration-300 w-8 group-hover:w-12 shrink-0"
-                style={{ background: "#fafafa" }}
+                className="block transition-all duration-300 w-8 group-hover:w-12 shrink-0"
+                style={{ height: 0, borderTop: "1px solid #fafafa" }}
               />
               <span
                 style={{
@@ -281,8 +281,8 @@ export function MobileContactPage() {
                 style={{ background: "transparent", border: "none", padding: 0, alignSelf: "flex-start", cursor: status === "sent" ? "default" : "pointer", opacity: status === "sending" ? 0.6 : 1, transition: "opacity 0.2s ease" }}
               >
                 <span
-                  className="block h-px transition-all duration-300 w-8 group-hover:w-12 shrink-0"
-                  style={{ background: "#fafafa" }}
+                  className="block transition-all duration-300 w-8 group-hover:w-12 shrink-0"
+                  style={{ height: 0, borderTop: "1px solid #fafafa" }}
                   aria-hidden="true"
                 />
                 <span
