@@ -1,60 +1,30 @@
 import { useState, useEffect } from "react";
 
 /**
- * Retourne `true` une fois le contenu de la nouvelle page prêt à être affiché.
+ * Retourne `true` dès que le composant est monté côté client.
  *
- * ── Problème de timing ──────────────────────────────────────────────────────
- * Deux chemins d'entrée sur une page :
+ * ── Approche ────────────────────────────────────────────────────────────────
+ * On abandonne la synchronisation avec astro:page-load / astro:after-swap,
+ * dont le timing est imprévisible selon le chemin de navigation (URL directe
+ * vs astroNavigate() depuis un bouton JS).
  *
- * 1. Chargement direct (URL) :
- *    `astro:page-load` peut se déclencher AVANT que le `useEffect` du composant
- *    React ait eu le temps de s'enregistrer. Solution : flag `_isReady` au niveau
- *    module, lu au moment du mount.
+ * requestAnimationFrame garantit que le flag passe à true après le premier
+ * paint — soit immédiatement sur chargement direct, soit dès que le DOM de
+ * la nouvelle page est en place lors d'une View Transition.
  *
- * 2. Navigation programmatique via `astroNavigate()` (boutons JS) :
- *    `astro:page-load` peut être manqué si le useEffect s'enregistre trop tard.
- *    Solution : écouter aussi `astro:after-swap` qui se déclenche dès que le
- *    nouveau DOM est en place, avant la fin de l'animation de transition.
+ * L'animation d'entrée (opacity 0 → 1, y 18 → 0) est portée par le composant
+ * Reveal (Framer Motion, durée 0.7s) — elle se superpose naturellement à la
+ * fin du slide de page.
  *
- * ── Séquence des événements Astro View Transitions ──────────────────────────
- * astro:before-preparation → astro:after-preparation →
- * astro:before-swap → astro:after-swap → astro:page-load
- *
- * ── Cas couverts ────────────────────────────────────────────────────────────
- * - Chargement direct  : page-load déjà passé → _isReady = true → ready immédiat
- * - Navigation JS      : after-swap ou page-load capturé par le listener
+ * Garantit aussi que le SSR et le client démarrent toujours à false,
+ * évitant les hydration mismatches React (#418 / #423).
  */
-
-let _isReady = false;
-
-if (typeof document !== "undefined") {
-  document.addEventListener("astro:before-preparation", () => {
-    _isReady = false;
-  });
-  document.addEventListener("astro:page-load", () => {
-    _isReady = true;
-  });
-}
-
 export function usePageReady(): boolean {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // Chargement direct : événement déjà passé avant le mount
-    if (_isReady) {
-      setReady(true);
-      return;
-    }
-
-    // Navigation : écouter les deux événements — le premier qui arrive gagne
-    const trigger = () => setReady(true);
-    document.addEventListener("astro:page-load", trigger);
-    document.addEventListener("astro:after-swap", trigger);
-
-    return () => {
-      document.removeEventListener("astro:page-load", trigger);
-      document.removeEventListener("astro:after-swap", trigger);
-    };
+    const raf = requestAnimationFrame(() => setReady(true));
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   return ready;
