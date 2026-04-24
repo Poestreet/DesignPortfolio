@@ -3,3 +3,5 @@ dist/
 
 # SMTP credentials — ne jamais committer
 public/.smtp-config.php
+.DS_Store
+**/.DS_Store
