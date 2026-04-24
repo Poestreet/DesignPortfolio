@@ -1,0 +1,150 @@
+/* ── Tailwind 4 ──────────────────────────────────────────────────────────────── */
+@import "tailwindcss" source(none);
+@source "../**/*.{js,ts,jsx,tsx,astro}";
+@import "tw-animate-css";
+
+/* ── Google Fonts ───────────────────────────────────────────────────────────────
+   Chargées via <link> dans BaseLayout.astro (preconnect + stylesheet).
+   Ne pas importer ici via @import — bloquerait le parsing CSS. */
+
+/* ── Design Tokens ──────────────────────────────────────────────────────────── */
+:root {
+  --color-brand:       #070071;
+  --color-almost-white: #fafafa;
+  --color-error:       #ff4d4d;
+  --font-display:      "Fraunces", serif;
+  --font-body:         "Outfit", sans-serif;
+}
+
+/* ── Reset minimal ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-brand);
+}
+
+/* ── Focus visible — WCAG 2.4.11 AA ────────────────────────────────────────────
+   Soulignement via box-shadow (pas d'outline).
+   currentColor s'adapte automatiquement : #070071 sur homepage (fond blanc),
+   #fafafa sur les pages intérieures (fond sombre).
+   Pas de clipping par overflow:hidden sur les navs positionnées en abs. */
+@layer base {
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 1px 0 0 currentColor;
+  }
+
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: none;
+    box-shadow: 0 3px 0 0 #fafafa;
+    border-bottom-color: #fafafa !important;
+  }
+
+  .skip-link:focus-visible {
+    box-shadow: 0 1px 0 0 #070071;
+  }
+}
+
+/* ── Textarea background — reset du fond UA navigateur ─────────────────────────
+   Les navigateurs réappliquent un background-color système aux <textarea>
+   à l'état default, focus et pendant la saisie. Couvre tous les états. */
+textarea,
+textarea:focus,
+textarea:active,
+textarea:focus-visible {
+  background-color: transparent;
+}
+
+/* ── Placeholder — distingue le texte saisi (#fafafa) du placeholder ───────────
+   La propriété color inline ne cible pas ::placeholder, règle globale requise. */
+input::placeholder,
+textarea::placeholder {
+  color: rgba(250, 250, 250, 0.4);
+  opacity: 1; /* Firefox applique opacity: 0.54 par défaut */
+}
+
+/* ── Autofill — supprime le fond navigateur (Chrome/Safari) ────────────────────
+   Le fond jaune/bleu de l'autofill écrase background-color inline.
+   box-shadow inset #070071 simule un fond solide cohérent avec les champs. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fafafa;
+  -webkit-box-shadow: 0 0 0px 1000px #070071 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ── Skip link ──────────────────────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -9999px;
+  left: 0;
+  z-index: 9999;
+  padding: 8px 16px;
+  background: var(--color-almost-white);
+  color: var(--color-brand);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ── Page transition — Astro View Transitions ───────────────────────────────────
+   Entrée  : slide depuis la droite (desktop) / depuis le bas (mobile).
+   Sortie  : slide vers la gauche / vers le bas — effet miroir.
+   Durée   : 700ms — astro:page-load se déclenche à la fin,
+             synchronisé avec usePageReady() dans les islands React. */
+@keyframes slide-in-from-right {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes slide-out-to-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+@keyframes slide-in-from-bottom {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+@keyframes slide-out-to-bottom {
+  from { transform: translateY(0); }
+  to   { transform: translateY(100%); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-new(root) {
+    animation: 0.7s cubic-bezier(0.4, 0, 0.05, 1) slide-in-from-right both;
+  }
+  ::view-transition-old(root) {
+    animation: 0.7s cubic-bezier(0.4, 0, 0.05, 1) slide-out-to-left both;
+  }
+
+  @media (max-width: 768px) {
+    ::view-transition-new(root) {
+      animation: 0.7s cubic-bezier(0.4, 0, 0.05, 1) slide-in-from-bottom both;
+    }
+    ::view-transition-old(root) {
+      animation: 0.7s cubic-bezier(0.4, 0, 0.05, 1) slide-out-to-bottom both;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-new(root),
+  ::view-transition-old(root) {
+    animation: none;
+  }
+}

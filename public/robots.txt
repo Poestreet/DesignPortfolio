@@ -1,24 +1,4 @@
-# ── AI crawlers — explicitly allowed for GEO ──────────────────────────────────
-User-agent: GPTBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: cohere-ai
-Allow: /
-
-# ── All other crawlers ─────────────────────────────────────────────────────────
 User-agent: *
 Allow: /
 
-Sitemap: https://www.julienbourcet.fr/sitemap.xml
+Sitemap: https://julienbourcet.fr/sitemap-index.xml

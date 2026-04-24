@@ -1,0 +1,471 @@
+{
+  "id": "VariableCollectionId:300:1",
+  "name": "Semantic",
+  "modes": {
+    "300:0": "Default"
+  },
+  "variableIds": [
+    "VariableID:300:10",
+    "VariableID:300:11",
+    "VariableID:300:12",
+    "VariableID:300:13",
+    "VariableID:300:14",
+    "VariableID:300:15",
+    "VariableID:300:16",
+    "VariableID:300:17",
+    "VariableID:300:18",
+    "VariableID:300:19",
+    "VariableID:300:20",
+    "VariableID:300:21",
+    "VariableID:300:22",
+    "VariableID:300:23",
+    "VariableID:300:24",
+    "VariableID:300:25",
+    "VariableID:300:26",
+    "VariableID:300:27",
+    "VariableID:300:28",
+    "VariableID:300:29",
+    "VariableID:300:30",
+    "VariableID:300:31",
+    "VariableID:300:32",
+    "VariableID:300:33",
+    "VariableID:300:34",
+    "VariableID:300:35",
+    "VariableID:300:36"
+  ],
+  "variables": [
+
+    {
+      "id": "VariableID:300:10",
+      "name": "Color/Background/default",
+      "description": "Fond principal des pages et composants. → Core/Color/blue-900",
+      "type": "COLOR",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:10" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": { "r": 0.02745098, "g": 0, "b": 0.44313726, "a": 1 }, "alias": "VariableID:200:10" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:11",
+      "name": "Color/Background/surface",
+      "description": "Surface claire (homepage, cartes sur fond blanc). → Core/Color/white",
+      "type": "COLOR",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:11" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 1 }, "alias": "VariableID:200:11" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:12",
+      "name": "Color/Text/primary",
+      "description": "Texte principal sur fond bleu. → Core/Color/white",
+      "type": "COLOR",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:11" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 1 }, "alias": "VariableID:200:11" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:13",
+      "name": "Color/Text/on-light",
+      "description": "Texte sur fond blanc (homepage nav). → Core/Color/blue-900",
+      "type": "COLOR",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:10" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": { "r": 0.02745098, "g": 0, "b": 0.44313726, "a": 1 }, "alias": "VariableID:200:10" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:14",
+      "name": "Color/Text/placeholder",
+      "description": "Texte placeholder dans les champs de formulaire. → Core/Color/white-70",
+      "type": "COLOR",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:12" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 0.7 }, "alias": "VariableID:200:12" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:15",
+      "name": "Color/Text/error",
+      "description": "Texte et icône d'état erreur. → Core/Color/red-500",
+      "type": "COLOR",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:16" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": { "r": 1, "g": 0.30196078, "b": 0.30196078, "a": 1 }, "alias": "VariableID:200:16" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:16",
+      "name": "Color/Border/default",
+      "description": "Bordure inférieure des champs (état Default). → Core/Color/white-60",
+      "type": "COLOR",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:13" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 0.6 }, "alias": "VariableID:200:13" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:17",
+      "name": "Color/Border/focus",
+      "description": "Bordure inférieure des champs (état Focus). → Core/Color/white",
+      "type": "COLOR",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:11" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 1 }, "alias": "VariableID:200:11" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:18",
+      "name": "Color/Border/error",
+      "description": "Bordure inférieure des champs (état Error). → Core/Color/red-500",
+      "type": "COLOR",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:16" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": { "r": 1, "g": 0.30196078, "b": 0.30196078, "a": 1 }, "alias": "VariableID:200:16" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:19",
+      "name": "Color/Tag/background",
+      "description": "Fond des pills / tags. → Core/Color/white-20",
+      "type": "COLOR",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:15" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 0.2 }, "alias": "VariableID:200:15" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:20",
+      "name": "Color/Tag/border",
+      "description": "Bordure des pills / tags. → Core/Color/white",
+      "type": "COLOR",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:11" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 1 }, "alias": "VariableID:200:11" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:21",
+      "name": "Color/Deco/binary",
+      "description": "Masque décoratif binaire homepage. → Core/Color/white-55",
+      "type": "COLOR",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:14" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 0.55 }, "alias": "VariableID:200:14" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:22",
+      "name": "Color/Overlay/hero",
+      "description": "Vignette sombre sur images hero. → Core/Color/black-45",
+      "type": "COLOR",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:17" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": { "r": 0, "g": 0, "b": 0, "a": 0.45 }, "alias": "VariableID:200:17" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:23",
+      "name": "Color/Overlay/photo",
+      "description": "Vignette légère sur photos de contenu. → Core/Color/black-30",
+      "type": "COLOR",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:18" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": { "r": 0, "g": 0, "b": 0, "a": 0.3 }, "alias": "VariableID:200:18" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:24",
+      "name": "Spacing/xs",
+      "description": "4px — gap subnav, padding interne minimal. → Core/Spacing/4",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:20" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": 4, "alias": "VariableID:200:20" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:25",
+      "name": "Spacing/sm",
+      "description": "8px — gap entre éléments de navigation, padding boutons. → Core/Spacing/8",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:21" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": 8, "alias": "VariableID:200:21" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:26",
+      "name": "Spacing/md",
+      "description": "12px — padding horizontal boutons, gap tags. → Core/Spacing/12",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:22" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": 12, "alias": "VariableID:200:22" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:27",
+      "name": "Spacing/lg",
+      "description": "16px — padding des champs de formulaire, gap cas. → Core/Spacing/16",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:23" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": 16, "alias": "VariableID:200:23" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:28",
+      "name": "Spacing/xl",
+      "description": "20px — gap entre blocs de navigation. → Core/Spacing/20",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:24" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": 20, "alias": "VariableID:200:24" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:29",
+      "name": "Spacing/2xl",
+      "description": "24px — espacement large entre sections. → Core/Spacing/24",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:25" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": 24, "alias": "VariableID:200:25" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:30",
+      "name": "Component/Tiret/default",
+      "description": "Largeur du tiret SubNavItem inactif. → Core/Size/8",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:31" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": 8, "alias": "VariableID:200:31" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:31",
+      "name": "Component/Tiret/active",
+      "description": "Largeur du tiret SubNavItem actif. → Core/Size/16",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:32" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": 16, "alias": "VariableID:200:32" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:32",
+      "name": "Component/Tiret/hover",
+      "description": "Largeur du tiret SubNavItem au survol. → Core/Size/24",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:33" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": 24, "alias": "VariableID:200:33" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:33",
+      "name": "Component/Tiret/cta",
+      "description": "Largeur du tiret NavButton et CTAButton. → Core/Size/32",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:34" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": 32, "alias": "VariableID:200:34" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:34",
+      "name": "Component/Border/width",
+      "description": "Épaisseur standard des bordures. → Core/Size/1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:30" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": 1, "alias": "VariableID:200:30" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:35",
+      "name": "Component/Border/radius-pill",
+      "description": "Border-radius pills / tags. → Core/Size/999",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:35" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": 999, "alias": "VariableID:200:35" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+
+    {
+      "id": "VariableID:300:36",
+      "name": "Component/Focus/ring-width",
+      "description": "Épaisseur du soulignement :focus-visible. WCAG 2.4.11. → Core/Size/1",
+      "type": "FLOAT",
+      "valuesByMode": {
+        "300:0": { "type": "VARIABLE_ALIAS", "id": "VariableID:200:30" }
+      },
+      "resolvedValuesByMode": {
+        "300:0": { "resolvedValue": 1, "alias": "VariableID:200:30" }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    }
+
+  ]
+}

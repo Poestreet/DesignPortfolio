@@ -1,0 +1,35 @@
+@import './fonts.css';
+@import './tailwind.css';
+@import './theme.css';
+
+/* ── Focus visible — WCAG 2.4.11 AA ─────────────────────────────────────────
+   Soulignement via box-shadow (pas d'outline).
+   Avantages vs outline :
+   - currentColor s'adapte automatiquement : #070071 sur homepage (fond blanc),
+     #fafafa sur les pages intérieures (fond sombre) — aucune règle par page.
+   - Pas de risque de clipping par overflow:hidden sur les navs positionnées en abs.
+   - Cohérent avec le design typographique du portfolio (pas de boîtes).
+
+   Règle dans @layer base : les classes Tailwind @layer utilities (outline-none
+   sur les composants shadcn/ui) gardent leur priorité.
+   ─────────────────────────────────────────────────────────────────────────── */
+@layer base {
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 1px 0 0 currentColor;
+  }
+
+  /* Champs de formulaire : design à bordure inférieure seule.
+     Border-bottom qui passe à l'opacité pleine + lueur douce. */
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: none;
+    box-shadow: 0 3px 0 0 rgba(250, 250, 250, 0.5);
+    border-bottom-color: #fafafa !important;
+  }
+
+  /* Skip link : fond #fafafa clair → soulignement en bleu foncé */
+  .skip-link:focus-visible {
+    box-shadow: 0 1px 0 0 #070071;
+  }
+}

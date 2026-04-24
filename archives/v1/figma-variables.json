@@ -1,0 +1,323 @@
+{
+  "id": "VariableCollectionId:100:1",
+  "name": "julienbourcet.fr",
+  "modes": {
+    "100:0": "Default"
+  },
+  "variableIds": [
+    "VariableID:100:10",
+    "VariableID:100:11",
+    "VariableID:100:12",
+    "VariableID:100:13",
+    "VariableID:100:14",
+    "VariableID:100:15",
+    "VariableID:100:16",
+    "VariableID:100:17",
+    "VariableID:100:18",
+    "VariableID:100:19",
+    "VariableID:100:20",
+    "VariableID:100:21",
+    "VariableID:100:22",
+    "VariableID:100:23",
+    "VariableID:100:24",
+    "VariableID:100:25",
+    "VariableID:100:26",
+    "VariableID:100:27",
+    "VariableID:100:28",
+    "VariableID:100:29",
+    "VariableID:100:30",
+    "VariableID:100:31",
+    "VariableID:100:32"
+  ],
+  "variables": [
+    {
+      "id": "VariableID:100:10",
+      "name": "Color/Brand/primary-blue",
+      "description": "Couleur principale. Fond des composants, textes sur blanc.",
+      "type": "COLOR",
+      "valuesByMode": {
+        "100:0": { "r": 0.02745098, "g": 0, "b": 0.44313726, "a": 1 }
+      },
+      "resolvedValuesByMode": {
+        "100:0": { "resolvedValue": { "r": 0.02745098, "g": 0, "b": 0.44313726, "a": 1 }, "alias": null }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:11",
+      "name": "Color/Brand/almost-white",
+      "description": "Blanc cassé. Textes, tirets, icônes sur fond bleu.",
+      "type": "COLOR",
+      "valuesByMode": {
+        "100:0": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 1 }
+      },
+      "resolvedValuesByMode": {
+        "100:0": { "resolvedValue": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 1 }, "alias": null }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:12",
+      "name": "Color/UI/text-placeholder",
+      "description": "Texte placeholder dans les champs de formulaire. Almost-white à 70%.",
+      "type": "COLOR",
+      "valuesByMode": {
+        "100:0": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 0.7 }
+      },
+      "resolvedValuesByMode": {
+        "100:0": { "resolvedValue": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 0.7 }, "alias": null }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:13",
+      "name": "Color/UI/border-subtle",
+      "description": "Bordure inférieure des champs de formulaire (état Default). Almost-white à 60%.",
+      "type": "COLOR",
+      "valuesByMode": {
+        "100:0": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 0.6 }
+      },
+      "resolvedValuesByMode": {
+        "100:0": { "resolvedValue": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 0.6 }, "alias": null }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:14",
+      "name": "Color/UI/binary-deco",
+      "description": "Élément décoratif binaire (masque homepage). Almost-white à 55%.",
+      "type": "COLOR",
+      "valuesByMode": {
+        "100:0": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 0.55 }
+      },
+      "resolvedValuesByMode": {
+        "100:0": { "resolvedValue": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 0.55 }, "alias": null }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:15",
+      "name": "Color/UI/tag-background",
+      "description": "Fond des pills / tags sur fond bleu. Almost-white à 20%.",
+      "type": "COLOR",
+      "valuesByMode": {
+        "100:0": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 0.2 }
+      },
+      "resolvedValuesByMode": {
+        "100:0": { "resolvedValue": { "r": 0.98039216, "g": 0.98039216, "b": 0.98039216, "a": 0.2 }, "alias": null }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:16",
+      "name": "Color/Feedback/error",
+      "description": "Erreur — bordure et texte état Error dans FormField.",
+      "type": "COLOR",
+      "valuesByMode": {
+        "100:0": { "r": 1, "g": 0.30196078, "b": 0.30196078, "a": 1 }
+      },
+      "resolvedValuesByMode": {
+        "100:0": { "resolvedValue": { "r": 1, "g": 0.30196078, "b": 0.30196078, "a": 1 }, "alias": null }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:17",
+      "name": "Color/Overlay/vignette-hero",
+      "description": "Vignette sombre sur les images hero de CasesPage. Noir à 45%.",
+      "type": "COLOR",
+      "valuesByMode": {
+        "100:0": { "r": 0, "g": 0, "b": 0, "a": 0.45 }
+      },
+      "resolvedValuesByMode": {
+        "100:0": { "resolvedValue": { "r": 0, "g": 0, "b": 0, "a": 0.45 }, "alias": null }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:18",
+      "name": "Color/Overlay/vignette-photo",
+      "description": "Vignette légère sur les photos de contenu. Noir à 30%.",
+      "type": "COLOR",
+      "valuesByMode": {
+        "100:0": { "r": 0, "g": 0, "b": 0, "a": 0.3 }
+      },
+      "resolvedValuesByMode": {
+        "100:0": { "resolvedValue": { "r": 0, "g": 0, "b": 0, "a": 0.3 }, "alias": null }
+      },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:19",
+      "name": "Dimension/Spacing/xs",
+      "description": "4px",
+      "type": "FLOAT",
+      "valuesByMode": { "100:0": 4 },
+      "resolvedValuesByMode": { "100:0": { "resolvedValue": 4, "alias": null } },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:20",
+      "name": "Dimension/Spacing/sm",
+      "description": "8px",
+      "type": "FLOAT",
+      "valuesByMode": { "100:0": 8 },
+      "resolvedValuesByMode": { "100:0": { "resolvedValue": 8, "alias": null } },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:21",
+      "name": "Dimension/Spacing/md",
+      "description": "12px",
+      "type": "FLOAT",
+      "valuesByMode": { "100:0": 12 },
+      "resolvedValuesByMode": { "100:0": { "resolvedValue": 12, "alias": null } },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:22",
+      "name": "Dimension/Spacing/lg",
+      "description": "16px",
+      "type": "FLOAT",
+      "valuesByMode": { "100:0": 16 },
+      "resolvedValuesByMode": { "100:0": { "resolvedValue": 16, "alias": null } },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:23",
+      "name": "Dimension/Spacing/xl",
+      "description": "20px",
+      "type": "FLOAT",
+      "valuesByMode": { "100:0": 20 },
+      "resolvedValuesByMode": { "100:0": { "resolvedValue": 20, "alias": null } },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:24",
+      "name": "Dimension/Spacing/2xl",
+      "description": "24px",
+      "type": "FLOAT",
+      "valuesByMode": { "100:0": 24 },
+      "resolvedValuesByMode": { "100:0": { "resolvedValue": 24, "alias": null } },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:25",
+      "name": "Dimension/Border/width",
+      "description": "Épaisseur standard des bordures (champs, tags).",
+      "type": "FLOAT",
+      "valuesByMode": { "100:0": 1 },
+      "resolvedValuesByMode": { "100:0": { "resolvedValue": 1, "alias": null } },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:26",
+      "name": "Dimension/Border/radius-pill",
+      "description": "Border-radius pour les pills / tags.",
+      "type": "FLOAT",
+      "valuesByMode": { "100:0": 999 },
+      "resolvedValuesByMode": { "100:0": { "resolvedValue": 999, "alias": null } },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:27",
+      "name": "Dimension/Focus/ring-width",
+      "description": "Épaisseur du soulignement :focus-visible. WCAG 2.4.11.",
+      "type": "FLOAT",
+      "valuesByMode": { "100:0": 1 },
+      "resolvedValuesByMode": { "100:0": { "resolvedValue": 1, "alias": null } },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:28",
+      "name": "Dimension/Tiret/default",
+      "description": "Largeur du tiret SubNavItem inactif.",
+      "type": "FLOAT",
+      "valuesByMode": { "100:0": 8 },
+      "resolvedValuesByMode": { "100:0": { "resolvedValue": 8, "alias": null } },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:29",
+      "name": "Dimension/Tiret/active",
+      "description": "Largeur du tiret SubNavItem actif.",
+      "type": "FLOAT",
+      "valuesByMode": { "100:0": 16 },
+      "resolvedValuesByMode": { "100:0": { "resolvedValue": 16, "alias": null } },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:30",
+      "name": "Dimension/Tiret/hover",
+      "description": "Largeur du tiret SubNavItem au survol.",
+      "type": "FLOAT",
+      "valuesByMode": { "100:0": 24 },
+      "resolvedValuesByMode": { "100:0": { "resolvedValue": 24, "alias": null } },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:31",
+      "name": "Dimension/Tiret/cta",
+      "description": "Largeur du tiret dans NavButton et CTAButton.",
+      "type": "FLOAT",
+      "valuesByMode": { "100:0": 32 },
+      "resolvedValuesByMode": { "100:0": { "resolvedValue": 32, "alias": null } },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    },
+    {
+      "id": "VariableID:100:32",
+      "name": "Typography/FontSize/body",
+      "description": "Taille de base du corps de texte. Outfit Medium 14px.",
+      "type": "FLOAT",
+      "valuesByMode": { "100:0": 14 },
+      "resolvedValuesByMode": { "100:0": { "resolvedValue": 14, "alias": null } },
+      "scopes": ["ALL_SCOPES"],
+      "hiddenFromPublishing": false,
+      "codeSyntax": {}
+    }
+  ]
+}

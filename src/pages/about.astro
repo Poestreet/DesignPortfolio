@@ -1,0 +1,82 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import AboutIsland from "../components/islands/AboutIsland";
+import StaticBackground from "../components/StaticBackground.astro";
+import "../styles/global.css";
+
+const seo = {
+  title:       "About — Julien Bourcet, Senior Product Designer",
+  description: "Background and expertise of Julien Bourcet. Self-taught since 1998. Design System, UX Research, digital accessibility, and front-end.",
+  ogImage:     "/og/OGimage.png",
+  url:         "https://julienbourcet.fr/about",
+  canonical:   "https://julienbourcet.fr/about",
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    <link rel="canonical" href={seo.canonical} />
+
+    <meta property="og:title"       content={seo.title} />
+    <meta property="og:description" content={seo.description} />
+    <meta property="og:image"       content={seo.ogImage} />
+    <meta property="og:url"         content={seo.url} />
+    <meta property="og:type"        content="website" />
+    <meta property="og:locale"      content="en_US" />
+
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={seo.title} />
+    <meta name="twitter:description" content={seo.description} />
+    <meta name="twitter:image"       content={seo.ogImage} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,700&family=Outfit:wght@400;500;600;800&display=swap"
+    />
+
+    <ViewTransitions />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Contenu statique — SEO et lecteurs d'écran -->
+    <main id="main-content" tabindex="-1" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">
+      <h1>About — Julien Bourcet</h1>
+      <p>« Simplicity is inexhaustible »</p>
+      <p>
+        Self-taught, I discovered the graphic arts in 1998. Senior Product Designer specialised in
+        Design System, UX Research, digital accessibility, and front-end development.
+      </p>
+      <h2>Experiences</h2>
+      <ul>
+        <li>2023–2025 — Frontguys, Senior Product Designer</li>
+        <li>2021–2023 — SNCF Connect, Senior Product Designer</li>
+        <li>2016–2021 — Rail Europe, UXI Designer</li>
+        <li>From 2006 — Hebdoprint, eDreams/GoVoyages, Pixalione, L'Équipe, Radio France…</li>
+      </ul>
+      <h2>Links</h2>
+      <ul>
+        <li><a href="https://linkedin.com/in/julienbourcet" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        <li><a href="https://medium.com/@julienbourcet" target="_blank" rel="noopener noreferrer">Medium</a></li>
+      </ul>
+      <nav aria-label="Main navigation">
+        <a href="/">Home</a>
+        <a href="/cases">Cases</a>
+        <a href="/contact">Contact</a>
+      </nav>
+    </main>
+
+    <div style="position:fixed;inset:0;z-index:0;" aria-hidden="true">
+      <StaticBackground />
+    </div>
+    <div style="position:fixed;inset:0;z-index:1;" aria-hidden="true">
+      <AboutIsland client:load />
+    </div>
+  </body>
+</html>

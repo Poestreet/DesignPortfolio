@@ -1,0 +1,376 @@
+{
+  "$metadata": {
+    "name": "julienbourcet.fr — Design Tokens",
+    "version": "1.0.0",
+    "format": "W3C Design Tokens Community Group (DTCG)",
+    "description": "Tokens générés depuis l'UI Kit — correspondance exacte avec les Paint Styles et Text Styles Figma. Importable via Tokens Studio for Figma ou Style Dictionary."
+  },
+
+  "color": {
+    "$description": "Palette complète — correspond aux Paint Styles Portfolio/*",
+
+    "brand": {
+      "primary-blue": {
+        "$value": "#070071",
+        "$type": "color",
+        "$description": "Couleur principale. Fond des composants, textes sur blanc."
+      },
+      "almost-white": {
+        "$value": "#fafafa",
+        "$type": "color",
+        "$description": "Blanc cassé. Textes, tirets, icônes sur fond bleu."
+      }
+    },
+
+    "ui": {
+      "text-placeholder": {
+        "$value": "rgba(250, 250, 250, 0.70)",
+        "$type": "color",
+        "$description": "Texte placeholder dans les champs de formulaire."
+      },
+      "border-subtle": {
+        "$value": "rgba(250, 250, 250, 0.60)",
+        "$type": "color",
+        "$description": "Bordure inférieure des champs de formulaire (état Default)."
+      },
+      "binary-deco": {
+        "$value": "rgba(250, 250, 250, 0.55)",
+        "$type": "color",
+        "$description": "Élément décoratif binaire (masque homepage)."
+      },
+      "tag-background": {
+        "$value": "rgba(250, 250, 250, 0.20)",
+        "$type": "color",
+        "$description": "Fond des pills / tags sur fond bleu."
+      }
+    },
+
+    "feedback": {
+      "error": {
+        "$value": "#ff4d4d",
+        "$type": "color",
+        "$description": "Erreur — bordure et texte état Error dans FormField."
+      }
+    },
+
+    "overlay": {
+      "vignette-hero": {
+        "$value": "rgba(0, 0, 0, 0.45)",
+        "$type": "color",
+        "$description": "Vignette sombre sur les images hero de CasesPage."
+      },
+      "vignette-photo": {
+        "$value": "rgba(0, 0, 0, 0.30)",
+        "$type": "color",
+        "$description": "Vignette légère sur les photos de contenu."
+      }
+    }
+  },
+
+  "typography": {
+    "$description": "Styles typographiques — correspond aux Text Styles Portfolio/*",
+
+    "nav-cta-label": {
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontWeight": "800",
+        "fontSize": "11px",
+        "lineHeight": "normal",
+        "letterSpacing": "3px",
+        "textTransform": "uppercase"
+      },
+      "$type": "typography",
+      "$description": "Boutons de navigation, CTAs, liens externes. Outfit ExtraBold 11px, uppercase."
+    },
+
+    "eyebrow-number": {
+      "$value": {
+        "fontFamily": "Fraunces",
+        "fontWeight": "700",
+        "fontStyle": "italic",
+        "fontSize": "12px",
+        "lineHeight": "normal",
+        "letterSpacing": "0",
+        "textTransform": "none"
+      },
+      "$type": "typography",
+      "$description": "Numéro dans le composant EyeBrow. Fraunces Bold Italic 12px."
+    },
+
+    "eyebrow-label": {
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontWeight": "800",
+        "fontSize": "12px",
+        "lineHeight": "normal",
+        "letterSpacing": "0",
+        "textTransform": "none"
+      },
+      "$type": "typography",
+      "$description": "Label dans le composant EyeBrow. Outfit ExtraBold 12px."
+    },
+
+    "tag-label": {
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontWeight": "500",
+        "fontSize": "12px",
+        "lineHeight": "normal",
+        "letterSpacing": "0",
+        "textTransform": "none"
+      },
+      "$type": "typography",
+      "$description": "Texte des pills / tags. Outfit Medium 12px."
+    },
+
+    "subnav-default": {
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontWeight": "400",
+        "fontSize": "10px",
+        "lineHeight": "normal",
+        "letterSpacing": "1.65px",
+        "textTransform": "uppercase"
+      },
+      "$type": "typography",
+      "$description": "Sous-navigation CasesPage, état inactif. Outfit Regular 10px, uppercase."
+    },
+
+    "subnav-active": {
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontWeight": "500",
+        "fontSize": "10px",
+        "lineHeight": "normal",
+        "letterSpacing": "1.65px",
+        "textTransform": "uppercase"
+      },
+      "$type": "typography",
+      "$description": "Sous-navigation CasesPage, état actif. Outfit Medium 10px, uppercase."
+    },
+
+    "casenav-default": {
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontWeight": "400",
+        "fontSize": "11px",
+        "lineHeight": "normal",
+        "letterSpacing": "2.2px",
+        "textTransform": "uppercase"
+      },
+      "$type": "typography",
+      "$description": "Navigation cas (SNCF, Manutan), état inactif. Outfit Regular 11px, uppercase."
+    },
+
+    "casenav-active": {
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontWeight": "600",
+        "fontSize": "14px",
+        "lineHeight": "normal",
+        "letterSpacing": "2.8px",
+        "textTransform": "uppercase"
+      },
+      "$type": "typography",
+      "$description": "Navigation cas, état actif. Outfit SemiBold 14px, uppercase."
+    },
+
+    "form-label": {
+      "$value": {
+        "fontFamily": "Fraunces",
+        "fontWeight": "700",
+        "fontStyle": "italic",
+        "fontSize": "16px",
+        "lineHeight": "20px",
+        "letterSpacing": "0",
+        "textTransform": "none"
+      },
+      "$type": "typography",
+      "$description": "Label des champs de formulaire. Fraunces Bold Italic 16px / 20px."
+    },
+
+    "form-placeholder": {
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontWeight": "400",
+        "fontSize": "14px",
+        "lineHeight": "normal",
+        "letterSpacing": "0",
+        "textTransform": "none"
+      },
+      "$type": "typography",
+      "$description": "Texte placeholder et valeur saisie dans les champs. Outfit Regular 14px."
+    },
+
+    "body": {
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontWeight": "500",
+        "fontSize": "14px",
+        "lineHeight": "24.5px",
+        "letterSpacing": "0",
+        "textTransform": "none"
+      },
+      "$type": "typography",
+      "$description": "Corps de texte principal. Outfit Medium 14px / 24.5px."
+    },
+
+    "heading-section": {
+      "$value": {
+        "fontFamily": "Fraunces",
+        "fontWeight": "700",
+        "fontStyle": "italic",
+        "fontSize": "22px",
+        "lineHeight": "30.8px",
+        "letterSpacing": "0",
+        "textTransform": "none"
+      },
+      "$type": "typography",
+      "$description": "Titres de section. Fraunces Bold Italic 22px / 30.8px."
+    },
+
+    "experience-date": {
+      "$value": {
+        "fontFamily": "Fraunces",
+        "fontWeight": "700",
+        "fontStyle": "italic",
+        "fontSize": "18px",
+        "lineHeight": "normal",
+        "letterSpacing": "0",
+        "textTransform": "none"
+      },
+      "$type": "typography",
+      "$description": "Dates dans les entrées d'expérience. Fraunces Bold Italic 18px."
+    },
+
+    "experience-role": {
+      "$value": {
+        "fontFamily": "Outfit",
+        "fontWeight": "500",
+        "fontSize": "18px",
+        "lineHeight": "normal",
+        "letterSpacing": "0",
+        "textTransform": "none"
+      },
+      "$type": "typography",
+      "$description": "Intitulés de poste dans les entrées d'expérience. Outfit Medium 18px."
+    }
+  },
+
+  "dimension": {
+    "$description": "Valeurs dimensionnelles — espacements, rayons, épaisseurs",
+
+    "border": {
+      "width-default": {
+        "$value": "1px",
+        "$type": "dimension",
+        "$description": "Épaisseur standard des bordures (champs, tags, pilules)."
+      },
+      "radius-pill": {
+        "$value": "999px",
+        "$type": "dimension",
+        "$description": "Border-radius pour les pills / tags."
+      },
+      "radius-sm": {
+        "$value": "2px",
+        "$type": "dimension",
+        "$description": "Rayon léger pour les éléments de navigation."
+      }
+    },
+
+    "focus": {
+      "ring-width": {
+        "$value": "1px",
+        "$type": "dimension",
+        "$description": "Épaisseur du soulignement :focus-visible (box-shadow bottom). WCAG 2.4.11."
+      }
+    },
+
+    "tiret": {
+      "default": {
+        "$value": "8px",
+        "$type": "dimension",
+        "$description": "Largeur du tiret SubNavItem inactif."
+      },
+      "active": {
+        "$value": "16px",
+        "$type": "dimension",
+        "$description": "Largeur du tiret SubNavItem actif."
+      },
+      "hover": {
+        "$value": "24px",
+        "$type": "dimension",
+        "$description": "Largeur du tiret SubNavItem au survol."
+      },
+      "cta": {
+        "$value": "32px",
+        "$type": "dimension",
+        "$description": "Largeur du tiret dans NavButton et CTAButton."
+      }
+    },
+
+    "spacing": {
+      "xs": {
+        "$value": "4px",
+        "$type": "dimension"
+      },
+      "sm": {
+        "$value": "8px",
+        "$type": "dimension"
+      },
+      "md": {
+        "$value": "12px",
+        "$type": "dimension"
+      },
+      "lg": {
+        "$value": "16px",
+        "$type": "dimension"
+      },
+      "xl": {
+        "$value": "20px",
+        "$type": "dimension"
+      },
+      "2xl": {
+        "$value": "24px",
+        "$type": "dimension"
+      }
+    }
+  },
+
+  "font-family": {
+    "sans": {
+      "$value": "Outfit",
+      "$type": "fontFamily",
+      "$description": "Police principale. Utilisée pour les labels, corps, navigation."
+    },
+    "serif": {
+      "$value": "Fraunces",
+      "$type": "fontFamily",
+      "$description": "Police accent. Utilisée pour les titres, dates, numéros EyeBrow."
+    }
+  },
+
+  "font-weight": {
+    "regular": {
+      "$value": "400",
+      "$type": "fontWeight"
+    },
+    "medium": {
+      "$value": "500",
+      "$type": "fontWeight"
+    },
+    "semibold": {
+      "$value": "600",
+      "$type": "fontWeight"
+    },
+    "extrabold": {
+      "$value": "800",
+      "$type": "fontWeight"
+    },
+    "bold-italic": {
+      "$value": "700",
+      "$type": "fontWeight",
+      "$description": "Fraunces Bold Italic uniquement — toujours couplé à fontStyle: italic."
+    }
+  }
+}

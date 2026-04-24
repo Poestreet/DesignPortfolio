@@ -1,2 +1,0 @@
-/* Fonts are loaded via <link> in index.html (preconnect + stylesheet).
-   Loading here via @import would block CSS parsing — avoid. */
