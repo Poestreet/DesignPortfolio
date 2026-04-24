@@ -1,25 +1,28 @@
 import { useState, useEffect } from "react";
 
 /**
- * Retourne `true` une fois la View Transition Astro terminée.
+ * Retourne `true` une fois le contenu de la nouvelle page prêt à être affiché.
  *
  * ── Problème de timing ──────────────────────────────────────────────────────
- * Sur le premier chargement, `astro:page-load` peut se déclencher AVANT que
- * le `useEffect` du composant React ait eu le temps de s'enregistrer (les
- * islands `client:load` hydratent de façon asynchrone après DOMContentLoaded).
- * Un simple addEventListener dans useEffect rate l'événement → ready = false
- * pour toujours → contenu invisible.
+ * Deux chemins d'entrée sur une page :
  *
- * ── Solution ────────────────────────────────────────────────────────────────
- * Listener enregistré au niveau du module (avant tout mount React) :
- * - `astro:before-preparation` remet _isReady à false avant chaque navigation
- * - `astro:page-load` le repasse à true (premier chargement ET fin de slide)
- * - `useState(() => _isReady)` lit l'état courant au moment de l'hydratation
+ * 1. Chargement direct (URL) :
+ *    `astro:page-load` peut se déclencher AVANT que le `useEffect` du composant
+ *    React ait eu le temps de s'enregistrer. Solution : flag `_isReady` au niveau
+ *    module, lu au moment du mount.
  *
- * Cas couverts :
- * - Premier chargement : l'événement est déjà passé → ready = true immédiat
- * - Navigation inter-pages : _isReady est false au mount → useEffect attend
- *   la fin de l'animation (700ms) → ready = true → contenu entre proprement
+ * 2. Navigation programmatique via `astroNavigate()` (boutons JS) :
+ *    `astro:page-load` peut être manqué si le useEffect s'enregistre trop tard.
+ *    Solution : écouter aussi `astro:after-swap` qui se déclenche dès que le
+ *    nouveau DOM est en place, avant la fin de l'animation de transition.
+ *
+ * ── Séquence des événements Astro View Transitions ──────────────────────────
+ * astro:before-preparation → astro:after-preparation →
+ * astro:before-swap → astro:after-swap → astro:page-load
+ *
+ * ── Cas couverts ────────────────────────────────────────────────────────────
+ * - Chargement direct  : page-load déjà passé → _isReady = true → ready immédiat
+ * - Navigation JS      : after-swap ou page-load capturé par le listener
  */
 
 let _isReady = false;
@@ -34,20 +37,24 @@ if (typeof document !== "undefined") {
 }
 
 export function usePageReady(): boolean {
-  // Toujours false au SSR — garantit que l'hydratation React correspond au HTML serveur.
-  // useEffect (client-only) corrige immédiatement si l'événement est déjà passé.
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // Déjà prêt (premier chargement, événement reçu avant le mount)
+    // Chargement direct : événement déjà passé avant le mount
     if (_isReady) {
       setReady(true);
       return;
     }
-    // Navigation : attendre la fin de la View Transition
-    const handle = () => setReady(true);
-    document.addEventListener("astro:page-load", handle);
-    return () => document.removeEventListener("astro:page-load", handle);
+
+    // Navigation : écouter les deux événements — le premier qui arrive gagne
+    const trigger = () => setReady(true);
+    document.addEventListener("astro:page-load", trigger);
+    document.addEventListener("astro:after-swap", trigger);
+
+    return () => {
+      document.removeEventListener("astro:page-load", trigger);
+      document.removeEventListener("astro:after-swap", trigger);
+    };
   }, []);
 
   return ready;
