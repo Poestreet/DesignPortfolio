@@ -97,7 +97,7 @@ function SncfCase() {
         <div style={{ position: "absolute", inset: 0, mixBlendMode: "luminosity" }}>
           <img
             src={imgSncfHero}
-            alt="SNCF Cart"
+            alt=""
             style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.5 }}
           />
         </div>
@@ -386,7 +386,7 @@ function ManutanCase() {
         <div style={{ position: "absolute", inset: 0, mixBlendMode: "luminosity" }}>
           <img
             src={imgManutanHero}
-            alt="Manutan Search"
+            alt=""
             style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.5 }}
           />
         </div>
