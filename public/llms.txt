@@ -1,8 +1,9 @@
 # Julien Bourcet — Senior Product Designer
 
-> Portfolio de Julien Bourcet, Senior Product Designer avec 20 ans d'expérience.
+> Portfolio de Julien Bourcet, Senior Product Designer avec 10+ ans d'expérience.
 > Spécialisé en Design System, UX Research, UI Design & Prototypage, et Front-End (React, TypeScript).
-> Disponible pour des missions en cabinet ou en freelance.
+> Intègre activement l'IA dans ses workflows de design et de recherche.
+> Ouvert aux échanges — missions ou collaborations.
 
 ## À propos
 
@@ -12,6 +13,9 @@ eDreams/GoVoyages), presse (L'Équipe), audiovisuel (Radio France), et services 
 
 Expertises principales : Design System & DesignOps, accessibilité numérique (WCAG 2.2 AA / RGAA),
 UX Research & Product Discovery, Figma & Prototypage, développement Front-End React/TypeScript.
+
+Approche IA : intégration des outils d'IA dans les workflows de recherche utilisateur,
+de génération de contenu et d'exploration de solutions de design.
 
 ## Pages
 
@@ -36,3 +40,8 @@ Résultats mesurés : +22% à +33% de clics produits, +92% à +123% de clics cat
 
 Ce portfolio v2 est construit avec Astro (SSG), React Islands, Framer Motion, Tailwind CSS
 et TypeScript. Déployé sur Netlify. Design system et animations prototypées dans Figma.
+
+## Liens
+
+- LinkedIn : https://www.linkedin.com/in/julienbourcet
+- Medium : https://medium.com/@julienbourcet
