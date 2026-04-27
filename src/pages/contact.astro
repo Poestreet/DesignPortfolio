@@ -59,9 +59,9 @@ const seo = {
 
     <!-- Formulaire statique pour détection Netlify Forms au build -->
     <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden aria-hidden="true">
-      <input type="text"  name="name" />
-      <input type="email" name="email" />
-      <textarea name="message"></textarea>
+      <input type="text"  name="name"    aria-label="Name" />
+      <input type="email" name="email"   aria-label="Email" />
+      <textarea           name="message" aria-label="Message"></textarea>
     </form>
 
     <div style="position:fixed;inset:0;z-index:0;" aria-hidden="true">
