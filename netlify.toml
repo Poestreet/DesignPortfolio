@@ -1,0 +1,48 @@
+# netlify.toml — Configuration de déploiement et en-têtes de sécurité
+# julienbourcet.fr
+
+# ── Build ──────────────────────────────────────────────────────────────────────
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# ── En-têtes de sécurité (toutes les pages) ───────────────────────────────────
+
+[[headers]]
+  for = "/*"
+
+  [headers.values]
+
+    # Force HTTPS pendant 1 an — le navigateur refusera les connexions HTTP
+    # includeSubDomains : couvre aussi les sous-domaines
+    # preload : eligible à la liste de préchargement HSTS des navigateurs
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+
+    # Empêche l'intégration du site dans une iframe (clickjacking)
+    # DENY = personne ne peut intégrer le site, même le domaine lui-même
+    X-Frame-Options = "DENY"
+
+    # Empêche le navigateur de "deviner" le type de fichier (MIME sniffing)
+    # Réduit le risque qu'un fichier texte soit exécuté comme script
+    X-Content-Type-Options = "nosniff"
+
+    # Contrôle les informations envoyées dans l'en-tête Referer
+    # strict-origin-when-cross-origin : envoie l'origine complète en interne,
+    # uniquement l'origine (sans le chemin) vers des domaines externes
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # Désactive les APIs navigateur non utilisées sur ce site
+    # Réduit la surface d'attaque si du code tiers est injecté
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+
+    # Content Security Policy — définit les sources autorisées pour chaque type de ressource
+    #
+    # Notes spécifiques à ce projet :
+    # - 'unsafe-inline' requis pour script-src : Astro injecte des scripts inline
+    #   (View Transitions, hydratation des islands, JSON-LD)
+    # - 'unsafe-inline' requis pour style-src : Framer Motion applique des styles inline
+    # - fonts.googleapis.com / fonts.gstatic.com : Google Fonts (Fraunces + Outfit)
+    # - https://api.netlify.com : envoi du formulaire de contact
+    # - frame-ancestors 'none' : équivalent moderne de X-Frame-Options DENY
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.netlify.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
