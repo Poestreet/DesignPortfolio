@@ -62,7 +62,7 @@ export function MobileAboutPage() {
       <div className="relative w-full shrink-0" style={{ height: "85vh", zIndex: 1 }}>
         <img
           src={photo}
-          alt="Julien Bourcet"
+          alt="Portrait of Julien Bourcet"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ objectPosition: "center center", opacity: 0.8 }}
         />

@@ -114,7 +114,7 @@ export default function AboutPage() {
           >
             <img
               src={photo}
-              alt="Julien Bourcet"
+              alt="Portrait of Julien Bourcet"
               className="absolute inset-0 w-full h-full object-cover"
               style={{ objectPosition: "center center" }}
             />
