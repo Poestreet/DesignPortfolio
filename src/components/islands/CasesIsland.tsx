@@ -1,4 +1,4 @@
-import { useNavigate } from "../../lib/navigate";
+import { PrimaryNav } from "../PrimaryNav";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { MobileCasesPage } from "../mobile/MobileCasesPage";
@@ -508,29 +508,7 @@ function ManutanResults() {
 }
 
 // ── Nav components — inline styles uniquement (pas de classes Tailwind dynamiques) ──
-
-function NavBtn({ label, onClick, href }: { label: string; onClick?: () => void; href?: string }) {
-  const [hovered, setHovered] = useState(false);
-  const lineW = hovered ? 48 : 32;
-  const inner = (
-    <span
-      style={{ display: "flex", alignItems: "center", gap: 8 }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <span style={{ display: "block", width: lineW, height: 0, borderTop: "1px solid #fafafa", flexShrink: 0, alignSelf: "center", transition: "width 0.3s ease" }} />
-      <span style={{ fontSize: "11px", letterSpacing: "0.2em", color: "#fafafa", fontFamily: "'Outfit', sans-serif", fontWeight: 400, textTransform: "uppercase" }}>
-        {label}
-      </span>
-    </span>
-  );
-  if (href) return <a href={href} style={{ textDecoration: "none" }}>{inner}</a>;
-  return (
-    <button onClick={onClick} style={{ cursor: "pointer", background: "transparent", border: "none", padding: 0 }}>
-      {inner}
-    </button>
-  );
-}
+// PrimaryNav (About / Contact / Homepage) est géré par le composant partagé PrimaryNav.tsx.
 
 function CaseNavItem({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   const [hovered, setHovered] = useState(false);
@@ -581,8 +559,6 @@ function SubNavItem({ label, active, onClick }: { label: string; active: boolean
 
 // ── Main Page ──────────────────────────────────────────────────────────────────
 export default function CasesPage() {
-  const navigate = useNavigate();
-
   const [activeCase,       setActiveCase]       = useState<CaseId>("sncf");
   const [activeSubSection, setActiveSubSection] = useState<SubId>("hero");
   const [showNav,          setShowNav]          = useState(false);
@@ -621,31 +597,27 @@ export default function CasesPage() {
     <div style={{ position: "absolute", inset: 0 }}>
 
       {/* Navigation — DOM-before-content for correct keyboard tab order (WCAG 2.4.3) */}
+
+      {/* Primary navigation — composant partagé, identique à About / Contact */}
+      <PrimaryNav
+        links={[
+          { label: "About",    path: "/about" },
+          { label: "Contact",  path: "/contact" },
+          { label: "Homepage", path: "/" },
+        ]}
+        visible={showNav}
+        zIndex={30}
+      />
+
+      {/* Ancres de sections de case — colonne droite, centrées verticalement */}
       <div
         style={{
           position: "absolute", top: 0, bottom: 0, right: 0, zIndex: 30,
           display: "flex", flexDirection: "column", alignItems: "flex-end",
-          paddingRight: 16, paddingTop: 16,
+          paddingRight: 16, justifyContent: "center",
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 16 }}>
-          {(["About", "Contact", "Homepage"] as const).map((label, i) => (
-            <motion.div
-              key={label}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: showNav ? 1 : 0, y: showNav ? 0 : 8 }}
-              exit={{ opacity: 0, y: 8, transition: { duration: 0.35, delay: i * 0.08, ease: EASE_TUPLE } }}
-              transition={{ duration: 0.5, delay: i * 0.06, ease: EASE_TUPLE }}
-            >
-              <NavBtn
-                label={label}
-                onClick={() => navigate(label === "Homepage" ? "/" : `/${label.toLowerCase()}`)}
-              />
-            </motion.div>
-          ))}
-        </div>
-
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "flex-end", justifyContent: "center", gap: 20 }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 20 }}>
           {CASES.map(({ id, label }, i) => (
             <motion.div
               layout
