@@ -610,14 +610,16 @@ export default function CasesPage() {
       />
 
       {/* Ancres de sections de case — colonne droite, centrées verticalement */}
+      {/* pointerEvents: none sur le container (zone transparente) pour ne pas bloquer PrimaryNav */}
       <div
         style={{
           position: "absolute", top: 0, bottom: 0, right: 0, zIndex: 30,
           display: "flex", flexDirection: "column", alignItems: "flex-end",
           paddingRight: 16, justifyContent: "center",
+          pointerEvents: "none",
         }}
       >
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 20 }}>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 20, pointerEvents: "auto" }}>
           {CASES.map(({ id, label }, i) => (
             <motion.div
               layout
